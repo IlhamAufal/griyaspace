@@ -103,12 +103,6 @@
 
 @push('scripts')
 <script>
-    import { Calendar } from '@fullcalendar/core';
-    import dayGridPlugin from '@fullcalendar/daygrid';
-    import timeGridPlugin from '@fullcalendar/timegrid';
-    import interactionPlugin from '@fullcalendar/interaction';
-    import listPlugin from '@fullcalendar/list';
-
     function calendarApp() {
         return {
             calendar: null,
@@ -119,8 +113,13 @@
             init() {
                 const self = this;
 
-                this.calendar = new Calendar(document.getElementById('calendar'), {
-                    plugins: [dayGridPlugin, timeGridPlugin, interactionPlugin, listPlugin],
+                this.calendar = new FullCalendar.Calendar(document.getElementById('calendar'), {
+                    plugins: [
+                        FullCalendar.dayGridPlugin,
+                        FullCalendar.timeGridPlugin,
+                        FullCalendar.interactionPlugin,
+                        FullCalendar.listPlugin
+                    ],
                     initialView: 'timeGridWeek',
                     headerToolbar: false,
                     slotMinTime: '06:00:00',

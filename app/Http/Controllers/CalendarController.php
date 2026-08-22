@@ -16,14 +16,19 @@ class CalendarController extends Controller
 
     public function events(Request $request)
     {
-        $request->validate([
-            'from' => 'required|date',
-            'to' => 'required|date|after_or_equal:from',
-        ]);
+        $from = $request->input('from', $request->input('start'));
+        $to = $request->input('to', $request->input('end'));
+
+        if (!$from || !$to) {
+            return response()->json(['error' => 'Parameter from/start and to/end are required.'], 422);
+        }
+
+        $fromDate = date('Y-m-d', strtotime($from));
+        $toDate = date('Y-m-d', strtotime($to));
 
         $query = Booking::with(['room', 'organization'])
-            ->where('booking_date', '>=', $request->from)
-            ->where('booking_date', '<=', $request->to)
+            ->where('booking_date', '>=', $fromDate)
+            ->where('booking_date', '<=', $toDate)
             ->where('status', '!=', 'cancelled');
 
         if ($request->filled('room_id')) {

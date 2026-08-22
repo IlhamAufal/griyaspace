@@ -4,11 +4,16 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 use App\Models\Booking;
 use App\Models\Room;
 use App\Models\User;
+use App\Models\Organization;
 use App\Models\BookingHistory;
 use App\Models\BookingDocument;
+use App\Services\BookingService;
+use App\Exceptions\BookingConflictException;
+use InvalidArgumentException;
 
 class BookingController extends Controller
 {
@@ -42,12 +47,15 @@ class BookingController extends Controller
     {
         $rooms = Room::where('status', 'active')->get();
         $user = $request->user();
-        $users = $user->isAdmin() ? User::where('is_active', true)->get() : collect();
+        $users = $user->isAdmin()
+            ? User::where('is_active', true)->whereHas('role', fn($q) => $q->where('slug', '!=', 'admin'))->with(['organization', 'role'])->get()
+            : collect();
+        $organizations = Organization::where('is_active', true)->get();
 
-        return view('pages.bookings.create', compact('rooms', 'user', 'users'));
+        return view('pages.bookings.create', compact('rooms', 'user', 'users', 'organizations'));
     }
 
-    public function store(Request $request)
+    public function store(Request $request, BookingService $bookingService)
     {
         $user = $request->user();
 
@@ -57,83 +65,39 @@ class BookingController extends Controller
             'start_time' => 'required',
             'end_time' => 'required|after:start_time',
             'activity_name' => 'required|string|max:255',
-            'purpose' => 'required|string',
+            'purpose' => 'nullable|string',
             'participant_count' => 'required|integer|min:1',
             'person_in_charge' => 'required|string|max:255',
             'contact_phone' => 'required|string|max:255',
             'document' => 'required|file|mimes:pdf|max:10240',
             'user_id' => $user->isAdmin() ? 'nullable|exists:users,id' : 'nullable',
+            'organization_id' => 'nullable|exists:organizations,id',
         ]);
 
-        $submitter = $user;
-        if ($user->isAdmin() && !empty($validated['user_id'])) {
-            $submitter = User::findOrFail($validated['user_id']);
-        }
-        unset($validated['user_id']);
-
-        $room = Room::find($validated['room_id']);
-
-        if ($validated['participant_count'] > $room->capacity) {
-            return back()->withErrors(['participant_count' => 'Jumlah peserta melebihi kapasitas ruangan.'])->withInput();
-        }
-
-        $hasConflict = Booking::where('room_id', $validated['room_id'])
-            ->where('booking_date', $validated['booking_date'])
-            ->where('status', '!=', 'cancelled')
-            ->where('start_time', '<', $validated['end_time'])
-            ->where('end_time', '>', $validated['start_time'])
-            ->exists();
-
-        if ($hasConflict) {
-            return back()->withErrors(['start_time' => 'Jadwal bentrok dengan booking lain.'])->withInput();
-        }
-
-        DB::beginTransaction();
-
         try {
-            $validated['organization_id'] = $submitter->organization_id;
-            $validated['submitted_by'] = $submitter->id;
-            $validated['status'] = 'submitted';
-            $validated['submitted_at'] = now();
-
-            $booking = Booking::create($validated);
-
-            if ($request->hasFile('document')) {
-                $file = $request->file('document');
-                $storageKey = 'bookings/' . $booking->id . '/' . Str::random(40) . '.' . $file->getClientOriginalExtension();
-                $file->storeAs('private', $storageKey);
-
-                BookingDocument::create([
-                    'booking_id' => $booking->id,
-                    'version' => 1,
-                    'storage_key' => $storageKey,
-                    'original_filename' => $file->getClientOriginalName(),
-                    'mime_type' => $file->getMimeType(),
-                    'file_size' => $file->getSize(),
-                    'checksum' => hash_file('sha256', $file->getPathname()),
-                    'uploaded_by' => $user->id,
-                    'uploaded_at' => now(),
-                    'is_current' => true,
-                ]);
-            }
-
-            BookingHistory::create([
-                'booking_id' => $booking->id,
-                'previous_status' => null,
-                'new_status' => 'submitted',
-                'note' => $user->isAdmin() && $submitter->id !== $user->id
-                    ? 'Pengajuan baru oleh admin untuk ' . $submitter->name . '.'
-                    : 'Pengajuan baru.',
-                'changed_by' => $user->id,
-                'created_at' => now(),
-            ]);
-
-            DB::commit();
+            $booking = $bookingService->create(
+                $validated,
+                $user,
+                $request->file('document')
+            );
 
             return redirect()->route('bookings.show', $booking)->with('success', 'Pengajuan berhasil dikirim.');
+        } catch (BookingConflictException $e) {
+            return back()
+                ->withErrors([
+                    'schedule_conflict' => $e->getMessage(),
+                    'start_time' => $e->getMessage(),
+                ])
+                ->with('conflict_step', 2)
+                ->withInput();
+        } catch (InvalidArgumentException $e) {
+            return back()
+                ->withErrors(['participant_count' => $e->getMessage()])
+                ->withInput();
         } catch (\Exception $e) {
-            DB::rollBack();
-            return back()->withErrors(['error' => 'Gagal menyimpan pengajuan.'])->withInput();
+            return back()
+                ->withErrors(['error' => 'Gagal menyimpan pengajuan: ' . $e->getMessage()])
+                ->withInput();
         }
     }
 

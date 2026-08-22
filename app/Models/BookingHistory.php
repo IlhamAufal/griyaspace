@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BookingHistory extends Model
 {
+    protected $table = 'booking_history';
+
     public $timestamps = false;
 
     protected $fillable = [

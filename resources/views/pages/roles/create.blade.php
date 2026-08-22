@@ -13,38 +13,34 @@
 
         <h1 class="text-2xl font-bold text-gray-900 mb-6">Tambah Role</h1>
 
-        <div class="bg-white shadow rounded-lg p-6">
+        <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-gray-200 dark:border-gray-700/60 p-6 sm:p-8">
             <form action="{{ route('roles.store') }}" method="POST">
                 @csrf
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Nama Role</label>
-                        <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Contoh: Staff Keuangan" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-brand-500 focus:border-brand-500" required>
-                        @error('name') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Role <span class="text-red-500">*</span></label>
+                        <input type="text" name="name" id="name" value="{{ old('name') }}" placeholder="Contoh: Staff Keuangan" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        @error('name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 mb-1">Deskripsi</label>
-                        <textarea name="description" rows="3" placeholder="Deskripsi tugas atau wewenang role..." class="w-full border-gray-300 rounded-md shadow-sm focus:ring-brand-500 focus:border-brand-500">{{ old('description') }}</textarea>
-                        @error('description') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Deskripsi Role</label>
+                        <textarea name="description" rows="3" placeholder="Deskripsi tugas atau wewenang role..." class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs">{{ old('description') }}</textarea>
+                        @error('description') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
-                    <div>
-                        <label class="flex items-center">
-                            <input type="checkbox" name="is_active" value="1" {{ old('is_active', 1) ? 'checked' : '' }} class="rounded border-gray-300 text-brand-500 shadow-sm focus:ring-brand-500">
-                            <span class="ml-2 text-sm text-gray-700">Status Role Aktif</span>
-                        </label>
-                        @error('is_active') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    <div class="md:col-span-2">
+                        <x-common.toggle name="is_active" label="Status Role" :checked="old('is_active', 1)" />
                     </div>
                 </div>
 
-                <div class="mt-6 flex justify-end gap-3">
-                    <a href="{{ route('roles.index') }}" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700/60 flex items-center justify-end gap-3">
+                    <a href="{{ route('roles.index') }}" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
                         <i class="fa-solid fa-arrow-left text-sm"></i>
                         <span>Batal</span>
                     </a>
-                    <button type="submit" class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <button type="submit" class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors">
                         <i class="fa-solid fa-floppy-disk text-sm"></i>
                         <span>Simpan</span>
                     </button>

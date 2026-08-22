@@ -17,18 +17,18 @@
             </a>
         </div>
 
-        <div class="bg-white shadow rounded-lg p-4 mb-4">
+        <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl border border-gray-200 dark:border-gray-700/60 p-4 mb-5">
             <form action="{{ route('users.index') }}" method="GET" class="flex flex-wrap items-end gap-4">
-                <div class="flex-1 min-w-[200px]">
-                    <label class="block text-xs font-medium text-gray-500 mb-1">Cari</label>
+                <div class="flex-1 min-w-[220px]">
+                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Pencarian</label>
                     <div class="relative">
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Nama, email, atau username..." class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-brand-500 focus:border-brand-500">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Nama, email, atau username..." class="h-10 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm bg-transparent placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
                     </div>
                 </div>
-                <div class="w-44">
-                    <label class="block text-xs font-medium text-gray-500 mb-1">Role</label>
-                    <select name="role_id" class="w-full border border-gray-300 rounded-lg text-sm py-2 px-3 focus:ring-brand-500 focus:border-brand-500">
+                <div class="w-48">
+                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Role</label>
+                    <select name="role_id" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
                         <option value="">Semua Role</option>
                         @foreach($roles as $role)
                         <option value="{{ $role->id }}" {{ request('role_id') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
@@ -36,20 +36,20 @@
                     </select>
                 </div>
                 <div class="w-44">
-                    <label class="block text-xs font-medium text-gray-500 mb-1">Status</label>
-                    <select name="status" class="w-full border border-gray-300 rounded-lg text-sm py-2 px-3 focus:ring-brand-500 focus:border-brand-500">
+                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Status</label>
+                    <select name="status" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
                         <option value="">Semua Status</option>
                         <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif</option>
                         <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Nonaktif</option>
                     </select>
                 </div>
                 <div class="flex gap-2">
-                    <button type="submit" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center gap-2">
-                        <i class="fa-solid fa-filter text-sm"></i> Filter
+                    <button type="submit" class="h-10 bg-brand-500 hover:bg-brand-600 text-white px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 shadow-theme-xs transition-colors">
+                        <i class="fa-solid fa-filter text-xs"></i> Filter
                     </button>
                     @if(request()->hasAny(['search', 'role_id', 'status']))
-                    <a href="{{ route('users.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center gap-2">
-                        <i class="fa-solid fa-xmark text-sm"></i> Reset
+                    <a href="{{ route('users.index') }}" class="h-10 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200 px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 transition-colors">
+                        <i class="fa-solid fa-xmark text-xs"></i> Reset
                     </a>
                     @endif
                 </div>

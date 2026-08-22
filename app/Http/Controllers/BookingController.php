@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\Booking;
 use App\Models\Room;
+use App\Models\User;
 use App\Models\BookingHistory;
 use App\Models\BookingDocument;
 
@@ -41,8 +42,9 @@ class BookingController extends Controller
     {
         $rooms = Room::where('status', 'active')->get();
         $user = $request->user();
+        $users = $user->isAdmin() ? User::where('is_active', true)->get() : collect();
 
-        return view('pages.bookings.create', compact('rooms', 'user'));
+        return view('pages.bookings.create', compact('rooms', 'user', 'users'));
     }
 
     public function store(Request $request)
@@ -60,7 +62,14 @@ class BookingController extends Controller
             'person_in_charge' => 'required|string|max:255',
             'contact_phone' => 'required|string|max:255',
             'document' => 'required|file|mimes:pdf|max:10240',
+            'user_id' => $user->isAdmin() ? 'nullable|exists:users,id' : 'nullable',
         ]);
+
+        $submitter = $user;
+        if ($user->isAdmin() && !empty($validated['user_id'])) {
+            $submitter = User::findOrFail($validated['user_id']);
+        }
+        unset($validated['user_id']);
 
         $room = Room::find($validated['room_id']);
 
@@ -82,8 +91,8 @@ class BookingController extends Controller
         DB::beginTransaction();
 
         try {
-            $validated['organization_id'] = $user->organization_id;
-            $validated['submitted_by'] = $user->id;
+            $validated['organization_id'] = $submitter->organization_id;
+            $validated['submitted_by'] = $submitter->id;
             $validated['status'] = 'submitted';
             $validated['submitted_at'] = now();
 
@@ -112,7 +121,9 @@ class BookingController extends Controller
                 'booking_id' => $booking->id,
                 'previous_status' => null,
                 'new_status' => 'submitted',
-                'note' => 'Pengajuan baru.',
+                'note' => $user->isAdmin() && $submitter->id !== $user->id
+                    ? 'Pengajuan baru oleh admin untuk ' . $submitter->name . '.'
+                    : 'Pengajuan baru.',
                 'changed_by' => $user->id,
                 'created_at' => now(),
             ]);
@@ -294,5 +305,64 @@ class BookingController extends Controller
     {
         $history = $booking->history()->with('changedBy')->latest('created_at')->get();
         return view('pages.bookings.history', compact('booking', 'history'));
+    }
+
+    public function historyAll(Request $request)
+    {
+        $user = $request->user();
+        $query = Booking::with(['room', 'submittedBy']);
+
+        if (!$user->isAdmin()) {
+            $query->where('submitted_by', $user->id);
+        }
+
+        $query->whereIn('status', ['approved', 'rejected', 'cancelled']);
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('booking_number', 'like', "%{$search}%")
+                  ->orWhere('activity_name', 'like', "%{$search}%");
+            });
+        }
+
+        if ($user->isAdmin() && $request->filled('user_id')) {
+            $query->where('submitted_by', $request->user_id);
+        }
+
+        $bookings = $query->latest()->paginate(15)->withQueryString();
+        $users = $user->isAdmin() ? User::where('is_active', true)->get() : collect();
+
+        return view('pages.bookings.history-all', compact('bookings', 'users'));
+    }
+
+    public function konfirmasi(Request $request)
+    {
+        $query = Booking::with(['room', 'submittedBy'])
+            ->whereIn('status', ['submitted', 'revision']);
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('booking_number', 'like', "%{$search}%")
+                  ->orWhere('activity_name', 'like', "%{$search}%")
+                  ->orWhereHas('submittedBy', function ($q2) use ($search) {
+                      $q2->where('name', 'like', "%{$search}%");
+                  });
+            });
+        }
+
+        if ($request->filled('user_id')) {
+            $query->where('submitted_by', $request->user_id);
+        }
+
+        $bookings = $query->latest()->paginate(15)->withQueryString();
+        $users = User::where('is_active', true)->get();
+
+        return view('pages.bookings.konfirmasi', compact('bookings', 'users'));
     }
 }

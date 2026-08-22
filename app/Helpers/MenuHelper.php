@@ -27,6 +27,22 @@ class MenuHelper
                 'icon' => 'booking',
                 'name' => 'Pengajuan',
                 'path' => '/pengajuan',
+                'subItems' => array_merge([
+                    [
+                        'name' => 'Pengajuan Baru',
+                        'path' => '/pengajuan/baru',
+                    ],
+                ], $user->isAdmin() ? [
+                    [
+                        'name' => 'Konfirmasi',
+                        'path' => '/pengajuan/konfirmasi',
+                    ],
+                ] : [], [
+                    [
+                        'name' => 'Riwayat Pengajuan',
+                        'path' => '/pengajuan/riwayat',
+                    ],
+                ]),
             ],
         ];
 

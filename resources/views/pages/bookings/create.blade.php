@@ -10,6 +10,19 @@
                 @csrf
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
+                    @if($user->isAdmin() && $users->count())
+                    <div class="md:col-span-2">
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Pengajuan Untuk <span class="text-red-500">*</span></label>
+                        <select name="user_id" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                            <option value="">Pilih Pengguna (Kosongkan untuk diri sendiri)</option>
+                            @foreach($users as $u)
+                            <option value="{{ $u->id }}" {{ old('user_id') == $u->id ? 'selected' : '' }}>{{ $u->name }} - {{ $u->email }}</option>
+                            @endforeach
+                        </select>
+                        @error('user_id') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                    </div>
+                    @endif
+
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ruangan <span class="text-red-500">*</span></label>
                         <select name="room_id" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>

@@ -35,6 +35,8 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/', [BookingController::class, 'index'])->name('bookings.index');
         Route::get('/baru', [BookingController::class, 'create'])->name('bookings.create');
         Route::post('/', [BookingController::class, 'store'])->name('bookings.store');
+        Route::get('/konfirmasi', [BookingController::class, 'konfirmasi'])->name('bookings.konfirmasi')->middleware('role:admin');
+        Route::get('/riwayat', [BookingController::class, 'historyAll'])->name('bookings.historyAll');
         Route::get('/{booking}', [BookingController::class, 'show'])->name('bookings.show');
         Route::get('/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
         Route::put('/{booking}', [BookingController::class, 'update'])->name('bookings.update');

@@ -27,7 +27,7 @@
 
             <div class="ml-auto flex items-center gap-3">
                 <select x-model="selectedRoom" @change="updateEvents()"
-                    class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
                     <option value="">Semua Ruangan</option>
                     @foreach($rooms as $room)
                         <option value="{{ $room->id }}">{{ $room->name }}</option>
@@ -35,15 +35,15 @@
                 </select>
 
                 <div class="flex rounded-lg border border-gray-300 overflow-hidden">
-                    <button @click="changeView('timeGridWeek')" :class="currentView === 'timeGridWeek' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                    <button @click="changeView('timeGridWeek')" :class="currentView === 'timeGridWeek' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
                         class="px-3 py-1.5 text-sm font-medium transition-colors">
                         Minggu
                     </button>
-                    <button @click="changeView('dayGridMonth')" :class="currentView === 'dayGridMonth' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                    <button @click="changeView('dayGridMonth')" :class="currentView === 'dayGridMonth' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
                         class="px-3 py-1.5 text-sm font-medium border-l border-gray-300 transition-colors">
                         Bulan
                     </button>
-                    <button @click="changeView('listWeek')" :class="currentView === 'listWeek' ? 'bg-blue-600 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                    <button @click="changeView('listWeek')" :class="currentView === 'listWeek' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
                         class="px-3 py-1.5 text-sm font-medium border-l border-gray-300 transition-colors">
                         Daftar
                     </button>

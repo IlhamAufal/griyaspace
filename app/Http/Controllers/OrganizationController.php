@@ -7,9 +7,23 @@ use App\Models\Organization;
 
 class OrganizationController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $organizations = Organization::latest()->paginate(10);
+        $query = Organization::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('is_active', $request->status === 'active');
+        }
+
+        $organizations = $query->latest()->paginate(10)->withQueryString();
         return view('pages.organizations.index', compact('organizations'));
     }
 

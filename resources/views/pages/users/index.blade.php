@@ -3,23 +3,69 @@
 @section('content')
 <div class="py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+            <a href="{{ route('dashboard') }}" class="hover:text-brand-500 transition-colors"><i class="fa-solid fa-house"></i></a>
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+            <span class="text-gray-900 font-medium">Pengguna</span>
+        </nav>
+
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Daftar Pengguna</h1>
-            <a href="{{ route('users.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2">
+            <a href="{{ route('users.create') }}" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2">
                 <i class="fa-solid fa-plus text-sm"></i>
                 <span>Pengguna Baru</span>
             </a>
         </div>
 
+        <div class="bg-white shadow rounded-lg p-4 mb-4">
+            <form action="{{ route('users.index') }}" method="GET" class="flex flex-wrap items-end gap-4">
+                <div class="flex-1 min-w-[200px]">
+                    <label class="block text-xs font-medium text-gray-500 mb-1">Cari</label>
+                    <div class="relative">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Nama, email, atau username..." class="w-full pl-9 pr-3 py-2 border border-gray-300 rounded-lg text-sm focus:ring-brand-500 focus:border-brand-500">
+                        <i class="fa-solid fa-magnifying-glass absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-sm"></i>
+                    </div>
+                </div>
+                <div class="w-44">
+                    <label class="block text-xs font-medium text-gray-500 mb-1">Role</label>
+                    <select name="role_id" class="w-full border border-gray-300 rounded-lg text-sm py-2 px-3 focus:ring-brand-500 focus:border-brand-500">
+                        <option value="">Semua Role</option>
+                        @foreach($roles as $role)
+                        <option value="{{ $role->id }}" {{ request('role_id') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                        @endforeach
+                    </select>
+                </div>
+                <div class="w-44">
+                    <label class="block text-xs font-medium text-gray-500 mb-1">Status</label>
+                    <select name="status" class="w-full border border-gray-300 rounded-lg text-sm py-2 px-3 focus:ring-brand-500 focus:border-brand-500">
+                        <option value="">Semua Status</option>
+                        <option value="active" {{ request('status') === 'active' ? 'selected' : '' }}>Aktif</option>
+                        <option value="inactive" {{ request('status') === 'inactive' ? 'selected' : '' }}>Nonaktif</option>
+                    </select>
+                </div>
+                <div class="flex gap-2">
+                    <button type="submit" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center gap-2">
+                        <i class="fa-solid fa-filter text-sm"></i> Filter
+                    </button>
+                    @if(request()->hasAny(['search', 'role_id', 'status']))
+                    <a href="{{ route('users.index') }}" class="bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium inline-flex items-center gap-2">
+                        <i class="fa-solid fa-xmark text-sm"></i> Reset
+                    </a>
+                    @endif
+                </div>
+            </form>
+        </div>
+
         <div class="bg-white shadow rounded-lg overflow-hidden">
             <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
+                <thead class="bg-brand-500 text-white">
                     <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nama</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Email</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Role</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Organisasi</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Aksi</th>
+                        <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Nama</th>
+                        <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Email</th>
+                        <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Role</th>
+                        <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Organisasi</th>
+                        <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Status</th>
+                        <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
                 <tbody class="bg-white divide-y divide-gray-200">
@@ -30,16 +76,36 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->role->name ?? '-' }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $user->organization->name ?? '-' }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            @if($user->is_active)
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Aktif</span>
+                            @else
+                                <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Nonaktif</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex items-center gap-2">
                                 <a href="{{ route('users.edit', $user) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Edit Pengguna">
                                     <i class="fa-solid fa-pen-to-square text-sm"></i>
                                 </a>
+                                @if(auth()->id() === $user->id)
+                                    <span class="inline-flex items-center justify-center w-8 h-8 text-gray-300 cursor-not-allowed" title="Tidak bisa menonaktifkan akun sendiri">
+                                        <i class="fa-solid fa-trash text-sm"></i>
+                                    </span>
+                                @else
+                                    <form action="{{ route('users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menonaktifkan pengguna {{ $user->name }}?')">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="inline-flex items-center justify-center w-8 h-8 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg transition-colors dark:text-red-400 dark:hover:bg-red-900/20" title="Nonaktifkan Pengguna">
+                                            <i class="fa-solid fa-trash text-sm"></i>
+                                        </button>
+                                    </form>
+                                @endif
                             </div>
                         </td>
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="5" class="px-6 py-4 text-center text-sm text-gray-500">Tidak ada data pengguna</td>
+                        <td colspan="6" class="px-6 py-4 text-center text-sm text-gray-500">Tidak ada data pengguna</td>
                     </tr>
                     @endforelse
                 </tbody>

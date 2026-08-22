@@ -11,10 +11,30 @@ use App\Models\Role;
 
 class UserController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $users = User::with('organization', 'role')->latest()->paginate(10);
-        return view('pages.users.index', compact('users'));
+        $query = User::with('organization', 'role');
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('email', 'like', "%{$search}%")
+                  ->orWhere('username', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('role_id')) {
+            $query->where('role_id', $request->role_id);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('is_active', $request->status === 'active');
+        }
+
+        $users = $query->latest()->paginate(10)->withQueryString();
+        $roles = Role::all();
+        return view('pages.users.index', compact('users', 'roles'));
     }
 
     public function create()

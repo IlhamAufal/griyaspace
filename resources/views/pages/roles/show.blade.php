@@ -3,6 +3,14 @@
 @section('content')
 <div class="py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
+            <a href="{{ route('dashboard') }}" class="hover:text-blue-600 transition-colors"><i class="fa-solid fa-house"></i></a>
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+            <a href="{{ route('roles.index') }}" class="hover:text-blue-600 transition-colors">Role</a>
+            <i class="fa-solid fa-chevron-right text-xs"></i>
+            <span class="text-gray-900 font-medium">{{ $role->name }}</span>
+        </nav>
+
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Detail Role: {{ $role->name }}</h1>
             <div class="flex items-center gap-2">
@@ -50,11 +58,11 @@
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Daftar Pengguna dengan Role ini</h2>
                 </div>
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-gray-50 dark:bg-gray-700/50">
+                    <thead class="bg-brand-500 text-white">
                         <tr>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Nama</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Email</th>
-                            <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 dark:text-gray-300 uppercase">Organisasi</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Nama</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Email</th>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Organisasi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">

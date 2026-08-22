@@ -29,12 +29,12 @@
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
-                <thead class="border-b border-gray-200 bg-gray-50 text-xs uppercase text-gray-500 dark:border-gray-700 dark:bg-gray-700/50 dark:text-gray-400">
+                <thead class="bg-brand-500 text-white">
                     <tr>
-                        <th class="px-5 py-3">Organisasi</th>
-                        <th class="px-5 py-3">Ruangan</th>
-                        <th class="px-5 py-3">Tanggal</th>
-                        <th class="px-5 py-3">Status</th>
+                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Organisasi</th>
+                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Ruangan</th>
+                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Tanggal</th>
+                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Status</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
@@ -69,12 +69,12 @@
         </div>
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
-                <thead class="border-b border-gray-200 bg-gray-50 text-xs uppercase text-gray-500 dark:border-gray-700 dark:bg-gray-700/50 dark:text-gray-400">
+                <thead class="bg-brand-500 text-white">
                     <tr>
-                        <th class="px-5 py-3">Organisasi</th>
-                        <th class="px-5 py-3">Ruangan</th>
-                        <th class="px-5 py-3">Tanggal</th>
-                        <th class="px-5 py-3">Waktu</th>
+                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Organisasi</th>
+                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Ruangan</th>
+                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Tanggal</th>
+                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Waktu</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-700">

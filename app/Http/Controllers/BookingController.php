@@ -24,7 +24,15 @@ class BookingController extends Controller
             $query->where('status', $request->status);
         }
 
-        $bookings = $query->latest()->paginate(10);
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('booking_number', 'like', "%{$search}%")
+                  ->orWhere('activity_name', 'like', "%{$search}%");
+            });
+        }
+
+        $bookings = $query->latest()->paginate(10)->withQueryString();
 
         return view('pages.bookings.index', compact('bookings'));
     }

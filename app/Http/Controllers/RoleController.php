@@ -8,9 +8,23 @@ use App\Models\Role;
 
 class RoleController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-        $roles = Role::latest()->paginate(10);
+        $query = Role::query();
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('name', 'like', "%{$search}%")
+                  ->orWhere('description', 'like', "%{$search}%");
+            });
+        }
+
+        if ($request->filled('status')) {
+            $query->where('is_active', $request->status === 'active');
+        }
+
+        $roles = $query->withCount('users')->latest()->paginate(10)->withQueryString();
         return view('pages.roles.index', compact('roles'));
     }
 

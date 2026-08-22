@@ -11,9 +11,8 @@
 
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Daftar Role</h1>
-            <a href="{{ route('roles.create') }}" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2">
-                <i class="fa-solid fa-plus text-sm"></i>
-                <span>Role Baru</span>
+            <a href="{{ route('roles.create') }}" class="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg inline-flex items-center text-sm font-medium shadow-theme-xs transition-colors">
+                <span>Tambah Role Baru</span>
             </a>
         </div>
 
@@ -35,7 +34,7 @@
                     </select>
                 </div>
                 <div class="flex gap-2">
-                    <button type="submit" class="h-10 bg-brand-500 hover:bg-brand-600 text-white px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 shadow-theme-xs transition-colors">
+                    <button type="submit" class="h-10 bg-secondary-500 hover:bg-secondary-600 text-white px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 shadow-theme-xs transition-colors">
                         <i class="fa-solid fa-filter text-xs"></i> Filter
                     </button>
                     @if(request()->hasAny(['search', 'status']))
@@ -75,9 +74,9 @@
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $role->users_count }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex items-center gap-2">
-                                <a href="{{ route('roles.show', $role) }}" class="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors dark:text-green-400 dark:hover:bg-green-900/20" title="Lihat Detail">
+                                <button type="button" @click="$dispatch('open-modal', 'detail-role-{{ $role->id }}')" class="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors dark:text-green-400 dark:hover:bg-green-900/20" title="Lihat Detail">
                                     <i class="fa-solid fa-eye text-sm"></i>
-                                </a>
+                                </button>
                                 <a href="{{ route('roles.edit', $role) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Edit Role">
                                     <i class="fa-solid fa-pen-to-square text-sm"></i>
                                 </a>
@@ -109,6 +108,67 @@
         <div class="mt-4">
             {{ $roles->links() }}
         </div>
+
+        @foreach($roles as $role)
+        <x-common.modal id="detail-role-{{ $role->id }}" title="Detail Role" icon="fa-solid fa-shield-halved" maxWidth="lg">
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Nama Role</label>
+                        <p class="mt-1 text-sm font-medium text-gray-900 dark:text-white">{{ $role->name }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Jumlah Pengguna</label>
+                        <p class="mt-1 text-sm font-medium text-gray-900 dark:text-white">{{ $role->users_count }} Pengguna</p>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Deskripsi</label>
+                        <p class="mt-1 text-sm text-gray-900 dark:text-gray-200">{{ $role->description ?: '-' }}</p>
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Status</label>
+                        @if($role->is_active)
+                            <span class="mt-1 px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Aktif</span>
+                        @else
+                            <span class="mt-1 px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Nonaktif</span>
+                        @endif
+                    </div>
+                </div>
+
+                @if($role->users_count > 0)
+                <div class="border-t border-gray-200 dark:border-gray-700 pt-4">
+                    <h4 class="text-xs font-medium text-gray-500 dark:text-gray-400 mb-2">Daftar Pengguna</h4>
+                    <div class="max-h-48 overflow-y-auto">
+                        <table class="min-w-full text-sm">
+                            <thead class="bg-gray-50 dark:bg-gray-700/50">
+                                <tr>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400">Nama</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400">Email</th>
+                                    <th class="px-3 py-2 text-left text-xs font-medium text-gray-500 dark:text-gray-400">Organisasi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
+                                @foreach($role->users as $u)
+                                <tr>
+                                    <td class="px-3 py-2 text-gray-900 dark:text-white">{{ $u->name }}</td>
+                                    <td class="px-3 py-2 text-gray-500 dark:text-gray-400">{{ $u->email }}</td>
+                                    <td class="px-3 py-2 text-gray-500 dark:text-gray-400">{{ $u->organization->name ?? '-' }}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                @endif
+            </div>
+
+            <x-slot:footer>
+                <a href="{{ route('roles.edit', $role) }}" class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <i class="fa-solid fa-pen-to-square text-sm"></i> Edit
+                </a>
+            </x-slot:footer>
+        </x-common.modal>
+        @endforeach
     </div>
 </div>
 @endsection

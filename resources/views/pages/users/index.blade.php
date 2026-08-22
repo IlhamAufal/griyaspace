@@ -11,9 +11,8 @@
 
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Daftar Pengguna</h1>
-            <a href="{{ route('users.create') }}" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2">
-                <i class="fa-solid fa-plus text-sm"></i>
-                <span>Pengguna Baru</span>
+            <a href="{{ route('users.create') }}" class="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg inline-flex items-center text-sm font-medium shadow-theme-xs transition-colors">
+                <span>Tambah Pengguna Baru</span>
             </a>
         </div>
 
@@ -44,7 +43,7 @@
                     </select>
                 </div>
                 <div class="flex gap-2">
-                    <button type="submit" class="h-10 bg-brand-500 hover:bg-brand-600 text-white px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 shadow-theme-xs transition-colors">
+                    <button type="submit" class="h-10 bg-secondary-500 hover:bg-secondary-600 text-white px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 shadow-theme-xs transition-colors">
                         <i class="fa-solid fa-filter text-xs"></i> Filter
                     </button>
                     @if(request()->hasAny(['search', 'role_id', 'status']))
@@ -84,6 +83,9 @@
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex items-center gap-2">
+                                <button type="button" @click="$dispatch('open-modal', 'detail-user-{{ $user->id }}')" class="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors dark:text-green-400 dark:hover:bg-green-900/20" title="Lihat Detail">
+                                    <i class="fa-solid fa-eye text-sm"></i>
+                                </button>
                                 <a href="{{ route('users.edit', $user) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Edit Pengguna">
                                     <i class="fa-solid fa-pen-to-square text-sm"></i>
                                 </a>
@@ -115,6 +117,57 @@
         <div class="mt-4">
             {{ $users->links() }}
         </div>
+
+        @foreach($users as $user)
+        <x-common.modal id="detail-user-{{ $user->id }}" title="Detail Pengguna" icon="fa-solid fa-user" maxWidth="lg">
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Nama</label>
+                        <p class="mt-1 text-sm font-medium text-gray-900 dark:text-white">{{ $user->name }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Username</label>
+                        <p class="mt-1 text-sm font-medium text-gray-900 dark:text-white">{{ $user->username }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Email</label>
+                        <p class="mt-1 text-sm text-gray-900 dark:text-gray-200">{{ $user->email }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">No. Telepon</label>
+                        <p class="mt-1 text-sm text-gray-900 dark:text-gray-200">{{ $user->phone ?? '-' }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Role</label>
+                        <p class="mt-1 text-sm text-gray-900 dark:text-gray-200">{{ $user->role->name ?? '-' }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Organisasi</label>
+                        <p class="mt-1 text-sm text-gray-900 dark:text-gray-200">{{ $user->organization->name ?? '-' }}</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Status</label>
+                        @if($user->is_active)
+                            <span class="mt-1 px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Aktif</span>
+                        @else
+                            <span class="mt-1 px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Nonaktif</span>
+                        @endif
+                    </div>
+                    <div>
+                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Terakhir Login</label>
+                        <p class="mt-1 text-sm text-gray-900 dark:text-gray-200">{{ $user->last_login_at ? $user->last_login_at->diffForHumans() : 'Belum pernah login' }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <x-slot:footer>
+                <a href="{{ route('users.edit', $user) }}" class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <i class="fa-solid fa-pen-to-square text-sm"></i> Edit
+                </a>
+            </x-slot:footer>
+        </x-common.modal>
+        @endforeach
     </div>
 </div>
 @endsection

@@ -5,8 +5,7 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Daftar Ruangan</h1>
-            <a href="{{ route('rooms.create') }}" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2">
-                <i class="fa-solid fa-plus text-sm"></i>
+            <a href="{{ route('rooms.create') }}" class="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg inline-flex items-center text-sm font-medium shadow-theme-xs transition-colors">
                 <span>Ruangan Baru</span>
             </a>
         </div>

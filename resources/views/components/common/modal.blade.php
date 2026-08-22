@@ -1,8 +1,9 @@
-﻿@props([
+@props([
     'id' => 'modal',
     'title' => null,
     'maxWidth' => 'lg',
-    'icon' => null
+    'icon' => null,
+    'headerBg' => 'brand'
 ])
 
 @php
@@ -72,10 +73,10 @@ $maxWidthClass = match ($maxWidth) {
 
             <!-- Header -->
             @if ($title || isset($header) || $icon)
-                <div class="flex items-center justify-between border-b border-gray-100 dark:border-gray-700/60 px-6 py-4">
+                <div class="flex items-center justify-between {{ $headerBg === 'brand' ? 'bg-brand-500 text-white' : 'border-b border-gray-100 dark:border-gray-700/60 text-gray-900 dark:text-white' }} px-6 py-4">
                     <div class="flex items-center gap-3">
                         @if ($icon)
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400">
+                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg {{ $headerBg === 'brand' ? 'bg-white/15 text-white' : 'bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400' }}">
                                 <i class="{{ $icon }} text-base"></i>
                             </span>
                         @endif
@@ -83,14 +84,15 @@ $maxWidthClass = match ($maxWidth) {
                         @if (isset($header))
                             {{ $header }}
                         @else
-                            <h3 class="text-lg font-semibold text-gray-900 dark:text-white" x-text="modalData.title || @json($title)"></h3>
+                            <h3 class="text-lg font-bold {{ $headerBg === 'brand' ? 'text-white' : 'text-gray-900 dark:text-white' }}" x-text="modalData.title || @json($title)"></h3>
                         @endif
                     </div>
 
                     <button @click="close()"
                             type="button"
-                            class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-200 p-1.5 rounded-lg transition-colors">
-                        <i class="fa-solid fa-xmark text-lg"></i>
+                            class="{{ $headerBg === 'brand' ? 'text-white/80 hover:text-white hover:bg-white/15' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200' }} p-1.5 rounded-lg transition-colors"
+                            aria-label="Tutup Modal">
+                        <i class="fa-solid fa-xmark text-lg {{ $headerBg === 'brand' ? 'text-white' : '' }}"></i>
                     </button>
                 </div>
             @endif

@@ -11,8 +11,7 @@
 
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Daftar Pengajuan</h1>
-            <a href="{{ route('bookings.create') }}" class="bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2">
-                <i class="fa-solid fa-plus text-sm"></i>
+            <a href="{{ route('bookings.create') }}" class="bg-accent-500 hover:bg-accent-600 text-white px-4 py-2 rounded-lg inline-flex items-center text-sm font-medium shadow-theme-xs transition-colors">
                 <span>Pengajuan Baru</span>
             </a>
         </div>
@@ -38,7 +37,7 @@
                     </select>
                 </div>
                 <div class="flex gap-2">
-                    <button type="submit" class="h-10 bg-brand-500 hover:bg-brand-600 text-white px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 shadow-theme-xs transition-colors">
+                    <button type="submit" class="h-10 bg-secondary-500 hover:bg-secondary-600 text-white px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 shadow-theme-xs transition-colors">
                         <i class="fa-solid fa-filter text-xs"></i> Filter
                     </button>
                     @if(request()->hasAny(['search', 'status']))

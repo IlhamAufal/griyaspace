@@ -1,0 +1,290 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
+use App\Models\Booking;
+use App\Models\Room;
+use App\Models\BookingHistory;
+use App\Models\BookingDocument;
+
+class BookingController extends Controller
+{
+    public function index(Request $request)
+    {
+        $user = $request->user();
+        $query = Booking::with(['room', 'organization', 'submittedBy']);
+
+        if ($user->isOrganization()) {
+            $query->where('organization_id', $user->organization_id);
+        }
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        $bookings = $query->latest()->paginate(10);
+
+        return view('pages.bookings.index', compact('bookings'));
+    }
+
+    public function create(Request $request)
+    {
+        $rooms = Room::where('status', 'active')->get();
+        $user = $request->user();
+
+        return view('pages.bookings.create', compact('rooms', 'user'));
+    }
+
+    public function store(Request $request)
+    {
+        $user = $request->user();
+
+        $validated = $request->validate([
+            'room_id' => 'required|exists:rooms,id',
+            'booking_date' => 'required|date|after_or_equal:today',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
+            'activity_name' => 'required|string|max:255',
+            'purpose' => 'required|string',
+            'participant_count' => 'required|integer|min:1',
+            'person_in_charge' => 'required|string|max:255',
+            'contact_phone' => 'required|string|max:255',
+            'document' => 'required|file|mimes:pdf|max:10240',
+        ]);
+
+        $room = Room::find($validated['room_id']);
+
+        if ($validated['participant_count'] > $room->capacity) {
+            return back()->withErrors(['participant_count' => 'Jumlah peserta melebihi kapasitas ruangan.'])->withInput();
+        }
+
+        $hasConflict = Booking::where('room_id', $validated['room_id'])
+            ->where('booking_date', $validated['booking_date'])
+            ->where('status', '!=', 'cancelled')
+            ->where('start_time', '<', $validated['end_time'])
+            ->where('end_time', '>', $validated['start_time'])
+            ->exists();
+
+        if ($hasConflict) {
+            return back()->withErrors(['start_time' => 'Jadwal bentrok dengan booking lain.'])->withInput();
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $validated['organization_id'] = $user->organization_id;
+            $validated['submitted_by'] = $user->id;
+            $validated['status'] = 'submitted';
+            $validated['submitted_at'] = now();
+
+            $booking = Booking::create($validated);
+
+            if ($request->hasFile('document')) {
+                $file = $request->file('document');
+                $storageKey = 'bookings/' . $booking->id . '/' . Str::random(40) . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('private', $storageKey);
+
+                BookingDocument::create([
+                    'booking_id' => $booking->id,
+                    'version' => 1,
+                    'storage_key' => $storageKey,
+                    'original_filename' => $file->getClientOriginalName(),
+                    'mime_type' => $file->getMimeType(),
+                    'file_size' => $file->getSize(),
+                    'checksum' => hash_file('sha256', $file->getPathname()),
+                    'uploaded_by' => $user->id,
+                    'uploaded_at' => now(),
+                    'is_current' => true,
+                ]);
+            }
+
+            BookingHistory::create([
+                'booking_id' => $booking->id,
+                'previous_status' => null,
+                'new_status' => 'submitted',
+                'note' => 'Pengajuan baru.',
+                'changed_by' => $user->id,
+                'created_at' => now(),
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('bookings.show', $booking)->with('success', 'Pengajuan berhasil dikirim.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Gagal menyimpan pengajuan.'])->withInput();
+        }
+    }
+
+    public function show(Booking $booking)
+    {
+        $booking->load(['room', 'organization', 'submittedBy', 'approvedBy', 'documents', 'permit', 'history.changedBy']);
+
+        return view('pages.bookings.show', compact('booking'));
+    }
+
+    public function edit(Booking $booking)
+    {
+        if (!$booking->isEditable()) {
+            abort(403, 'Booking tidak dapat diedit.');
+        }
+
+        $rooms = Room::where('status', 'active')->get();
+
+        return view('pages.bookings.edit', compact('booking', 'rooms'));
+    }
+
+    public function update(Request $request, Booking $booking)
+    {
+        if (!$booking->isEditable()) {
+            abort(403, 'Booking tidak dapat diedit.');
+        }
+
+        $validated = $request->validate([
+            'room_id' => 'required|exists:rooms,id',
+            'booking_date' => 'required|date|after_or_equal:today',
+            'start_time' => 'required',
+            'end_time' => 'required|after:start_time',
+            'activity_name' => 'required|string|max:255',
+            'purpose' => 'required|string',
+            'participant_count' => 'required|integer|min:1',
+            'person_in_charge' => 'required|string|max:255',
+            'contact_phone' => 'required|string|max:255',
+            'document' => 'nullable|file|mimes:pdf|max:10240',
+        ]);
+
+        $room = Room::find($validated['room_id']);
+
+        if ($validated['participant_count'] > $room->capacity) {
+            return back()->withErrors(['participant_count' => 'Jumlah peserta melebihi kapasitas ruangan.'])->withInput();
+        }
+
+        $hasConflict = Booking::where('room_id', $validated['room_id'])
+            ->where('booking_date', $validated['booking_date'])
+            ->where('status', '!=', 'cancelled')
+            ->where('id', '!=', $booking->id)
+            ->where('start_time', '<', $validated['end_time'])
+            ->where('end_time', '>', $validated['start_time'])
+            ->exists();
+
+        if ($hasConflict) {
+            return back()->withErrors(['start_time' => 'Jadwal bentrok dengan booking lain.'])->withInput();
+        }
+
+        DB::beginTransaction();
+
+        try {
+            $oldStatus = $booking->status;
+            $booking->update($validated);
+
+            if ($request->hasFile('document')) {
+                $file = $request->file('document');
+                $storageKey = 'bookings/' . $booking->id . '/' . Str::random(40) . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('private', $storageKey);
+
+                $booking->documents()->update(['is_current' => false]);
+
+                $lastVersion = $booking->documents()->max('version') ?? 0;
+
+                BookingDocument::create([
+                    'booking_id' => $booking->id,
+                    'version' => $lastVersion + 1,
+                    'storage_key' => $storageKey,
+                    'original_filename' => $file->getClientOriginalName(),
+                    'mime_type' => $file->getMimeType(),
+                    'file_size' => $file->getSize(),
+                    'checksum' => hash_file('sha256', $file->getPathname()),
+                    'uploaded_by' => auth()->id(),
+                    'uploaded_at' => now(),
+                    'is_current' => true,
+                ]);
+            }
+
+            if ($oldStatus === 'revision') {
+                $booking->update(['status' => 'submitted']);
+            }
+
+            BookingHistory::create([
+                'booking_id' => $booking->id,
+                'previous_status' => $oldStatus,
+                'new_status' => $booking->status,
+                'note' => 'Data diperbarui.',
+                'changed_by' => auth()->id(),
+                'created_at' => now(),
+            ]);
+
+            DB::commit();
+
+            return redirect()->route('bookings.show', $booking)->with('success', 'Booking berhasil diperbarui.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return back()->withErrors(['error' => 'Gagal memperbarui booking.'])->withInput();
+        }
+    }
+
+    public function cancel(Booking $booking)
+    {
+        if (!$booking->canBeCancelled()) {
+            abort(403, 'Booking tidak dapat dibatalkan.');
+        }
+
+        $oldStatus = $booking->status;
+        $booking->update([
+            'status' => 'cancelled',
+            'cancelled_at' => now(),
+        ]);
+
+        BookingHistory::create([
+            'booking_id' => $booking->id,
+            'previous_status' => $oldStatus,
+            'new_status' => 'cancelled',
+            'note' => 'Dibatalkan oleh pengguna.',
+            'changed_by' => auth()->id(),
+            'created_at' => now(),
+        ]);
+
+        return redirect()->route('bookings.index')->with('success', 'Booking berhasil dibatalkan.');
+    }
+
+    public function decision(Request $request, Booking $booking)
+    {
+        $validated = $request->validate([
+            'action' => 'required|in:approve,reject,revision',
+            'admin_note' => 'required|string',
+        ]);
+
+        $oldStatus = $booking->status;
+
+        $newStatus = match ($validated['action']) {
+            'approve' => 'approved',
+            'reject' => 'rejected',
+            'revision' => 'revision',
+        };
+
+        $booking->update([
+            'status' => $newStatus,
+            'admin_note' => $validated['admin_note'],
+            'approved_by' => $validated['action'] === 'approve' ? auth()->id() : null,
+            'decided_at' => now(),
+        ]);
+
+        BookingHistory::create([
+            'booking_id' => $booking->id,
+            'previous_status' => $oldStatus,
+            'new_status' => $newStatus,
+            'note' => $validated['admin_note'],
+            'changed_by' => auth()->id(),
+            'created_at' => now(),
+        ]);
+
+        return redirect()->route('bookings.show', $booking)->with('success', 'Keputusan berhasil disimpan.');
+    }
+
+    public function history(Booking $booking)
+    {
+        $history = $booking->history()->with('changedBy')->latest('created_at')->get();
+        return view('pages.bookings.history', compact('booking', 'history'));
+    }
+}

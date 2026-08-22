@@ -12,18 +12,14 @@
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
         <div class="flex flex-wrap items-center gap-4">
             <div class="flex items-center gap-2">
-                <button @click="prev()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors" title="Sebelumnya">
-                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-                    </svg>
+                <button @click="prev()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-600" title="Sebelumnya">
+                    <i class="fa-solid fa-chevron-left text-base"></i>
                 </button>
                 <button @click="goToday()" class="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
                     Hari Ini
                 </button>
-                <button @click="next()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors" title="Selanjutnya">
-                    <svg class="w-5 h-5 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-                    </svg>
+                <button @click="next()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-600" title="Selanjutnya">
+                    <i class="fa-solid fa-chevron-right text-base"></i>
                 </button>
             </div>
 

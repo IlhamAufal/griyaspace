@@ -83,8 +83,8 @@
                 @if($booking->document_path)
                 <div class="md:col-span-2">
                     <label class="block text-sm font-medium text-gray-500">Dokumen</label>
-                    <a href="{{ Storage::url($booking->document_path) }}" target="_blank" class="mt-1 inline-flex items-center text-blue-600 hover:text-blue-900">
-                        <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path></svg>
+                    <a href="{{ Storage::url($booking->document_path) }}" target="_blank" class="mt-1 inline-flex items-center text-blue-600 hover:text-blue-900 gap-1.5">
+                        <i class="fa-solid fa-paperclip text-sm"></i>
                         Lihat Dokumen
                     </a>
                 </div>
@@ -122,8 +122,8 @@
                                 @endif
                                 <div class="relative flex space-x-3">
                                     <div>
-                                        <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white">
-                                            <svg class="w-4 h-4 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"></path></svg>
+                                        <span class="h-8 w-8 rounded-full bg-blue-500 flex items-center justify-center ring-8 ring-white text-white">
+                                            <i class="fa-solid fa-check text-xs"></i>
                                         </span>
                                     </div>
                                     <div class="flex min-w-0 flex-1 justify-between space-x-4 pt-1.5">
@@ -146,18 +146,29 @@
             @if($booking->status === 'submitted')
             <div class="mt-6 border-t pt-6">
                 <h3 class="text-lg font-medium text-gray-900 mb-4">Aksi Admin</h3>
-                <form action="{{ route('bookings.approve', $booking) }}" method="POST" class="inline-block">
-                    @csrf
-                    <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg">Setujui</button>
-                </form>
-                <form action="{{ route('bookings.reject', $booking) }}" method="POST" class="inline-block ml-2">
-                    @csrf
-                    <button type="submit" class="bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg">Tolak</button>
-                </form>
-                <form action="{{ route('bookings.revision', $booking) }}" method="POST" class="inline-block ml-2">
-                    @csrf
-                    <button type="submit" class="bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg">Minta Revisi</button>
-                </form>
+                <div class="flex flex-wrap items-center gap-3">
+                    <form action="{{ route('bookings.approve', $booking) }}" method="POST" class="inline-block">
+                        @csrf
+                        <button type="submit" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-check text-sm"></i>
+                            <span>Setujui</span>
+                        </button>
+                    </form>
+                    <form action="{{ route('bookings.reject', $booking) }}" method="POST" class="inline-block">
+                        @csrf
+                        <button type="submit" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-xmark text-sm"></i>
+                            <span>Tolak</span>
+                        </button>
+                    </form>
+                    <form action="{{ route('bookings.revision', $booking) }}" method="POST" class="inline-block">
+                        @csrf
+                        <button type="submit" class="inline-flex items-center gap-2 bg-orange-600 hover:bg-orange-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-rotate-left text-sm"></i>
+                            <span>Minta Revisi</span>
+                        </button>
+                    </form>
+                </div>
             </div>
             @endif
 
@@ -165,13 +176,19 @@
             <div class="mt-6 border-t pt-6">
                 <form action="{{ route('bookings.cancel', $booking) }}" method="POST" onsubmit="return confirm('Yakin ingin membatalkan pengajuan ini?')">
                     @csrf
-                    <button type="submit" class="bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg">Batalkan Pengajuan</button>
+                    <button type="submit" class="inline-flex items-center gap-2 bg-gray-600 hover:bg-gray-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <i class="fa-solid fa-ban text-sm"></i>
+                        <span>Batalkan Pengajuan</span>
+                    </button>
                 </form>
             </div>
             @endif
 
             <div class="mt-6 flex justify-end">
-                <a href="{{ route('bookings.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg">Kembali</a>
+                <a href="{{ route('bookings.index') }}" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                    <i class="fa-solid fa-arrow-left text-sm"></i>
+                    <span>Kembali</span>
+                </a>
             </div>
         </div>
     </div>

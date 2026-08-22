@@ -5,8 +5,9 @@
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="flex justify-between items-center mb-6">
             <h1 class="text-2xl font-bold text-gray-900">Daftar Ruangan</h1>
-            <a href="{{ route('rooms.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">
-                + Ruangan Baru
+            <a href="{{ route('rooms.create') }}" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg inline-flex items-center gap-2">
+                <i class="fa-solid fa-plus text-sm"></i>
+                <span>Ruangan Baru</span>
             </a>
         </div>
 
@@ -39,7 +40,11 @@
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            <a href="{{ route('rooms.edit', $room) }}" class="text-blue-600 hover:text-blue-900">Edit</a>
+                            <div class="flex items-center gap-2">
+                                <a href="{{ route('rooms.edit', $room) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Edit Ruangan">
+                                    <i class="fa-solid fa-pen-to-square text-sm"></i>
+                                </a>
+                            </div>
                         </td>
                     </tr>
                     @empty

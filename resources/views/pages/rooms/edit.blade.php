@@ -63,11 +63,34 @@
                     </div>
                 </div>
 
-                <div class="mt-6 flex justify-end">
-                    <a href="{{ route('rooms.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg mr-3">Batal</a>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">Simpan Perubahan</button>
+                <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t pt-6">
+                    <div>
+                        @if($room->status === 'active')
+                            <button type="button" onclick="if(confirm('Yakin ingin menonaktifkan ruangan ini?')) document.getElementById('deactivate-room-form').submit();" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                <i class="fa-solid fa-ban text-sm"></i>
+                                <span>Nonaktifkan Ruangan</span>
+                            </button>
+                        @endif
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <a href="{{ route('rooms.index') }}" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                            <i class="fa-solid fa-arrow-left text-sm"></i>
+                            <span>Batal</span>
+                        </a>
+                        <button type="submit" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-floppy-disk text-sm"></i>
+                            <span>Simpan Perubahan</span>
+                        </button>
+                    </div>
                 </div>
             </form>
+
+            @if($room->status === 'active')
+                <form id="deactivate-room-form" action="{{ route('rooms.destroy', $room) }}" method="POST" class="hidden">
+                    @csrf
+                    @method('DELETE')
+                </form>
+            @endif
         </div>
     </div>
 </div>

@@ -3,24 +3,35 @@
 namespace Database\Seeders;
 
 use App\Models\User;
+use App\Models\Role;
 use App\Models\Organization;
 use App\Models\Room;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-    /**
-     * Seed the application's database.
-     */
     public function run(): void
     {
+        // Roles
+        $adminRole = Role::create([
+            'name' => 'Admin',
+            'slug' => 'admin',
+            'description' => 'Administrator sistem',
+        ]);
+
+        $orgRole = Role::create([
+            'name' => 'Organisasi',
+            'slug' => 'organization',
+            'description' => 'Pengguna dari organisasi/ormawa',
+        ]);
+
         // Admin user
         User::create([
             'name' => 'Administrator',
             'email' => 'admin@griyaspace.test',
             'username' => 'admin',
             'password' => bcrypt('password'),
-            'role' => 'admin',
+            'role_id' => $adminRole->id,
             'is_active' => true,
             'must_change_password' => false,
         ]);
@@ -39,7 +50,7 @@ class DatabaseSeeder extends Seeder
             'email' => 'ormawa@griyaspace.test',
             'username' => 'ormawa',
             'password' => bcrypt('password'),
-            'role' => 'organization',
+            'role_id' => $orgRole->id,
             'organization_id' => 1,
             'is_active' => true,
             'must_change_password' => false,
@@ -51,7 +62,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ruang Meeting Besar',
             'capacity' => 30,
             'location' => 'Gedung A Lt.2',
-            'facilities' => json_encode(['Proyektor', 'Whiteboard', 'AC', 'Mic']),
+            'facilities' => ['Proyektor', 'Whiteboard', 'AC', 'Mic'],
             'status' => 'active',
         ]);
 
@@ -60,7 +71,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ruang Meeting Kecil 1',
             'capacity' => 10,
             'location' => 'Gedung A Lt.1',
-            'facilities' => json_encode(['Proyektor', 'Whiteboard', 'AC']),
+            'facilities' => ['Proyektor', 'Whiteboard', 'AC'],
             'status' => 'active',
         ]);
 
@@ -69,7 +80,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ruang Meeting Kecil 2',
             'capacity' => 10,
             'location' => 'Gedung A Lt.1',
-            'facilities' => json_encode(['Whiteboard', 'AC']),
+            'facilities' => ['Whiteboard', 'AC'],
             'status' => 'active',
         ]);
     }

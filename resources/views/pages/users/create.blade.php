@@ -35,11 +35,13 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                        <select name="role" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-                            <option value="user" {{ old('role') === 'user' ? 'selected' : '' }}>User</option>
-                            <option value="admin" {{ old('role') === 'admin' ? 'selected' : '' }}>Admin</option>
+                        <select name="role_id" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                            <option value="">Pilih Role</option>
+                            @foreach($roles as $role)
+                            <option value="{{ $role->id }}" {{ old('role_id') == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                            @endforeach
                         </select>
-                        @error('role') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('role_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
@@ -60,9 +62,15 @@
                     </div>
                 </div>
 
-                <div class="mt-6 flex justify-end">
-                    <a href="{{ route('users.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg mr-3">Batal</a>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">Simpan</button>
+                <div class="mt-6 flex justify-end gap-3">
+                    <a href="{{ route('users.index') }}" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                        <i class="fa-solid fa-arrow-left text-sm"></i>
+                        <span>Batal</span>
+                    </a>
+                    <button type="submit" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        <i class="fa-solid fa-floppy-disk text-sm"></i>
+                        <span>Simpan</span>
+                    </button>
                 </div>
             </form>
         </div>

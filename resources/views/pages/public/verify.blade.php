@@ -11,22 +11,20 @@
 
             @php
                 $statusConfig = [
-                    'valid' => ['color' => 'bg-green-500', 'icon' => 'M5 13l4 4L19 7', 'text' => 'text-green-700', 'bg' => 'bg-green-50', 'label' => 'Valid'],
-                    'active' => ['color' => 'bg-blue-500', 'icon' => 'M5 13l4 4L19 7', 'text' => 'text-blue-700', 'bg' => 'bg-blue-50', 'label' => 'Aktif'],
-                    'upcoming' => ['color' => 'bg-yellow-500', 'icon' => 'M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z', 'text' => 'text-yellow-700', 'bg' => 'bg-yellow-50', 'label' => 'Akan Datang'],
-                    'expired' => ['color' => 'bg-red-500', 'icon' => 'M6 18L18 6M6 6l12 12', 'text' => 'text-red-700', 'bg' => 'bg-red-50', 'label' => 'Kadaluarsa'],
-                    'revoked' => ['color' => 'bg-gray-500', 'icon' => 'M6 18L18 6M6 6l12 12', 'text' => 'text-gray-700', 'bg' => 'bg-gray-50', 'label' => 'Dicabut'],
-                    'not_found' => ['color' => 'bg-gray-400', 'icon' => 'M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z', 'text' => 'text-gray-700', 'bg' => 'bg-gray-50', 'label' => 'Tidak Ditemukan'],
+                    'valid' => ['color' => 'bg-green-500', 'icon' => 'fa-solid fa-check', 'text' => 'text-green-700', 'bg' => 'bg-green-50', 'label' => 'Valid'],
+                    'active' => ['color' => 'bg-blue-500', 'icon' => 'fa-solid fa-check', 'text' => 'text-blue-700', 'bg' => 'bg-blue-50', 'label' => 'Aktif'],
+                    'upcoming' => ['color' => 'bg-yellow-500', 'icon' => 'fa-solid fa-clock', 'text' => 'text-yellow-700', 'bg' => 'bg-yellow-50', 'label' => 'Akan Datang'],
+                    'expired' => ['color' => 'bg-red-500', 'icon' => 'fa-solid fa-xmark', 'text' => 'text-red-700', 'bg' => 'bg-red-50', 'label' => 'Kadaluarsa'],
+                    'revoked' => ['color' => 'bg-gray-500', 'icon' => 'fa-solid fa-ban', 'text' => 'text-gray-700', 'bg' => 'bg-gray-50', 'label' => 'Dicabut'],
+                    'not_found' => ['color' => 'bg-gray-400', 'icon' => 'fa-solid fa-question', 'text' => 'text-gray-700', 'bg' => 'bg-gray-50', 'label' => 'Tidak Ditemukan'],
                 ];
                 $config = $statusConfig[$status] ?? $statusConfig['not_found'];
             @endphp
 
             <div class="rounded-lg {{ $config['bg'] }} p-4 mb-6">
                 <div class="flex items-center">
-                    <span class="flex-shrink-0 w-10 h-10 {{ $config['color'] }} rounded-full flex items-center justify-center">
-                        <svg class="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24" stroke-width="2">
-                            <path stroke-linecap="round" stroke-linejoin="round" d="{{ $config['icon'] }}"></path>
-                        </svg>
+                    <span class="flex-shrink-0 w-10 h-10 {{ $config['color'] }} rounded-full flex items-center justify-center text-white">
+                        <i class="{{ $config['icon'] }} text-lg"></i>
                     </span>
                     <div class="ml-3">
                         <h3 class="text-lg font-medium {{ $config['text'] }}">{{ $config['label'] }}</h3>

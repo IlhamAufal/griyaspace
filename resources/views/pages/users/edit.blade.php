@@ -36,11 +36,13 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Role</label>
-                        <select name="role" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
-                            <option value="organization" {{ old('role', $user->role) === 'organization' ? 'selected' : '' }}>Organization</option>
-                            <option value="admin" {{ old('role', $user->role) === 'admin' ? 'selected' : '' }}>Admin</option>
+                        <select name="role_id" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                            <option value="">Pilih Role</option>
+                            @foreach($roles as $role)
+                            <option value="{{ $role->id }}" {{ old('role_id', $user->role_id) == $role->id ? 'selected' : '' }}>{{ $role->name }}</option>
+                            @endforeach
                         </select>
-                        @error('role') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                        @error('role_id') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
@@ -59,13 +61,43 @@
                         <input type="text" name="phone" value="{{ old('phone', $user->phone) }}" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                         @error('phone') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
+
+                    <div class="flex items-center">
+                        <label class="flex items-center mt-6">
+                            <input type="checkbox" name="is_active" value="1" {{ old('is_active', $user->is_active) ? 'checked' : '' }} class="rounded border-gray-300 text-blue-600 shadow-sm focus:ring-blue-500">
+                            <span class="ml-2 text-sm text-gray-700">Status Akun Aktif</span>
+                        </label>
+                    </div>
                 </div>
 
-                <div class="mt-6 flex justify-end">
-                    <a href="{{ route('users.index') }}" class="bg-gray-300 hover:bg-gray-400 text-gray-700 px-4 py-2 rounded-lg mr-3">Batal</a>
-                    <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg">Simpan Perubahan</button>
+                <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t pt-6">
+                    <div>
+                        @if($user->is_active)
+                            <button type="button" onclick="if(confirm('Yakin ingin menonaktifkan pengguna ini?')) document.getElementById('deactivate-user-form').submit();" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                                <i class="fa-solid fa-user-slash text-sm"></i>
+                                <span>Nonaktifkan Pengguna</span>
+                            </button>
+                        @endif
+                    </div>
+                    <div class="flex items-center gap-3">
+                        <a href="{{ route('users.index') }}" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                            <i class="fa-solid fa-arrow-left text-sm"></i>
+                            <span>Batal</span>
+                        </a>
+                        <button type="submit" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-floppy-disk text-sm"></i>
+                            <span>Simpan Perubahan</span>
+                        </button>
+                    </div>
                 </div>
             </form>
+
+            @if($user->is_active)
+                <form id="deactivate-user-form" action="{{ route('users.destroy', $user) }}" method="POST" class="hidden">
+                    @csrf
+                    @method('DELETE')
+                </form>
+            @endif
         </div>
     </div>
 </div>

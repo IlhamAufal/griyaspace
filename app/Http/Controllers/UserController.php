@@ -7,19 +7,21 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Str;
 use App\Models\User;
 use App\Models\Organization;
+use App\Models\Role;
 
 class UserController extends Controller
 {
     public function index()
     {
-        $users = User::with('organization')->latest()->paginate(10);
+        $users = User::with('organization', 'role')->latest()->paginate(10);
         return view('pages.users.index', compact('users'));
     }
 
     public function create()
     {
         $organizations = Organization::where('is_active', true)->get();
-        return view('pages.users.create', compact('organizations'));
+        $roles = Role::where('is_active', true)->get();
+        return view('pages.users.create', compact('organizations', 'roles'));
     }
 
     public function store(Request $request)
@@ -29,7 +31,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email',
             'username' => 'required|string|max:255|unique:users,username',
             'organization_id' => 'nullable|exists:organizations,id',
-            'role' => 'required|in:admin,organization',
+            'role_id' => 'required|exists:roles,id',
             'is_active' => 'boolean',
         ]);
 
@@ -51,7 +53,8 @@ class UserController extends Controller
     public function edit(User $user)
     {
         $organizations = Organization::where('is_active', true)->get();
-        return view('pages.users.edit', compact('user', 'organizations'));
+        $roles = Role::where('is_active', true)->get();
+        return view('pages.users.edit', compact('user', 'organizations', 'roles'));
     }
 
     public function update(Request $request, User $user)
@@ -61,7 +64,7 @@ class UserController extends Controller
             'email' => 'required|email|unique:users,email,' . $user->id,
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'organization_id' => 'nullable|exists:organizations,id',
-            'role' => 'required|in:admin,organization',
+            'role_id' => 'required|exists:roles,id',
             'is_active' => 'boolean',
         ]);
 

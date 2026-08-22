@@ -18,7 +18,7 @@ class User extends Authenticatable
         'email',
         'username',
         'password',
-        'role',
+        'role_id',
         'is_active',
         'must_change_password',
         'last_login_at',
@@ -45,6 +45,11 @@ class User extends Authenticatable
         return $this->belongsTo(Organization::class);
     }
 
+    public function role(): BelongsTo
+    {
+        return $this->belongsTo(Role::class);
+    }
+
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class, 'submitted_by');
@@ -57,11 +62,11 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->role === 'admin';
+        return $this->role->slug === 'admin';
     }
 
     public function isOrganization(): bool
     {
-        return $this->role === 'organization';
+        return $this->role->slug === 'organization';
     }
 }

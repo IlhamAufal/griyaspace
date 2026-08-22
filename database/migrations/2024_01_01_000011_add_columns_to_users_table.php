@@ -11,8 +11,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->foreignId('organization_id')->nullable()->after('id')->constrained('organizations')->restrictOnDelete();
             $table->string('username')->unique()->after('name');
-            $table->string('role')->default('organization')->after('username');
-            $table->boolean('is_active')->default(true)->after('role');
+            $table->boolean('is_active')->default(true)->after('username');
             $table->boolean('must_change_password')->default(true)->after('is_active');
             $table->timestamp('last_login_at')->nullable()->after('must_change_password');
         });
@@ -25,7 +24,6 @@ return new class extends Migration
             $table->dropColumn([
                 'organization_id',
                 'username',
-                'role',
                 'is_active',
                 'must_change_password',
                 'last_login_at',

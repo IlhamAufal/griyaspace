@@ -8,13 +8,15 @@ use Symfony\Component\HttpFoundation\Response;
 
 class EnsureRole
 {
-    public function handle(Request $request, Closure $next, string ...$roles): Response
+    public function handle(Request $request, Closure $next, string ...$slugs): Response
     {
-        if (!$request->user() || !$request->user()->is_active) {
+        $user = $request->user();
+
+        if (!$user || !$user->is_active) {
             abort(403);
         }
 
-        if (!in_array($request->user()->role, $roles)) {
+        if (!$user->role || !in_array($user->role->slug, $slugs)) {
             abort(403, 'Akses tidak diizinkan.');
         }
 

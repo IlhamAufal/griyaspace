@@ -8,6 +8,7 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\RoomController;
 use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PublicController;
 
 // Public
@@ -65,6 +66,17 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{organization}/edit', [OrganizationController::class, 'edit'])->name('organizations.edit');
             Route::put('/{organization}', [OrganizationController::class, 'update'])->name('organizations.update');
             Route::delete('/{organization}', [OrganizationController::class, 'destroy'])->name('organizations.destroy');
+        });
+
+        // Role
+        Route::prefix('role')->group(function () {
+            Route::get('/', [RoleController::class, 'index'])->name('roles.index');
+            Route::get('/create', [RoleController::class, 'create'])->name('roles.create');
+            Route::post('/', [RoleController::class, 'store'])->name('roles.store');
+            Route::get('/{role}', [RoleController::class, 'show'])->name('roles.show');
+            Route::get('/{role}/edit', [RoleController::class, 'edit'])->name('roles.edit');
+            Route::put('/{role}', [RoleController::class, 'update'])->name('roles.update');
+            Route::delete('/{role}', [RoleController::class, 'destroy'])->name('roles.destroy');
         });
 
         // Pengguna

@@ -48,12 +48,6 @@
                     </div>
 
                     <div class="md:col-span-2">
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Fasilitas (JSON)</label>
-                        <input type="text" name="facilities" value="{{ old('facilities', $room->facilities) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs">
-                        @error('facilities') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
-                    </div>
-
-                    <div class="md:col-span-2">
                         <x-common.toggle name="status" label="Status Ruangan" :checked="old('status', $room->status) === 'active'" valueOn="active" valueOff="inactive" />
                     </div>
                 </div>

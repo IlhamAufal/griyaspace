@@ -25,7 +25,6 @@ class RoomController extends Controller
             'name' => 'required|string|max:255',
             'capacity' => 'required|integer|min:1',
             'location' => 'required|string|max:255',
-            'facilities' => 'nullable|array',
             'open_time' => 'required',
             'close_time' => 'required|after:open_time',
             'status' => 'required|in:active,inactive',
@@ -38,7 +37,8 @@ class RoomController extends Controller
 
     public function show(Room $room)
     {
-        return view('pages.rooms.show', compact('room'));
+        $recentBookings = $room->bookings()->with('organization')->latest()->take(5)->get();
+        return view('pages.rooms.show', compact('room', 'recentBookings'));
     }
 
     public function edit(Room $room)
@@ -53,7 +53,6 @@ class RoomController extends Controller
             'name' => 'required|string|max:255',
             'capacity' => 'required|integer|min:1',
             'location' => 'required|string|max:255',
-            'facilities' => 'nullable|array',
             'open_time' => 'required',
             'close_time' => 'required|after:open_time',
             'status' => 'required|in:active,inactive',

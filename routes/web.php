@@ -43,15 +43,19 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{booking}/riwayat', [BookingController::class, 'history'])->name('bookings.history');
     });
 
-    // Admin
+    // Ruangan (index & show bisa diakses semua role)
+    Route::prefix('ruangan')->group(function () {
+        Route::get('/', [RoomController::class, 'index'])->name('rooms.index');
+        Route::get('/{room}', [RoomController::class, 'show'])->name('rooms.show');
+    });
+
+    // Admin only
     Route::middleware(['role:admin'])->group(function () {
 
-        // Ruangan
+        // Ruangan (admin only)
         Route::prefix('ruangan')->group(function () {
-            Route::get('/', [RoomController::class, 'index'])->name('rooms.index');
             Route::get('/create', [RoomController::class, 'create'])->name('rooms.create');
             Route::post('/', [RoomController::class, 'store'])->name('rooms.store');
-            Route::get('/{room}', [RoomController::class, 'show'])->name('rooms.show');
             Route::get('/{room}/edit', [RoomController::class, 'edit'])->name('rooms.edit');
             Route::put('/{room}', [RoomController::class, 'update'])->name('rooms.update');
             Route::delete('/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
@@ -90,5 +94,7 @@ Route::middleware(['auth'])->group(function () {
             Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
             Route::post('/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
         });
+
     });
+
 });

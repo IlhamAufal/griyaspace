@@ -12,14 +12,12 @@ class Room extends Model
         'name',
         'capacity',
         'location',
-        'facilities',
         'open_time',
         'close_time',
         'status',
     ];
 
     protected $casts = [
-        'facilities' => 'array',
         'capacity' => 'integer',
     ];
 

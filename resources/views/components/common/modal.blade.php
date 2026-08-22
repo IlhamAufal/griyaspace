@@ -69,11 +69,11 @@ $maxWidthClass = match ($maxWidth) {
              x-transition:leave-start="opacity-100 translate-y-0 sm:scale-100"
              x-transition:leave-end="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
              @click.stop
-             class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 text-left shadow-2xl transition-all w-full {{ $maxWidthClass }} border border-gray-200 dark:border-gray-700">
+             class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 text-left shadow-2xl transition-all w-full {{ $maxWidthClass }} border-0 outline-hidden">
 
             <!-- Header -->
             @if ($title || isset($header) || $icon)
-                <div class="flex items-center justify-between {{ $headerBg === 'brand' ? 'bg-brand-500 text-white' : 'border-b border-gray-100 dark:border-gray-700/60 text-gray-900 dark:text-white' }} px-6 py-4">
+                <div class="flex items-center justify-between {{ $headerBg === 'brand' ? 'bg-brand-500 text-white' : 'border-b border-gray-100 dark:border-gray-700/60 text-gray-900 dark:text-white' }} px-6 py-4 border-0">
                     <div class="flex items-center gap-3">
                         @if ($icon)
                             <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg {{ $headerBg === 'brand' ? 'bg-white/15 text-white' : 'bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400' }}">
@@ -84,7 +84,9 @@ $maxWidthClass = match ($maxWidth) {
                         @if (isset($header))
                             {{ $header }}
                         @else
-                            <h3 class="text-lg font-bold {{ $headerBg === 'brand' ? 'text-white' : 'text-gray-900 dark:text-white' }}" x-text="modalData.title || @json($title)"></h3>
+                            <h3 class="text-lg font-bold {{ $headerBg === 'brand' ? 'text-white' : 'text-gray-900 dark:text-white' }}">
+                                <span x-text="modalData.title || '{{ addslashes($title ?? '') }}'">{{ $title }}</span>
+                            </h3>
                         @endif
                     </div>
 

@@ -30,12 +30,13 @@ class MenuHelper
             ],
         ];
 
+        $items[] = [
+            'icon' => 'room',
+            'name' => 'Ruangan',
+            'path' => '/ruangan',
+        ];
+
         if ($user->isAdmin()) {
-            $items[] = [
-                'icon' => 'room',
-                'name' => 'Ruangan',
-                'path' => '/ruangan',
-            ];
             $items[] = [
                 'icon' => 'organization',
                 'name' => 'Organisasi',

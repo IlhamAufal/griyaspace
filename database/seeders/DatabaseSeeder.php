@@ -62,7 +62,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ruang Meeting Besar',
             'capacity' => 30,
             'location' => 'Gedung A Lt.2',
-            'facilities' => ['Proyektor', 'Whiteboard', 'AC', 'Mic'],
             'status' => 'active',
         ]);
 
@@ -71,7 +70,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ruang Meeting Kecil 1',
             'capacity' => 10,
             'location' => 'Gedung A Lt.1',
-            'facilities' => ['Proyektor', 'Whiteboard', 'AC'],
             'status' => 'active',
         ]);
 
@@ -80,7 +78,6 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ruang Meeting Kecil 2',
             'capacity' => 10,
             'location' => 'Gedung A Lt.1',
-            'facilities' => ['Whiteboard', 'AC'],
             'status' => 'active',
         ]);
     }

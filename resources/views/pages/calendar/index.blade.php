@@ -81,14 +81,21 @@
                 </div>
             </div>
 
-            <template x-if="modalData.status">
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Tanggal & Waktu</label>
+                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-clock text-brand-500 text-xs"></i>
+                        <span x-text="modalData.time_range || '-'"></span>
+                    </p>
+                </div>
                 <div>
                     <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Status</label>
                     <div class="mt-1">
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400" x-text="modalData.status"></span>
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400" x-text="modalData.status || '-'"></span>
                     </div>
                 </div>
-            </template>
+            </div>
         </div>
 
         <x-slot:footer>
@@ -125,6 +132,17 @@
                     slotMinTime: '06:00:00',
                     slotMaxTime: '22:00:00',
                     slotDuration: '00:30:00',
+                    slotLabelInterval: '01:00',
+                    slotLabelFormat: {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    },
+                    eventTimeFormat: {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    },
                     allDaySlot: false,
                     nowIndicator: true,
                     selectable: true,
@@ -201,13 +219,19 @@
 
             showEventDetail(event) {
                 const props = event.extendedProps || {};
+                const startStr = event.start ? event.start.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
+                const endStr = event.end ? event.end.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
+                const dateStr = event.start ? event.start.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
+                const timeRange = startStr && endStr ? `${dateStr} (${startStr} - ${endStr} WIB)` : (startStr ? `${dateStr} ${startStr} WIB` : (dateStr || '-'));
+
                 window.dispatchEvent(new CustomEvent('open-modal', {
                     detail: {
                         id: 'calendar-event-modal',
                         data: {
                             title: event.title,
-                            room_name: props.room_name || '-',
-                            guest_name: props.guest_name || '-',
+                            room_name: props.room || props.room_name || '-',
+                            guest_name: props.organization || props.guest_name || '-',
+                            time_range: timeRange,
                             status: props.status || ''
                         }
                     }

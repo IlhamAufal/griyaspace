@@ -61,6 +61,7 @@
                         <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Ruangan</th>
                         <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Kegiatan</th>
                         <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Tanggal</th>
+                        <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Dokumen</th>
                         <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Aksi</th>
                     </tr>
                 </thead>
@@ -76,6 +77,17 @@
                         <td class="px-6 py-4 text-sm text-gray-500">{{ $booking->activity_name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $booking->booking_date->format('d/m/Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
+                            @if($booking->status === 'approved' && $booking->permit && $booking->permit->pdf_storage_key)
+                                <a href="{{ route('bookings.downloadPermit', $booking) }}"
+                                   class="inline-flex items-center gap-1 text-green-600 hover:text-green-800 font-medium"
+                                   title="Download Dokumen Izin">
+                                    <i class="fa-solid fa-file-pdf text-sm"></i> PDF
+                                </a>
+                            @else
+                                <span class="text-gray-400">-</span>
+                            @endif
+                        </td>
+                        <td class="px-6 py-4 whitespace-nowrap text-sm">
                             <div class="flex items-center gap-2">
                                 <a href="{{ route('bookings.show', $booking) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Lihat Detail">
                                     <i class="fa-solid fa-eye text-sm"></i>
@@ -88,7 +100,7 @@
                     </tr>
                     @empty
                     <tr>
-                        <td colspan="{{ auth()->user()->isAdmin() ? 6 : 5 }}" class="px-6 py-4 text-center text-sm text-gray-500">Tidak ada riwayat pengajuan</td>
+                        <td colspan="{{ auth()->user()->isAdmin() ? 7 : 6 }}" class="px-6 py-4 text-center text-sm text-gray-500">Tidak ada riwayat pengajuan</td>
                     </tr>
                     @endforelse
                 </tbody>

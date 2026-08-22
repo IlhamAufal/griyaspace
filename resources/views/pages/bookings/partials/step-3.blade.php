@@ -167,8 +167,8 @@
             <span>Kembali ke Jadwal (Step 2)</span>
         </button>
 
-        <button type="submit" :disabled="!agreedToTerms || isSubmitting"
-            @click="isSubmitting = true"
+        <button type="button" :disabled="!agreedToTerms || isSubmitting"
+            @click="submitBooking()"
             :class="!agreedToTerms ? 'opacity-50 cursor-not-allowed bg-brand-400' : 'bg-brand-500 hover:bg-brand-600 cursor-pointer'"
             class="inline-flex items-center gap-2 text-white px-7 py-2.5 rounded-lg text-sm font-semibold shadow-theme-xs transition-colors">
             <template x-if="!isSubmitting">

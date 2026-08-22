@@ -276,6 +276,16 @@ function bookingWizard() {
                     slotMaxTime: self.roomCloseTime ? (self.roomCloseTime + ':00') : '22:00:00',
                     slotDuration: '00:30:00',
                     slotLabelInterval: '01:00',
+                    slotLabelFormat: {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    },
+                    eventTimeFormat: {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    },
                     allDaySlot: false,
                     nowIndicator: true,
                     selectable: true,

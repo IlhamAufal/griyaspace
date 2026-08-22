@@ -11,8 +11,11 @@ use App\Models\User;
 use App\Models\Organization;
 use App\Models\BookingHistory;
 use App\Models\BookingDocument;
+use App\Models\Permit;
 use App\Services\BookingService;
+use App\Services\PermitPdfService;
 use App\Exceptions\BookingConflictException;
+use Illuminate\Support\Facades\Storage;
 use InvalidArgumentException;
 
 class BookingController extends Controller
@@ -105,7 +108,12 @@ class BookingController extends Controller
     {
         $booking->load(['room', 'organization', 'submittedBy', 'approvedBy', 'documents', 'permit', 'history.changedBy']);
 
-        return view('pages.bookings.show', compact('booking'));
+        $rooms = collect();
+        if ($booking->status === 'revision' && !auth()->user()->isAdmin()) {
+            $rooms = Room::where('status', 'active')->get();
+        }
+
+        return view('pages.bookings.show', compact('booking', 'rooms'));
     }
 
     public function edit(Booking $booking)
@@ -235,7 +243,7 @@ class BookingController extends Controller
     {
         $validated = $request->validate([
             'action' => 'required|in:approve,reject,revision',
-            'admin_note' => 'required|string',
+            'admin_note' => $request->input('action') === 'approve' ? 'nullable|string' : 'required|string',
         ]);
 
         $oldStatus = $booking->status;
@@ -262,6 +270,26 @@ class BookingController extends Controller
             'created_at' => now(),
         ]);
 
+        // Generate PDF permit saat approve
+        if ($validated['action'] === 'approve') {
+            $permit = Permit::create([
+                'booking_id' => $booking->id,
+                'status' => 'valid',
+                'issued_at' => now(),
+                'template_version' => '1.0',
+            ]);
+
+            try {
+                $pdfService = new PermitPdfService();
+                $pdfContent = $pdfService->generatePdf($permit);
+
+                Storage::disk('local')->put("permits/{$permit->id}.pdf", $pdfContent);
+                $permit->update(['pdf_storage_key' => "permits/{$permit->id}.pdf"]);
+            } catch (\Exception $e) {
+                // PDF generation gagal, tetap lanjut tanpa PDF
+            }
+        }
+
         return redirect()->route('bookings.show', $booking)->with('success', 'Keputusan berhasil disimpan.');
     }
 
@@ -274,7 +302,7 @@ class BookingController extends Controller
     public function historyAll(Request $request)
     {
         $user = $request->user();
-        $query = Booking::with(['room', 'submittedBy']);
+        $query = Booking::with(['room', 'submittedBy', 'permit']);
 
         if (!$user->isAdmin()) {
             $query->where('submitted_by', $user->id);
@@ -298,6 +326,17 @@ class BookingController extends Controller
         $users = $user->isAdmin() ? User::where('is_active', true)->get() : collect();
 
         return view('pages.bookings.history-all', compact('bookings', 'users'));
+    }
+
+    public function downloadPermit(Booking $booking)
+    {
+        $permit = $booking->permit;
+        abort_unless($permit && $permit->pdf_storage_key, 404);
+
+        $path = storage_path('app/private/' . $permit->pdf_storage_key);
+        abort_unless(file_exists($path), 404);
+
+        return response()->download($path, "Izin-{$permit->permit_number}.pdf");
     }
 
     public function konfirmasi(Request $request)

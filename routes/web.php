@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
         Route::post('/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
         Route::post('/{booking}/decision', [BookingController::class, 'decision'])->name('bookings.decision');
         Route::get('/{booking}/riwayat', [BookingController::class, 'history'])->name('bookings.history');
+        Route::get('/{booking}/permit-download', [BookingController::class, 'downloadPermit'])->name('bookings.downloadPermit');
     });
 
     // Ruangan (index & show bisa diakses semua role)

@@ -38,7 +38,7 @@
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
                             <td class="px-5 py-3">{{ $booking->room->name ?? '-' }}</td>
                             <td class="px-5 py-3">{{ \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') }}</td>
-                            <td class="px-5 py-3">{{ $booking->start_time }} - {{ $booking->end_time }}</td>
+                            <td class="px-5 py-3">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }} WIB</td>
                             <td class="px-5 py-3">
                                 <span class="inline-block rounded-full px-2 py-0.5 text-xs font-medium
                                     {{ $booking->status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : '' }}

@@ -83,7 +83,7 @@
                             <td class="px-5 py-3">{{ $booking->organization->name ?? '-' }}</td>
                             <td class="px-5 py-3">{{ $booking->room->name ?? '-' }}</td>
                             <td class="px-5 py-3">{{ \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') }}</td>
-                            <td class="px-5 py-3">{{ $booking->start_time }} - {{ $booking->end_time }}</td>
+                            <td class="px-5 py-3">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }} WIB</td>
                         </tr>
                     @empty
                         <tr>

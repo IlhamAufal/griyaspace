@@ -48,7 +48,7 @@
                 </div>
                 <div class="border-b pb-3">
                     <p class="text-sm text-gray-500">Waktu</p>
-                    <p class="text-sm font-medium text-gray-900">{{ $permit->booking->start_time }} - {{ $permit->booking->end_time }}</p>
+                    <p class="text-sm font-medium text-gray-900">{{ substr($permit->booking->start_time, 0, 5) }} - {{ substr($permit->booking->end_time, 0, 5) }} WIB</p>
                 </div>
                 <div class="border-b pb-3">
                     <p class="text-sm text-gray-500">Organisasi</p>

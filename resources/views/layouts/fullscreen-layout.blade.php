@@ -108,7 +108,10 @@ window.addEventListener('resize', checkMobile);">
     {{-- <x-common.preloader/> --}}
     {{-- preloader end --}}
 
-    @yield('content')b
+    @yield('content')
+
+    <!-- Global Toast Notification Container -->
+    <x-common.toast />
 
 </body>
 

@@ -131,6 +131,9 @@
 
     </div>
 
+    <!-- Global Toast Notification Container -->
+    <x-common.toast />
+
 </body>
 
 @stack('scripts')

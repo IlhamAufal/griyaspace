@@ -32,6 +32,7 @@ class UserController extends Controller
             'username' => 'required|string|max:255|unique:users,username',
             'organization_id' => 'nullable|exists:organizations,id',
             'role_id' => 'required|exists:roles,id',
+            'phone' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ]);
 
@@ -65,8 +66,16 @@ class UserController extends Controller
             'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'organization_id' => 'nullable|exists:organizations,id',
             'role_id' => 'required|exists:roles,id',
+            'phone' => 'nullable|string|max:255',
             'is_active' => 'boolean',
         ]);
+
+        if ($request->filled('password')) {
+            $request->validate([
+                'password' => ['min:8', 'confirmed', 'regex:/[A-Z]/'],
+            ]);
+            $validated['password'] = Hash::make($request->password);
+        }
 
         $user->update($validated);
 
@@ -87,6 +96,10 @@ class UserController extends Controller
 
     public function destroy(User $user)
     {
+        if ($user->id === auth()->id()) {
+            return back()->with('error', 'Anda tidak bisa menonaktifkan akun Anda sendiri.');
+        }
+
         $user->update(['is_active' => false]);
         return redirect()->route('users.index')->with('success', 'User berhasil dinonaktifkan.');
     }

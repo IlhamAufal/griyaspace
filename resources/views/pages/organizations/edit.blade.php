@@ -46,7 +46,7 @@
                 <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t pt-6">
                     <div>
                         @if($organization->is_active ?? true)
-                            <button type="button" onclick="if(confirm('Yakin ingin menonaktifkan organisasi ini?')) document.getElementById('deactivate-org-form').submit();" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <button type="button" @click="$dispatch('open-modal', 'confirm-deactivate-org')" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                                 <i class="fa-solid fa-ban text-sm"></i>
                                 <span>Nonaktifkan Organisasi</span>
                             </button>
@@ -70,6 +70,24 @@
                     @csrf
                     @method('DELETE')
                 </form>
+
+                <!-- Modal Konfirmasi Nonaktifkan Organisasi -->
+                <x-common.modal id="confirm-deactivate-org" title="Konfirmasi Nonaktifkan Organisasi" icon="fa-solid fa-triangle-exclamation" maxWidth="md">
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Apakah Anda yakin ingin menonaktifkan organisasi <strong>{{ $organization->name }}</strong>? Anggota organisasi ini mungkin tidak dapat mengajukan peminjaman baru.
+                    </p>
+
+                    <x-slot:footer>
+                        <button type="button" @click="close()" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                            <i class="fa-solid fa-xmark text-sm"></i>
+                            <span>Batal</span>
+                        </button>
+                        <button type="button" @click="document.getElementById('deactivate-org-form').submit()" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-ban text-sm"></i>
+                            <span>Ya, Nonaktifkan</span>
+                        </button>
+                    </x-slot:footer>
+                </x-common.modal>
             @endif
         </div>
     </div>

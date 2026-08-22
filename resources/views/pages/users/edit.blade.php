@@ -24,14 +24,31 @@
                     </div>
 
                     <div>
+                        <label class="block text-sm font-medium text-gray-700 mb-1">Username</label>
+                        <input type="text" name="username" value="{{ old('username', $user->username) }}" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        @error('username') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Password (Kosongkan jika tidak diubah)</label>
-                        <input type="password" name="password" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <input type="password" name="password" id="password" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <div id="password-requirements" class="mt-2 hidden">
+                            <p id="req-length" class="text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> <span>Minimal 8 karakter</span>
+                            </p>
+                            <p id="req-uppercase" class="text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> <span>Minimal 1 huruf kapital (A-Z)</span>
+                            </p>
+                            <p id="req-match" class="text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> <span>Password cocok</span>
+                            </p>
+                        </div>
                         @error('password') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
-                        <input type="password" name="password_confirmation" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500">
                     </div>
 
                     <div>
@@ -72,8 +89,8 @@
 
                 <div class="mt-6 flex flex-wrap items-center justify-between gap-4 border-t pt-6">
                     <div>
-                        @if($user->is_active)
-                            <button type="button" onclick="if(confirm('Yakin ingin menonaktifkan pengguna ini?')) document.getElementById('deactivate-user-form').submit();" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                        @if($user->is_active && auth()->id() !== $user->id)
+                            <button type="button" @click="$dispatch('open-modal', 'confirm-deactivate-user')" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                                 <i class="fa-solid fa-user-slash text-sm"></i>
                                 <span>Nonaktifkan Pengguna</span>
                             </button>
@@ -92,13 +109,59 @@
                 </div>
             </form>
 
-            @if($user->is_active)
+            @if($user->is_active && auth()->id() !== $user->id)
                 <form id="deactivate-user-form" action="{{ route('users.destroy', $user) }}" method="POST" class="hidden">
                     @csrf
                     @method('DELETE')
                 </form>
+
+                <!-- Modal Konfirmasi Nonaktifkan Pengguna -->
+                <x-common.modal id="confirm-deactivate-user" title="Konfirmasi Nonaktifkan Pengguna" icon="fa-solid fa-triangle-exclamation" maxWidth="md">
+                    <p class="text-gray-600 dark:text-gray-300">
+                        Apakah Anda yakin ingin menonaktifkan akun <strong>{{ $user->name }}</strong> ({{ $user->email }})? Pengguna yang dinonaktifkan tidak akan dapat masuk ke sistem.
+                    </p>
+
+                    <x-slot:footer>
+                        <button type="button" @click="close()" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                            <i class="fa-solid fa-xmark text-sm"></i>
+                            <span>Batal</span>
+                        </button>
+                        <button type="button" @click="document.getElementById('deactivate-user-form').submit()" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                            <i class="fa-solid fa-user-slash text-sm"></i>
+                            <span>Ya, Nonaktifkan</span>
+                        </button>
+                    </x-slot:footer>
+                </x-common.modal>
             @endif
         </div>
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    const passwordInput = document.getElementById('password');
+    const confirmInput = document.getElementById('password_confirmation');
+    const reqLength = document.getElementById('req-length');
+    const reqUppercase = document.getElementById('req-uppercase');
+    const reqMatch = document.getElementById('req-match');
+
+    function validatePassword() {
+        const val = passwordInput.value;
+        const confirm = confirmInput.value;
+        const hasLength = val.length >= 8;
+        const hasUpper = /[A-Z]/.test(val);
+        const isMatch = val.length > 0 && val === confirm;
+
+        reqLength.className = 'text-xs flex items-center gap-1 ' + (hasLength ? 'text-green-600' : 'text-red-500');
+        reqUppercase.className = 'text-xs flex items-center gap-1 ' + (hasUpper ? 'text-green-600' : 'text-red-500');
+        reqMatch.className = 'text-xs flex items-center gap-1 ' + (isMatch ? 'text-green-600' : 'text-red-500');
+    }
+
+    passwordInput.addEventListener('input', function() {
+        document.getElementById('password-requirements').classList.remove('hidden');
+        validatePassword();
+    });
+    confirmInput.addEventListener('input', validatePassword);
+</script>
+@endpush

@@ -24,13 +24,24 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Password</label>
-                        <input type="password" name="password" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="password" name="password" id="password" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <div id="password-requirements" class="mt-2">
+                            <p id="req-length" class="text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> <span>Minimal 8 karakter</span>
+                            </p>
+                            <p id="req-uppercase" class="text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> <span>Minimal 1 huruf kapital (A-Z)</span>
+                            </p>
+                            <p id="req-match" class="text-xs flex items-center gap-1">
+                                <i class="fa-solid fa-circle-check"></i> <span>Password cocok</span>
+                            </p>
+                        </div>
                         @error('password') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1">Konfirmasi Password</label>
-                        <input type="password" name="password_confirmation" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                        <input type="password" name="password_confirmation" id="password_confirmation" class="w-full border-gray-300 rounded-md shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
                     </div>
 
                     <div>
@@ -77,3 +88,31 @@
     </div>
 </div>
 @endsection
+
+@push('scripts')
+<script>
+    const passwordInput = document.getElementById('password');
+    const confirmInput = document.getElementById('password_confirmation');
+    const reqLength = document.getElementById('req-length');
+    const reqUppercase = document.getElementById('req-uppercase');
+    const reqMatch = document.getElementById('req-match');
+
+    function validatePassword() {
+        const val = passwordInput.value;
+        const confirm = confirmInput.value;
+        const hasLength = val.length >= 8;
+        const hasUpper = /[A-Z]/.test(val);
+        const isMatch = val.length > 0 && val === confirm;
+
+        reqLength.className = 'text-xs flex items-center gap-1 ' + (hasLength ? 'text-green-600' : 'text-red-500');
+        reqUppercase.className = 'text-xs flex items-center gap-1 ' + (hasUpper ? 'text-green-600' : 'text-red-500');
+        reqMatch.className = 'text-xs flex items-center gap-1 ' + (isMatch ? 'text-green-600' : 'text-red-500');
+    }
+
+    passwordInput.addEventListener('input', function() {
+        document.getElementById('password-requirements').classList.remove('hidden');
+        validatePassword();
+    });
+    confirmInput.addEventListener('input', validatePassword);
+</script>
+@endpush

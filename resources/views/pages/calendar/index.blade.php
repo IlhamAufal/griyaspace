@@ -55,6 +55,49 @@
     <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
         <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-standard"></div>
     </div>
+
+    <!-- Modal Detail Jadwal -->
+    <x-common.modal id="calendar-event-modal" title="Detail Jadwal Ruangan" icon="fa-solid fa-calendar-days" maxWidth="md">
+        <div class="space-y-4">
+            <div>
+                <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Nama Kegiatan</label>
+                <p class="text-base font-semibold text-gray-900 dark:text-white mt-0.5" x-text="modalData.title || '-'"></p>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Ruangan</label>
+                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-door-open text-brand-500 text-xs"></i>
+                        <span x-text="modalData.room_name || '-'"></span>
+                    </p>
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Peminjam / Tamu</label>
+                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-user text-brand-500 text-xs"></i>
+                        <span x-text="modalData.guest_name || '-'"></span>
+                    </p>
+                </div>
+            </div>
+
+            <template x-if="modalData.status">
+                <div>
+                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Status</label>
+                    <div class="mt-1">
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400" x-text="modalData.status"></span>
+                    </div>
+                </div>
+            </template>
+        </div>
+
+        <x-slot:footer>
+            <button type="button" @click="close()" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                <i class="fa-solid fa-xmark text-sm"></i>
+                <span>Tutup</span>
+            </button>
+        </x-slot:footer>
+    </x-common.modal>
 </div>
 @endsection
 
@@ -158,15 +201,18 @@
             },
 
             showEventDetail(event) {
-                const props = event.extendedProps;
-                const message = [
-                    `Acara: ${event.title}`,
-                    `Ruangan: ${props.room_name || '-'}`,
-                    props.guest_name ? `Tamu: ${props.guest_name}` : '',
-                    props.status ? `Status: ${props.status}` : '',
-                ].filter(Boolean).join('\n');
-
-                alert(message);
+                const props = event.extendedProps || {};
+                window.dispatchEvent(new CustomEvent('open-modal', {
+                    detail: {
+                        id: 'calendar-event-modal',
+                        data: {
+                            title: event.title,
+                            room_name: props.room_name || '-',
+                            guest_name: props.guest_name || '-',
+                            status: props.status || ''
+                        }
+                    }
+                }));
             }
         };
     }

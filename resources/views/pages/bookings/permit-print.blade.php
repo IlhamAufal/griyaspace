@@ -6,8 +6,19 @@
         * { margin: 0; padding: 0; box-sizing: border-box; }
         body { font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #1a1a1a; }
 
+        /* ============================================================
+           MARGIN HALAMAN
+           Meniru margin dokumen kantor (mis. Word): bagian atas sengaja
+           dikosongkan untuk tempat kop surat/letterhead, bagian bawah
+           dikosongkan untuk tempat QR code pojok kiri bawah.
+           Ubah nilai di sini kalau ukuran kop surat berbeda.
+        ============================================================ */
+        @page {
+            margin: 3.5cm 2cm 3.2cm 2cm; /* atas kanan bawah kiri */
+        }
+
         .content-wrapper {
-            padding: 30px 40px;
+            padding: 0 10px;
         }
 
         .permit-title {
@@ -26,22 +37,6 @@
             font-size: 13px;
             font-weight: bold;
             margin-top: 4px;
-        }
-
-        .qr-section {
-            text-align: center;
-            margin: 20px 0 25px 0;
-        }
-
-        .qr-section img.qr-code {
-            width: 150px;
-            height: 150px;
-        }
-
-        .qr-label {
-            font-size: 9px;
-            color: #666;
-            margin-top: 5px;
         }
 
         .detail-table {
@@ -100,6 +95,35 @@
             color: #555;
             margin-top: 3px;
         }
+
+        /* ============================================================
+           QR CODE — POJOK KIRI BAWAH
+           position: fixed membuat elemen ini menempel di posisi yang
+           sama pada setiap halaman (dompdf memperlakukan fixed mirip
+           header/footer berulang). Karena surat ini biasanya 1 halaman,
+           efeknya QR akan selalu nangkring di pojok kiri bawah.
+
+           Kalau mau geser posisi atau ukuran QR, cukup ubah 4 nilai
+           di bawah ini (left, bottom, width/height gambar).
+        ============================================================ */
+        .qr-corner {
+            position: fixed;
+            left: 0;
+            bottom: -60px;   /* jarak dari tepi bawah margin @page */
+            width: 110px;
+            text-align: center;
+        }
+
+        .qr-corner img.qr-code {
+            width: 90px;
+            height: 90px;
+        }
+
+        .qr-corner .qr-label {
+            font-size: 8px;
+            color: #666;
+            margin-top: 3px;
+        }
     </style>
 </head>
 <body>
@@ -107,11 +131,6 @@
         <div class="permit-title">
             <h1>Surat Izin Peminjaman Ruangan</h1>
             <div class="permit-number">No. {{ $permit->permit_number }}</div>
-        </div>
-
-        <div class="qr-section">
-            <img class="qr-code" src="data:image/png;base64,{{ $qrBase64 }}" alt="QR Code Verifikasi">
-            <div class="qr-label">Scan untuk verifikasi dokumen ini</div>
         </div>
 
         <div class="section-title">Data Kegiatan</div>
@@ -211,6 +230,12 @@
             <div class="url">{{ $verifyUrl }}</div>
             <div class="token">Token: {{ $permit->verification_token }}</div>
         </div>
+    </div>
+
+    <!-- QR Code — pojok kiri bawah, lihat blok .qr-corner di <style> untuk atur posisi -->
+    <div class="qr-corner">
+        <img class="qr-code" src="data:image/png;base64,{{ $qrBase64 }}" alt="QR Code Verifikasi">
+        <div class="qr-label">Scan untuk verifikasi</div>
     </div>
 </body>
 </html>

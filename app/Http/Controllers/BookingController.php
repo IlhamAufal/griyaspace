@@ -271,7 +271,7 @@ class BookingController extends Controller
         ]);
 
         // Generate PDF permit saat approve
-        if ($validated['action'] === 'approve') {
+        if ($validated['action'] === 'approve' && !$booking->permit) {
             $permit = Permit::create([
                 'booking_id' => $booking->id,
                 'status' => 'valid',
@@ -309,6 +309,10 @@ class BookingController extends Controller
         }
 
         $query->whereIn('status', ['approved', 'rejected', 'cancelled']);
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
 
         if ($request->filled('search')) {
             $search = $request->search;

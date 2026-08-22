@@ -17,17 +17,17 @@ class PermitPdfService
         $verifyUrl = url('/verifikasi/' . $permit->verification_token);
 
         // 1. Generate QR code dengan logo di tengah
-        $qrResult = (new Builder())
-            ->writer(new PngWriter())
-            ->data($verifyUrl)
-            ->errorCorrectionLevel(ErrorCorrectionLevel::Medium)
-            ->size(300)
-            ->margin(10)
-            ->logoPath(storage_path('app/private/logo.png'))
-            ->logoResizeToWidth(40)
-            ->logoPunchoutBackground(true)
-            ->validateResult(true)
-            ->build();
+        $qrResult = (new Builder(
+            writer: new PngWriter(),
+            data: $verifyUrl,
+            errorCorrectionLevel: ErrorCorrectionLevel::Medium,
+            size: 300,
+            margin: 10,
+            logoPath: storage_path('app/private/logo.png'),
+            logoResizeToWidth: 40,
+            logoPunchoutBackground: true,
+            validateResult: false,
+        ))->build();
 
         $qrBase64 = base64_encode($qrResult->getString());
 

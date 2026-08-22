@@ -92,7 +92,7 @@
                     @endif
                 </div>
 
-                @if(in_array($booking->status, ['submitted', 'revision']) && auth()->user()->isAdmin())
+                @if($booking->status === 'submitted' && auth()->user()->isAdmin())
                 <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-gray-200 dark:border-gray-700/60 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Aksi Pengajuan</h2>
                     <div class="flex flex-wrap gap-3">
@@ -117,6 +117,25 @@
                             <i class="fa-solid fa-ban text-sm"></i> Batalkan Pengajuan
                         </button>
                     </form>
+                </div>
+                @endif
+
+                @if($booking->status === 'approved' && $booking->permit && $booking->permit->pdf_storage_key)
+                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-green-200 dark:border-green-700/40 p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                <i class="fa-solid fa-file-pdf text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-semibold text-green-800 dark:text-green-200">Dokumen Izin</h2>
+                                <p class="text-xs text-green-600/80 dark:text-green-400/80">{{ $booking->permit->permit_number }}</p>
+                            </div>
+                        </div>
+                        <a href="{{ route('bookings.downloadPermit', $booking) }}" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors">
+                            <i class="fa-solid fa-download text-sm"></i> Unduh PDF
+                        </a>
+                    </div>
                 </div>
                 @endif
 
@@ -260,7 +279,7 @@
                                             <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{{ $item->note }}</p>
                                             @endif
                                             <p class="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
-                                                {{ $item->changedBy->name ?? '-' }} &middot; {{ $item->created_at->format('d/m/Y H:i') }}
+                                                {{ $item->changedBy->name ?? '-' }} &middot; {{ $item->created_at->setTimezone(config('app.timezone'))->format('d/m/Y H:i') }}
                                             </p>
                                         </div>
                                     </div>

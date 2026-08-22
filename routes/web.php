@@ -10,73 +10,73 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\PublicController;
 
-// Public routes
+// Public
 Route::get('/verifikasi/{token}', [PublicController::class, 'verify'])->name('public.verify');
 
-// Auth routes
+// Auth
 Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
 Route::post('/login', [AuthController::class, 'login']);
 Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 
-// Protected routes
+// Protected
 Route::middleware(['auth'])->group(function () {
+
     Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
-    // Calendar
-    Route::get('/kalender', [CalendarController::class, 'index'])->name('calendar.index');
-    Route::get('/api/kalender', [CalendarController::class, 'events'])->name('calendar.events');
+    // Kalender
+    Route::prefix('kalender')->group(function () {
+        Route::get('/', [CalendarController::class, 'index'])->name('calendar.index');
+        Route::get('/events', [CalendarController::class, 'events'])->name('calendar.events');
+    });
 
-    // Bookings
-    Route::get('/pengajuan', [BookingController::class, 'index'])->name('bookings.index');
-    Route::get('/pengajuan/baru', [BookingController::class, 'create'])->name('bookings.create');
-    Route::post('/pengajuan', [BookingController::class, 'store'])->name('bookings.store');
-    Route::get('/pengajuan/{booking}', [BookingController::class, 'show'])->name('bookings.show');
-    Route::get('/pengajuan/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
-    Route::put('/pengajuan/{booking}', [BookingController::class, 'update'])->name('bookings.update');
-    Route::post('/pengajuan/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
-    Route::post('/pengajuan/{booking}/decision', [BookingController::class, 'decision'])->name('bookings.decision');
-    Route::get('/pengajuan/{booking}/riwayat', [BookingController::class, 'history'])->name('bookings.history');
+    // Pengajuan
+    Route::prefix('pengajuan')->group(function () {
+        Route::get('/', [BookingController::class, 'index'])->name('bookings.index');
+        Route::get('/baru', [BookingController::class, 'create'])->name('bookings.create');
+        Route::post('/', [BookingController::class, 'store'])->name('bookings.store');
+        Route::get('/{booking}', [BookingController::class, 'show'])->name('bookings.show');
+        Route::get('/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
+        Route::put('/{booking}', [BookingController::class, 'update'])->name('bookings.update');
+        Route::post('/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
+        Route::post('/{booking}/decision', [BookingController::class, 'decision'])->name('bookings.decision');
+        Route::get('/{booking}/riwayat', [BookingController::class, 'history'])->name('bookings.history');
+    });
 
-    // Admin routes
+    // Admin
     Route::middleware(['role:admin'])->group(function () {
-        // Rooms
-        Route::resource('ruangan', RoomController::class)->parameters([
-            'ruangan' => 'room',
-        ])->names([
-            'index' => 'rooms.index',
-            'create' => 'rooms.create',
-            'store' => 'rooms.store',
-            'show' => 'rooms.show',
-            'edit' => 'rooms.edit',
-            'update' => 'rooms.update',
-            'destroy' => 'rooms.destroy',
-        ]);
 
-        // Organizations
-        Route::resource('organisasi', OrganizationController::class)->parameters([
-            'organisasi' => 'organization',
-        ])->names([
-            'index' => 'organizations.index',
-            'create' => 'organizations.create',
-            'store' => 'organizations.store',
-            'show' => 'organizations.show',
-            'edit' => 'organizations.edit',
-            'update' => 'organizations.update',
-            'destroy' => 'organizations.destroy',
-        ]);
+        // Ruangan
+        Route::prefix('ruangan')->group(function () {
+            Route::get('/', [RoomController::class, 'index'])->name('rooms.index');
+            Route::get('/create', [RoomController::class, 'create'])->name('rooms.create');
+            Route::post('/', [RoomController::class, 'store'])->name('rooms.store');
+            Route::get('/{room}', [RoomController::class, 'show'])->name('rooms.show');
+            Route::get('/{room}/edit', [RoomController::class, 'edit'])->name('rooms.edit');
+            Route::put('/{room}', [RoomController::class, 'update'])->name('rooms.update');
+            Route::delete('/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
+        });
 
-        // Users
-        Route::resource('pengguna', UserController::class)->parameters([
-            'pengguna' => 'user',
-        ])->names([
-            'index' => 'users.index',
-            'create' => 'users.create',
-            'store' => 'users.store',
-            'show' => 'users.show',
-            'edit' => 'users.edit',
-            'update' => 'users.update',
-            'destroy' => 'users.destroy',
-        ]);
-        Route::post('/pengguna/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
+        // Organisasi
+        Route::prefix('organisasi')->group(function () {
+            Route::get('/', [OrganizationController::class, 'index'])->name('organizations.index');
+            Route::get('/create', [OrganizationController::class, 'create'])->name('organizations.create');
+            Route::post('/', [OrganizationController::class, 'store'])->name('organizations.store');
+            Route::get('/{organization}', [OrganizationController::class, 'show'])->name('organizations.show');
+            Route::get('/{organization}/edit', [OrganizationController::class, 'edit'])->name('organizations.edit');
+            Route::put('/{organization}', [OrganizationController::class, 'update'])->name('organizations.update');
+            Route::delete('/{organization}', [OrganizationController::class, 'destroy'])->name('organizations.destroy');
+        });
+
+        // Pengguna
+        Route::prefix('pengguna')->group(function () {
+            Route::get('/', [UserController::class, 'index'])->name('users.index');
+            Route::get('/create', [UserController::class, 'create'])->name('users.create');
+            Route::post('/', [UserController::class, 'store'])->name('users.store');
+            Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
+            Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+            Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
+            Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+            Route::post('/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
+        });
     });
 });

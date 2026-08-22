@@ -1,0 +1,122 @@
+﻿/*
+ |--------------------------------------------------------------------------
+ | GriyaSpace — Design Tokens Reference (UMS Brand Identity)
+ | Berdasarkan: docs/DESIGN.md — Panduan Identitas Visual UMS
+ |--------------------------------------------------------------------------
+ |
+ | File ini adalah REFERENSI KOMENTAR untuk developer.
+ | Token aktual didefinisikan di app.css via @theme {}.
+ | Jangan import file ini ke app.css — sudah termasuk otomatis via @theme.
+ |
+ |--------------------------------------------------------------------------
+ | ATURAN WAJIB PALET WARNA
+ |--------------------------------------------------------------------------
+ |
+ | Batasi palet ke 3 warna inti ini. Jangan tambah warna baru tanpa alasan
+ | desain yang tertulis jelas.
+ |
+ | 1. brand-*     = PRIMARY   — Biru Tua UMS  #2F3185
+ | 2. secondary-* = SECONDARY — Kuning UMS    #FFB800
+ | 3. accent-*    = ACCENT    — Tosca UMS     #1CBDB3
+ |
+ |--------------------------------------------------------------------------
+ | PRIMARY — Biru Tua (brand-*)
+ |--------------------------------------------------------------------------
+ |
+ | Dipakai untuk:
+ |   - Header & sidebar background
+ |   - Navigasi utama
+ |   - Tombol primary (CTA utama)
+ |   - Teks judul besar (h1, h2)
+ |   - Border elemen aktif
+ |
+ | Contoh class Tailwind:
+ |   bg-brand-500        → latar biru tua (base)
+ |   bg-brand-600        → hover state tombol
+ |   bg-brand-50         → latar tint (info box, row highlight)
+ |   text-brand-500      → teks primary
+ |   border-brand-500    → border aktif / focused
+ |
+ | Tokens:
+ |   brand-500  #2F3185  ← BASE
+ |   brand-600  #292b75  ← hover
+ |   brand-700  #222463  ← active/pressed
+ |   brand-50   #e1e2f5  ← tint background
+ |   brand-100  #c3c6eb  ← border soft
+ |   brand-25   #f0f1fa  ← tint sangat lembut
+ |
+ |--------------------------------------------------------------------------
+ | SECONDARY — Kuning (secondary-*)
+ |--------------------------------------------------------------------------
+ |
+ | Dipakai untuk:
+ |   - Badge status positif / highlight
+ |   - Secondary action button (bukan CTA utama)
+ |   - Elemen yang perlu menarik perhatian ringan
+ |
+ | ⚠️ WCAG WARNING:
+ |   Teks putih di atas secondary-500 (#FFB800) tidak memenuhi kontras
+ |   WCAG AA (rasio ~2.1:1). Selalu gunakan teks gelap:
+ |   text-gray-900 atau text-gray-800 di atas warna secondary.
+ |
+ | Contoh class Tailwind:
+ |   bg-secondary-500 text-gray-900  → badge/button kuning
+ |   bg-secondary-50  text-secondary-800 → tint lembut
+ |
+ | Tokens:
+ |   secondary-500  #FFB800  ← BASE
+ |   secondary-600  #e6a600  ← hover
+ |   secondary-50   #fffbe0  ← tint background
+ |   secondary-100  #fff5b3  ← border soft
+ |
+ |--------------------------------------------------------------------------
+ | ACCENT — Tosca (accent-*)
+ |--------------------------------------------------------------------------
+ |
+ | Dipakai untuk:
+ |   - Ikon status aktif
+ |   - Garis pemisah / dekoratif
+ |   - Indikator status (aktif, online)
+ |   - Elemen dekoratif kecil
+ |
+ | BUKAN untuk latar area besar — gunakan secukupnya sebagai pelengkap.
+ |
+ | Contoh class Tailwind:
+ |   text-accent-500        → ikon / label status
+ |   border-accent-500      → garis accent (border-l-4)
+ |   bg-accent-50           → tint sangat lembut
+ |
+ | Tokens:
+ |   accent-500  #1CBDB3  ← BASE
+ |   accent-600  #19a9a0  ← hover
+ |   accent-50   #d4f4f2  ← tint background
+ |
+ |--------------------------------------------------------------------------
+ | TIPOGRAFI
+ |--------------------------------------------------------------------------
+ |
+ | font-poppins    → Default untuk SEMUA elemen UI
+ |                   (heading, body, label, nav, form)
+ |
+ | font-montserrat → HANYA untuk materi campaign / promosi
+ |                   Jangan campur dengan Poppins di halaman yang sama
+ |
+ | Weight yang digunakan:
+ |   font-bold      (700) → Heading utama
+ |   font-semibold  (600) → Sub-heading, tombol
+ |   font-medium    (500) → Body text, label
+ |   font-normal    (400) → Paragraf panjang
+ |
+ | Hindari: font-light, font-thin — tidak sesuai kepribadian institusional.
+ |
+ |--------------------------------------------------------------------------
+ | MOOD & PERSONALITY
+ |--------------------------------------------------------------------------
+ |
+ | ENERGY 2  — Palet solid dan tipografi bold, tapi tidak riuh
+ | RHYTHM 2  — Variasi section wajar, tidak terlalu dramatis
+ | MOTION 1  — Animasi minimal/fungsional (transition, duration-200)
+ |
+ | Referensi: docs/DESIGN.md §5 Dial Rekomendasi
+ |
+ */

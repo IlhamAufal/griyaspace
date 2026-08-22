@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap') layer(base);
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Montserrat:wght@500;900&display=swap') layer(base);
 @import 'prismjs/themes/prism.min.css';
 @import 'tailwindcss';
 
@@ -13,7 +13,8 @@
 
 @theme {
   --font-*: initial;
-  --font-outfit: Outfit, sans-serif;
+  --font-poppins: 'Poppins', sans-serif;
+  --font-montserrat: 'Montserrat', sans-serif;
 
   --breakpoint-*: initial;
   --breakpoint-2xsm: 375px;
@@ -47,18 +48,47 @@
   --color-white: #ffffff;
   --color-black: #101828;
 
-  --color-brand-25: #f2f7ff;
-  --color-brand-50: #ecf3ff;
-  --color-brand-100: #dde9ff;
-  --color-brand-200: #c2d6ff;
-  --color-brand-300: #9cb9ff;
-  --color-brand-400: #7592ff;
-  --color-brand-500: #465fff;
-  --color-brand-600: #3641f5;
-  --color-brand-700: #2a31d8;
-  --color-brand-800: #252dae;
-  --color-brand-900: #262e89;
-  --color-brand-950: #161950;
+  /* UMS Primary — Biru Tua #2F3185 */
+  --color-brand-25: #f0f1fa;
+  --color-brand-50: #e1e2f5;
+  --color-brand-100: #c3c6eb;
+  --color-brand-200: #9ea3dc;
+  --color-brand-300: #7880cd;
+  --color-brand-400: #5a63bf;
+  --color-brand-500: #2F3185;
+  --color-brand-600: #292b75;
+  --color-brand-700: #222463;
+  --color-brand-800: #1b1d51;
+  --color-brand-900: #141640;
+  --color-brand-950: #0d0f2e;
+
+  /* UMS Secondary — Kuning #FFB800 */
+  --color-secondary-25: #fffdf0;
+  --color-secondary-50: #fffbe0;
+  --color-secondary-100: #fff5b3;
+  --color-secondary-200: #ffed80;
+  --color-secondary-300: #ffe44d;
+  --color-secondary-400: #ffda1a;
+  --color-secondary-500: #FFB800;
+  --color-secondary-600: #e6a600;
+  --color-secondary-700: #cc9200;
+  --color-secondary-800: #b37f00;
+  --color-secondary-900: #996c00;
+  --color-secondary-950: #664800;
+
+  /* UMS Accent — Tosca #1CBDB3 */
+  --color-accent-25: #edfaf9;
+  --color-accent-50: #d4f4f2;
+  --color-accent-100: #a9e9e6;
+  --color-accent-200: #7eded9;
+  --color-accent-300: #53d3cc;
+  --color-accent-400: #28c8bf;
+  --color-accent-500: #1CBDB3;
+  --color-accent-600: #19a9a0;
+  --color-accent-700: #15958d;
+  --color-accent-800: #12817a;
+  --color-accent-900: #0e6d67;
+  --color-accent-950: #0a5954;
 
   --color-blue-light-25: #f5fbff;
   --color-blue-light-50: #f0f9ff;
@@ -151,7 +181,7 @@
   --shadow-theme-xl: 0px 20px 24px -4px rgba(16, 24, 40, 0.08),
     0px 8px 8px -4px rgba(16, 24, 40, 0.03);
   --shadow-datepicker: -5px 0 0 #262d3c, 5px 0 0 #262d3c;
-  --shadow-focus-ring: 0px 0px 0px 4px rgba(70, 95, 255, 0.12);
+  --shadow-focus-ring: 0px 0px 0px 4px rgba(47, 49, 133, 0.18);
   --shadow-slider-navigation: 0px 1px 2px 0px rgba(16, 24, 40, 0.1),
     0px 1px 3px 0px rgba(16, 24, 40, 0.1);
   --shadow-tooltip: 0px 4px 6px -2px rgba(16, 24, 40, 0.05),
@@ -189,7 +219,7 @@
     cursor: pointer;
   }
   body {
-    @apply relative font-normal font-outfit z-1 bg-gray-50;
+    @apply relative font-normal font-poppins z-1 bg-gray-50;
   }
 }
 
@@ -537,13 +567,13 @@ span.flatpickr-weekday,
 .flatpickr-day.selected.nextMonthDay,
 .flatpickr-day.startRange.nextMonthDay,
 .flatpickr-day.endRange.nextMonthDay {
-  background: #465fff;
+  background: #2F3185;
   @apply !border-brand-500 !bg-brand-500 hover:!border-brand-500 hover:!bg-brand-500;
 }
 .flatpickr-day.selected.startRange + .endRange:not(:nth-child(7n + 1)),
 .flatpickr-day.startRange.startRange + .endRange:not(:nth-child(7n + 1)),
 .flatpickr-day.endRange.startRange + .endRange:not(:nth-child(7n + 1)) {
-  box-shadow: -10px 0 0 #465fff;
+  box-shadow: -10px 0 0 #2F3185;
 }
 
 .flatpickr-months .flatpickr-prev-month svg,

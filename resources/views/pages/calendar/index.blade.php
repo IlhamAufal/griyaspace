@@ -35,17 +35,17 @@
                 </select>
 
                 <div class="flex rounded-lg border border-gray-300 overflow-hidden">
-                    <button @click="changeView('timeGridWeek')" :class="currentView === 'timeGridWeek' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                    <button @click="changeView('timeGridDay')" :class="currentView === 'timeGridDay' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
                         class="px-3 py-1.5 text-sm font-medium transition-colors">
+                        Hari
+                    </button>
+                    <button @click="changeView('timeGridWeek')" :class="currentView === 'timeGridWeek' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                        class="px-3 py-1.5 text-sm font-medium border-l border-gray-300 transition-colors">
                         Minggu
                     </button>
                     <button @click="changeView('dayGridMonth')" :class="currentView === 'dayGridMonth' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
                         class="px-3 py-1.5 text-sm font-medium border-l border-gray-300 transition-colors">
                         Bulan
-                    </button>
-                    <button @click="changeView('listWeek')" :class="currentView === 'listWeek' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
-                        class="px-3 py-1.5 text-sm font-medium border-l border-gray-300 transition-colors">
-                        Daftar
                     </button>
                 </div>
             </div>
@@ -57,11 +57,16 @@
     </div>
 
     <!-- Modal Detail Jadwal -->
-    <x-common.modal id="calendar-event-modal" title="Detail Jadwal Ruangan" icon="fa-solid fa-calendar-days" maxWidth="md">
+    <x-common.modal id="calendar-event-modal" title="Detail Pengajuan" icon="fa-solid fa-calendar-days" maxWidth="md">
         <div class="space-y-4">
             <div>
+                <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">No. Booking</label>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white mt-0.5" x-text="modalData.booking_number || '-'"></p>
+            </div>
+
+            <div>
                 <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Nama Kegiatan</label>
-                <p class="text-base font-semibold text-gray-900 dark:text-white mt-0.5" x-text="modalData.title || '-'"></p>
+                <p class="text-base font-semibold text-gray-900 dark:text-white mt-0.5" x-text="modalData.activity_name || '-'"></p>
             </div>
 
             <div class="grid grid-cols-2 gap-3">
@@ -73,10 +78,10 @@
                     </p>
                 </div>
                 <div>
-                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Peminjam / Tamu</label>
+                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Organisasi</label>
                     <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
-                        <i class="fa-solid fa-user text-brand-500 text-xs"></i>
-                        <span x-text="modalData.guest_name || '-'"></span>
+                        <i class="fa-solid fa-building text-brand-500 text-xs"></i>
+                        <span x-text="modalData.organization || '-'"></span>
                     </p>
                 </div>
             </div>
@@ -92,13 +97,42 @@
                 <div>
                     <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Status</label>
                     <div class="mt-1">
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400" x-text="modalData.status || '-'"></span>
+                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"
+                            :class="{
+                                'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400': modalData.status === 'approved',
+                                'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400': modalData.status === 'submitted',
+                                'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400': modalData.status === 'revision',
+                                'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400': modalData.status === 'rejected',
+                                'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300': !['approved','submitted','revision','rejected'].includes(modalData.status)
+                            }"
+                            x-text="modalData.status_label || '-'"></span>
                     </div>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-2 gap-3">
+                <div>
+                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Peserta</label>
+                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-users text-brand-500 text-xs"></i>
+                        <span x-text="(modalData.participant_count || '-') + ' orang'"></span>
+                    </p>
+                </div>
+                <div>
+                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">PIC</label>
+                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
+                        <i class="fa-solid fa-user text-brand-500 text-xs"></i>
+                        <span x-text="modalData.person_in_charge || '-'"></span>
+                    </p>
                 </div>
             </div>
         </div>
 
         <x-slot:footer>
+            <a :href="modalData.booking_id ? '/pengajuan/' + modalData.booking_id : '#'"
+                class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                <i class="fa-solid fa-eye text-xs"></i> Lihat Detail
+            </a>
             <button type="button" @click="close()" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
                 <i class="fa-solid fa-xmark text-sm"></i>
                 <span>Tutup</span>
@@ -176,7 +210,7 @@
                         params.append('room_id', this.selectedRoom);
                     }
 
-                    const response = await fetch(`/kalender?${params.toString()}`, {
+                    const response = await fetch(`/kalender/events?${params.toString()}`, {
                         headers: {
                             'Accept': 'application/json',
                             'X-Requested-With': 'XMLHttpRequest',
@@ -219,20 +253,31 @@
 
             showEventDetail(event) {
                 const props = event.extendedProps || {};
-                const startStr = event.start ? event.start.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
-                const endStr = event.end ? event.end.toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', hour12: false }) : '';
-                const dateStr = event.start ? event.start.toLocaleDateString('id-ID', { day: 'numeric', month: 'short', year: 'numeric' }) : '';
-                const timeRange = startStr && endStr ? `${dateStr} (${startStr} - ${endStr} WIB)` : (startStr ? `${dateStr} ${startStr} WIB` : (dateStr || '-'));
+                const statusLabels = {
+                    'approved': 'Disetujui',
+                    'submitted': 'Diajukan',
+                    'revision': 'Revisi',
+                    'rejected': 'Ditolak',
+                    'cancelled': 'Dibatalkan'
+                };
+                const timeRange = props.start_time && props.end_time
+                    ? `${props.booking_date || ''} (${props.start_time} - ${props.end_time} WIB)`
+                    : (event.start ? event.start.toLocaleString('id-ID', { date: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }) : '-');
 
                 window.dispatchEvent(new CustomEvent('open-modal', {
                     detail: {
                         id: 'calendar-event-modal',
                         data: {
-                            title: event.title,
-                            room_name: props.room || props.room_name || '-',
-                            guest_name: props.organization || props.guest_name || '-',
+                            booking_id: event.id,
+                            booking_number: props.booking_number || '-',
+                            activity_name: props.activity_name || event.title || '-',
+                            room_name: props.room || '-',
+                            organization: props.organization || '-',
                             time_range: timeRange,
-                            status: props.status || ''
+                            status: props.status || '',
+                            status_label: statusLabels[props.status] || props.status || '-',
+                            participant_count: props.participant_count || '-',
+                            person_in_charge: props.person_in_charge || '-',
                         }
                     }
                 }));

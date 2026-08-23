@@ -84,6 +84,11 @@
                         class="px-3 py-2 border-l border-gray-200 dark:border-gray-700 transition-colors">
                         Minggu
                     </button>
+                    <button type="button" @click="changeCalendarView('dayGridMonth')"
+                        :class="calendarViewMode === 'dayGridMonth' ? 'bg-brand-500 text-white' : 'text-gray-700 dark:text-gray-200 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                        class="px-3 py-2 border-l border-gray-200 dark:border-gray-700 transition-colors">
+                        Bulan
+                    </button>
                 </div>
                 <button type="button" @click="refreshCalendar()" title="Refresh Kalender"
                     class="p-2 rounded-lg bg-white dark:bg-gray-800 hover:bg-gray-100 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-200 border border-gray-200 dark:border-gray-700 text-xs transition-colors shadow-xs">

@@ -29,7 +29,8 @@ class CalendarController extends Controller
         $query = Booking::with(['room', 'organization'])
             ->where('booking_date', '>=', $fromDate)
             ->where('booking_date', '<=', $toDate)
-            ->where('status', '!=', 'cancelled');
+            ->where('status', '!=', 'cancelled')
+            ->where('status', '!=', 'rejected');
 
         if ($request->filled('room_id')) {
             $query->where('room_id', $request->room_id);
@@ -48,8 +49,16 @@ class CalendarController extends Controller
                     'color' => $isOwn ? '#1d4ed8' : '#9ca3af',
                     'extendedProps' => [
                         'room' => $booking->room->name,
+                        'organization' => $booking->organization->name ?? '-',
                         'status' => $booking->status,
                         'is_own' => $isOwn,
+                        'booking_number' => $booking->booking_number,
+                        'activity_name' => $booking->activity_name,
+                        'start_time' => substr($booking->start_time, 0, 5),
+                        'end_time' => substr($booking->end_time, 0, 5),
+                        'booking_date' => $booking->booking_date->format('d/m/Y'),
+                        'participant_count' => $booking->participant_count,
+                        'person_in_charge' => $booking->person_in_charge,
                     ],
                 ];
             });
@@ -57,7 +66,7 @@ class CalendarController extends Controller
             $bookings = $query->get()->map(function ($booking) {
                 return [
                     'id' => $booking->id,
-                    'title' => $booking->activity_name,
+                    'title' => $booking->organization->name ?? $booking->activity_name,
                     'start' => $booking->booking_date->format('Y-m-d') . 'T' . $booking->start_time,
                     'end' => $booking->booking_date->format('Y-m-d') . 'T' . $booking->end_time,
                     'color' => match ($booking->status) {
@@ -69,8 +78,15 @@ class CalendarController extends Controller
                     },
                     'extendedProps' => [
                         'room' => $booking->room->name,
-                        'organization' => $booking->organization->name,
+                        'organization' => $booking->organization->name ?? '-',
                         'status' => $booking->status,
+                        'booking_number' => $booking->booking_number,
+                        'activity_name' => $booking->activity_name,
+                        'start_time' => substr($booking->start_time, 0, 5),
+                        'end_time' => substr($booking->end_time, 0, 5),
+                        'booking_date' => $booking->booking_date->format('d/m/Y'),
+                        'participant_count' => $booking->participant_count,
+                        'person_in_charge' => $booking->person_in_charge,
                     ],
                 ];
             });

@@ -38,6 +38,7 @@ class BookingService
             $hasConflict = Booking::where('room_id', $data['room_id'])
                 ->where('booking_date', $data['booking_date'])
                 ->where('status', '!=', 'cancelled')
+                ->where('status', '!=', 'rejected')
                 ->where(function ($query) use ($data) {
                     $query->where('start_time', '<', $data['end_time'])
                           ->where('end_time', '>', $data['start_time']);

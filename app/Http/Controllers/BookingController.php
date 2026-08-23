@@ -155,6 +155,7 @@ class BookingController extends Controller
         $hasConflict = Booking::where('room_id', $validated['room_id'])
             ->where('booking_date', $validated['booking_date'])
             ->where('status', '!=', 'cancelled')
+            ->where('status', '!=', 'rejected')
             ->where('id', '!=', $booking->id)
             ->where('start_time', '<', $validated['end_time'])
             ->where('end_time', '>', $validated['start_time'])

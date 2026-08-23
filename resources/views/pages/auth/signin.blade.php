@@ -77,15 +77,6 @@
                      </div>
                  </div>
              </div>
-             <!-- Toggler -->
-             <div class="fixed right-6 bottom-6 z-50">
-                 <button
-                     class="bg-brand-500 hover:bg-brand-600 inline-flex size-14 items-center justify-center rounded-full text-white transition-colors"
-                     @click.prevent="$store.theme.toggle()">
-                     <i class="fa-solid fa-sun hidden dark:block text-xl"></i>
-                     <i class="fa-solid fa-moon dark:hidden text-xl"></i>
-                 </button>
-             </div>
         </div>
     </div>
 @endsection

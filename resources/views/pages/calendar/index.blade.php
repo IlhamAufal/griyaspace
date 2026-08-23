@@ -57,47 +57,38 @@
     </div>
 
     <!-- Modal Detail Jadwal -->
-    <x-common.modal id="calendar-event-modal" title="Detail Pengajuan" icon="fa-solid fa-calendar-days" maxWidth="md">
+    <x-common.modal id="calendar-event-modal" title="Detail Pengajuan" maxWidth="md">
         <div class="space-y-4">
             <div>
-                <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">No. Booking</label>
-                <p class="text-sm font-semibold text-gray-900 dark:text-white mt-0.5" x-text="modalData.booking_number || '-'"></p>
+                <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">No. Booking</label>
+                <p class="text-sm font-normal text-gray-600 dark:text-gray-400 font-mono" x-text="modalData.booking_number || '-'"></p>
             </div>
 
             <div>
-                <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Nama Kegiatan</label>
-                <p class="text-base font-semibold text-gray-900 dark:text-white mt-0.5" x-text="modalData.activity_name || '-'"></p>
+                <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Nama Kegiatan</label>
+                <p class="text-sm font-normal text-gray-600 dark:text-gray-400" x-text="modalData.activity_name || '-'"></p>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Ruangan</label>
-                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
-                        <i class="fa-solid fa-door-open text-brand-500 text-xs"></i>
-                        <span x-text="modalData.room_name || '-'"></span>
-                    </p>
+                    <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Ruangan</label>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400" x-text="modalData.room_name || '-'"></p>
                 </div>
                 <div>
-                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Organisasi</label>
-                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
-                        <i class="fa-solid fa-building text-brand-500 text-xs"></i>
-                        <span x-text="modalData.organization || '-'"></span>
-                    </p>
+                    <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Organisasi</label>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400" x-text="modalData.organization || '-'"></p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Tanggal & Waktu</label>
-                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
-                        <i class="fa-solid fa-clock text-brand-500 text-xs"></i>
-                        <span x-text="modalData.time_range || '-'"></span>
-                    </p>
+                    <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Tanggal & Waktu</label>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400" x-text="modalData.time_range || '-'"></p>
                 </div>
                 <div>
-                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Status</label>
-                    <div class="mt-1">
-                        <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-semibold"
+                    <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Status</label>
+                    <div class="mt-0.5">
+                        <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-normal"
                             :class="{
                                 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400': modalData.status === 'approved',
                                 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400': modalData.status === 'submitted',
@@ -110,29 +101,25 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-3">
+            <div class="grid grid-cols-2 gap-4">
                 <div>
-                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">Peserta</label>
-                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
-                        <i class="fa-solid fa-users text-brand-500 text-xs"></i>
-                        <span x-text="(modalData.participant_count || '-') + ' orang'"></span>
-                    </p>
+                    <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Peserta</label>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400" x-text="(modalData.participant_count || '-') + ' orang'"></p>
                 </div>
                 <div>
-                    <label class="text-xs font-medium text-gray-400 uppercase tracking-wider">PIC</label>
-                    <p class="text-sm font-medium text-gray-800 dark:text-gray-200 mt-0.5 flex items-center gap-1.5">
-                        <i class="fa-solid fa-user text-brand-500 text-xs"></i>
-                        <span x-text="modalData.person_in_charge || '-'"></span>
-                    </p>
+                    <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">PIC</label>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400" x-text="modalData.person_in_charge || '-'"></p>
                 </div>
             </div>
         </div>
 
         <x-slot:footer>
-            <a :href="modalData.booking_id ? '/pengajuan/' + modalData.booking_id : '#'"
-                class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
-                <i class="fa-solid fa-eye text-xs"></i> Lihat Detail
-            </a>
+            @if (auth()->user()->isAdmin() || auth()->user()->isStaff())
+                <a :href="modalData.booking_id ? '/pengajuan/' + modalData.booking_id : '#'"
+                    class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                    <i class="fa-solid fa-eye text-xs"></i> Lihat Detail
+                </a>
+            @endif
             <button type="button" @click="close()" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
                 <i class="fa-solid fa-xmark text-sm"></i>
                 <span>Tutup</span>

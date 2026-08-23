@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use App\Models\Room;
+use App\Models\RoomPhoto;
 
 class RoomController extends Controller
 {
@@ -28,21 +30,35 @@ class RoomController extends Controller
             'open_time' => 'required',
             'close_time' => 'required|after:open_time',
             'status' => 'required|in:active,inactive',
+            'photos' => 'nullable|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
-        Room::create($validated);
+        $room = Room::create($validated);
+
+        if ($request->hasFile('photos')) {
+            foreach ($request->file('photos') as $index => $photo) {
+                $path = $photo->store('rooms', 'public');
+                $room->photos()->create([
+                    'photo_path' => $path,
+                    'sort_order' => $index,
+                ]);
+            }
+        }
 
         return redirect()->route('rooms.index')->with('success', 'Ruangan berhasil ditambahkan.');
     }
 
     public function show(Room $room)
     {
+        $room->load('photos');
         $recentBookings = $room->bookings()->with('organization')->latest()->take(5)->get();
         return view('pages.rooms.show', compact('room', 'recentBookings'));
     }
 
     public function edit(Room $room)
     {
+        $room->load('photos');
         return view('pages.rooms.edit', compact('room'));
     }
 
@@ -56,11 +72,49 @@ class RoomController extends Controller
             'open_time' => 'required',
             'close_time' => 'required|after:open_time',
             'status' => 'required|in:active,inactive',
+            'photos' => 'nullable|array',
+            'photos.*' => 'image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);
 
         $room->update($validated);
 
+        if ($request->hasFile('photos')) {
+            $maxOrder = $room->photos()->max('sort_order') ?? -1;
+            foreach ($request->file('photos') as $index => $photo) {
+                $path = $photo->store('rooms', 'public');
+                $room->photos()->create([
+                    'photo_path' => $path,
+                    'sort_order' => $maxOrder + $index + 1,
+                ]);
+            }
+        }
+
         return redirect()->route('rooms.index')->with('success', 'Ruangan berhasil diperbarui.');
+    }
+
+    public function storePhoto(Request $request, Room $room)
+    {
+        $request->validate([
+            'photo' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
+        ]);
+
+        $maxOrder = $room->photos()->max('sort_order') ?? -1;
+        $path = $request->file('photo')->store('rooms', 'public');
+        $room->photos()->create([
+            'photo_path' => $path,
+            'sort_order' => $maxOrder + 1,
+        ]);
+
+        return redirect()->route('rooms.edit', $room)->with('success', 'Foto berhasil ditambahkan.');
+    }
+
+    public function destroyPhoto(RoomPhoto $photo)
+    {
+        $room = $photo->room;
+        Storage::disk('public')->delete($photo->photo_path);
+        $photo->delete();
+
+        return redirect()->route('rooms.edit', $room)->with('success', 'Foto berhasil dihapus.');
     }
 
     public function destroy(Room $room)

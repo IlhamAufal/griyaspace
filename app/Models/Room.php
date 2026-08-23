@@ -21,6 +21,11 @@ class Room extends Model
         'capacity' => 'integer',
     ];
 
+    public function photos(): HasMany
+    {
+        return $this->hasMany(RoomPhoto::class)->orderBy('sort_order');
+    }
+
     public function bookings(): HasMany
     {
         return $this->hasMany(Booking::class);

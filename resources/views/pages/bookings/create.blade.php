@@ -309,6 +309,12 @@ function bookingWizard() {
                         self.handleSlotSelection(selectionInfo);
                     },
 
+                    // Handle click on existing event
+                    eventClick: function(info) {
+                        info.jsEvent.preventDefault();
+                        self.showEventDetail(info.event);
+                    },
+
                     datesSet: function(dateInfo) {
                         // Keep bookingDate aligned with calendar date view
                         const d = dateInfo.view.currentStart;
@@ -523,6 +529,43 @@ function bookingWizard() {
             } else {
                 return `${mins} Menit`;
             }
+        },
+
+        showEventDetail(event) {
+            const props = event.extendedProps || {};
+            const statusLabels = {
+                'approved': 'Disetujui',
+                'submitted': 'Diajukan',
+                'revision': 'Revisi',
+                'rejected': 'Ditolak',
+                'cancelled': 'Dibatalkan'
+            };
+            const timeRange = props.start_time && props.end_time
+                ? `${props.booking_date || ''} (${props.start_time} - ${props.end_time} WIB)`
+                : (event.start ? event.start.toLocaleString('id-ID', { date: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }) : '-');
+
+            document.getElementById('modal-booking-number').textContent = props.booking_number || '-';
+            document.getElementById('modal-activity-name').textContent = props.activity_name || event.title || '-';
+            document.getElementById('modal-room-name').textContent = props.room || '-';
+            document.getElementById('modal-organization').textContent = props.organization || '-';
+            document.getElementById('modal-time-range').textContent = timeRange;
+            document.getElementById('modal-participant-count').textContent = (props.participant_count || '-') + ' orang';
+            document.getElementById('modal-person-in-charge').textContent = props.person_in_charge || '-';
+
+            const statusEl = document.getElementById('modal-status');
+            const statusClass = {
+                'approved': 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
+                'submitted': 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
+                'revision': 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
+                'rejected': 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
+            };
+            const cls = statusClass[props.status] || 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
+            statusEl.innerHTML = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-normal ${cls}">${statusLabels[props.status] || props.status || '-'}</span>`;
+
+            const link = document.getElementById('modal-link');
+            link.href = '/pengajuan/' + event.id;
+
+            document.getElementById('step2-event-modal').style.display = 'block';
         }
     };
 }

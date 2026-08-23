@@ -80,5 +80,7 @@ class DatabaseSeeder extends Seeder
             'location' => 'Gedung A Lt.1',
             'status' => 'active',
         ]);
+
+        $this->call(RoomPhotoSeeder::class);
     }
 }

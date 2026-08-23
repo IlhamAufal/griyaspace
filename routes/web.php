@@ -64,6 +64,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/{room}/edit', [RoomController::class, 'edit'])->name('rooms.edit');
             Route::put('/{room}', [RoomController::class, 'update'])->name('rooms.update');
             Route::delete('/{room}', [RoomController::class, 'destroy'])->name('rooms.destroy');
+            Route::post('/{room}/photo', [RoomController::class, 'storePhoto'])->name('rooms.photo.store');
+            Route::delete('/photo/{photo}', [RoomController::class, 'destroyPhoto'])->name('rooms.photo.destroy');
         });
 
         // Organisasi

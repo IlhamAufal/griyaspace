@@ -1,21 +1,24 @@
 @extends('layouts.app')
 
 @section('content')
+@php
+    $roomPhotos = $room->photos->map(fn($p) => [
+        'url' => asset('storage/' . $p->photo_path),
+        'caption' => $room->name,
+    ])->values()->all();
+    $hasPhotos = count($roomPhotos) > 0;
+@endphp
 <div class="py-6" x-data="{
     activeIndex: 0,
     lightbox: false,
-    photos: [
-        { url: '{{ asset('images/cards/card-01.jpg') }}', caption: 'Tampak Depan & Panggung Utama', tag: 'Panggung & Podium' },
-        { url: '{{ asset('images/cards/card-02.jpg') }}', caption: 'Area Kursi & Layout Peserta', tag: 'Interior Ruangan' },
-        { url: '{{ asset('images/cards/card-03.jpg') }}', caption: 'Meja Pembicara & Area Presentasi', tag: 'Meja Narasumber' },
-        { url: '{{ asset('images/carousel/carousel-01.png') }}', caption: 'Fasilitas Proyektor & Layar Lebar', tag: 'Multimedia & Layar' },
-        { url: '{{ asset('images/carousel/carousel-02.png') }}', caption: 'Pintu Masuk & Foyer Ruangan', tag: 'Akses & Foyer' },
-        { url: '{{ asset('images/carousel/carousel-03.png') }}', caption: 'Tata Udara & Pencahayaan Ruangan', tag: 'Fasilitas AC' }
-    ],
+    photos: @js($roomPhotos),
+    hasPhotos: @js($hasPhotos),
     next() {
+        if (this.photos.length === 0) return;
         this.activeIndex = (this.activeIndex + 1) % this.photos.length;
     },
     prev() {
+        if (this.photos.length === 0) return;
         this.activeIndex = (this.activeIndex - 1 + this.photos.length) % this.photos.length;
     },
     openLightbox(index) {
@@ -84,57 +87,77 @@
                             </span>
                             <div>
                                 <h2 class="text-base font-bold text-gray-900 dark:text-white">Galeri Foto Ruangan</h2>
-                                <p class="text-xs text-gray-500 dark:text-gray-400">Klik atau geser untuk melihat visual ruangan</p>
+                                <p class="text-xs text-gray-500 dark:text-gray-400" x-text="hasPhotos ? 'Klik atau geser untuk melihat visual ruangan' : 'Belum ada foto ruangan'"></p>
                             </div>
                         </div>
-                        <div class="flex items-center gap-2">
-                            <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
-                                <span x-text="activeIndex + 1"></span> / <span x-text="photos.length"></span> Foto
-                            </span>
-                        </div>
+                        <template x-if="hasPhotos">
+                            <div class="flex items-center gap-2">
+                                <span class="text-xs font-semibold px-2.5 py-1 rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                                    <span x-text="activeIndex + 1"></span> / <span x-text="photos.length"></span> Foto
+                                </span>
+                            </div>
+                        </template>
                     </div>
 
                     <!-- Main Stage Image with Navigation Overlay -->
-                    <div class="relative h-72 sm:h-96 md:h-[420px] w-full rounded-2xl overflow-hidden bg-gray-900 shadow-inner group">
-                        <!-- Active Image -->
-                        <img :src="photos[activeIndex].url" :alt="photos[activeIndex].caption" class="w-full h-full object-cover transition-all duration-500 cursor-pointer" @click="lightbox = true">
+                    <template x-if="hasPhotos">
+                        <div class="relative h-72 sm:h-96 md:h-[420px] w-full rounded-2xl overflow-hidden bg-gray-900 shadow-inner group">
+                            <!-- Active Image -->
+                            <img :src="photos[activeIndex].url" :alt="photos[activeIndex].caption" class="w-full h-full object-cover transition-all duration-500 cursor-pointer" @click="lightbox = true">
 
-                        <!-- Ambient Gradient Overlay -->
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-transparent to-black/20 pointer-events-none"></div>
+                            <!-- Ambient Gradient Overlay -->
+                            <div class="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-transparent to-black/20 pointer-events-none"></div>
 
-                        <!-- Prev Button -->
-                        <button type="button" @click="prev()" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-xs flex items-center justify-center transition-all opacity-80 hover:opacity-100 hover:scale-110 shadow-md" aria-label="Foto Sebelumnya">
-                            <i class="fa-solid fa-chevron-left text-sm"></i>
-                        </button>
-
-                        <!-- Next Button -->
-                        <button type="button" @click="next()" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-xs flex items-center justify-center transition-all opacity-80 hover:opacity-100 hover:scale-110 shadow-md" aria-label="Foto Selanjutnya">
-                            <i class="fa-solid fa-chevron-right text-sm"></i>
-                        </button>
-
-                        <!-- Bottom Info Overlay -->
-                        <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
-                            <div class="space-y-1">
-                                <span class="inline-block px-2.5 py-0.5 rounded-md bg-brand-500/90 text-white text-xs font-semibold backdrop-blur-xs shadow-xs" x-text="photos[activeIndex].tag"></span>
-                                <h3 class="text-white font-bold text-base sm:text-lg drop-shadow-md" x-text="photos[activeIndex].caption"></h3>
-                            </div>
-                            <button type="button" @click="lightbox = true" class="inline-flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 shadow-sm" title="Lihat Layar Penuh">
-                                <i class="fa-solid fa-expand"></i>
-                                <span class="hidden sm:inline">Perbesar</span>
+                            <!-- Prev Button -->
+                            <button type="button" @click="prev()" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-xs flex items-center justify-center transition-all opacity-80 hover:opacity-100 hover:scale-110 shadow-md" aria-label="Foto Sebelumnya">
+                                <i class="fa-solid fa-chevron-left text-sm"></i>
                             </button>
+
+                            <!-- Next Button -->
+                            <button type="button" @click="next()" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-xs flex items-center justify-center transition-all opacity-80 hover:opacity-100 hover:scale-110 shadow-md" aria-label="Foto Selanjutnya">
+                                <i class="fa-solid fa-chevron-right text-sm"></i>
+                            </button>
+
+                            <!-- Bottom Info Overlay -->
+                            <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                                <div class="space-y-1">
+                                    <h3 class="text-white font-bold text-base sm:text-lg drop-shadow-md" x-text="photos[activeIndex].caption"></h3>
+                                </div>
+                                <button type="button" @click="lightbox = true" class="inline-flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 shadow-sm" title="Lihat Layar Penuh">
+                                    <i class="fa-solid fa-expand"></i>
+                                    <span class="hidden sm:inline">Perbesar</span>
+                                </button>
+                            </div>
                         </div>
-                    </div>
+                    </template>
+
+                    <!-- Empty State when no photos -->
+                    <template x-if="!hasPhotos">
+                        <div class="relative h-72 sm:h-96 md:h-[420px] w-full rounded-2xl overflow-hidden bg-gray-50 dark:bg-gray-900/50 border-2 border-dashed border-gray-200 dark:border-gray-700 flex flex-col items-center justify-center">
+                            <div class="text-center space-y-3">
+                                <div class="w-16 h-16 mx-auto rounded-full bg-gray-100 dark:bg-gray-800 flex items-center justify-center">
+                                    <i class="fa-regular fa-image text-3xl text-gray-300 dark:text-gray-600"></i>
+                                </div>
+                                <div>
+                                    <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Belum ada foto ruangan</p>
+                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Foto akan ditampilkan setelah ditambahkan oleh admin</p>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
 
                     <!-- Multi-Image Thumbnails Strip -->
-                    <div class="grid grid-cols-6 gap-2 sm:gap-3 mt-3.5">
-                        <template x-for="(photo, index) in photos" :key="index">
-                            <button type="button" @click="activeIndex = index" class="relative rounded-xl overflow-hidden aspect-video transition-all duration-200 group focus:outline-hidden" :class="activeIndex === index ? 'ring-3 ring-brand-500 shadow-md scale-102 opacity-100' : 'opacity-60 hover:opacity-100 hover:scale-101'">
-                                <img :src="photo.url" :alt="photo.caption" class="w-full h-full object-cover">
-                                <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
-                                <div x-show="activeIndex === index" class="absolute bottom-0 inset-x-0 h-1 bg-brand-500"></div>
-                            </button>
-                        </template>
-                    </div>
+                    <template x-if="hasPhotos">
+                        <div class="grid grid-cols-6 gap-2 sm:gap-3 mt-3.5">
+                            <template x-for="(photo, index) in photos" :key="index">
+                                <button type="button" @click="activeIndex = index" class="relative rounded-xl overflow-hidden aspect-video transition-all duration-200 group focus:outline-hidden" :class="activeIndex === index ? 'ring-3 ring-brand-500 shadow-md scale-102 opacity-100' : 'opacity-60 hover:opacity-100 hover:scale-101'">
+                                    <img :src="photo.url" :alt="photo.caption" class="w-full h-full object-cover">
+                                    <div class="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors"></div>
+                                    <div x-show="activeIndex === index" class="absolute bottom-0 inset-x-0 h-1 bg-brand-500"></div>
+                                </button>
+                            </template>
+                        </div>
+                    </template>
                 </div>
 
                 <!-- SECTION 2: Spesifikasi & Informasi Lengkap Ruangan -->
@@ -323,11 +346,10 @@
     </div>
 
     <!-- FULLSCREEN LIGHTBOX MODAL -->
-    <div x-show="lightbox" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6" style="display: none;">
+    <div x-show="lightbox && hasPhotos" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6" style="display: none;">
         <!-- Top Bar -->
         <div class="flex items-center justify-between text-white z-10">
             <div class="flex items-center gap-3">
-                <span class="text-sm font-bold bg-white/20 px-3 py-1 rounded-lg" x-text="photos[activeIndex].tag"></span>
                 <span class="text-sm font-medium text-gray-300" x-text="photos[activeIndex].caption"></span>
             </div>
             <button type="button" @click="lightbox = false" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors">

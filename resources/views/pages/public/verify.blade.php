@@ -95,7 +95,7 @@
             <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-500">
                 <i class="fa-solid fa-file-circle-check text-sm"></i>
             </span>
-            <span>Detail Surat Izin</span>
+            <span>Detail Surat Peminjaman Ruangan</span>
         </h2>
 
         <!-- Grid Items -->
@@ -181,12 +181,5 @@
         </div>
     </div>
     @endif
-
-    <div class="text-center">
-        <a href="{{ route('login') }}" class="inline-flex items-center gap-2 text-sm font-medium text-brand-500 hover:text-brand-600 dark:text-brand-400 transition-colors">
-            <i class="fa-solid fa-arrow-left text-xs"></i>
-            Kembali ke Halaman Masuk
-        </a>
-    </div>
 </div>
 @endsection

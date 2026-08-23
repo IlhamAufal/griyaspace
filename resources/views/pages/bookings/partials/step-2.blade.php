@@ -10,20 +10,6 @@
                 Lihat slot jadwal yang terisi/kosong. Tarik (drag) pada area kosong kalender untuk mengisi waktu otomatis.
             </p>
         </div>
-
-        {{-- Room Badge & Change Button --}}
-        <div class="flex items-center gap-3 bg-brand-50/70 dark:bg-brand-500/10 px-4 py-2 rounded-xl border border-brand-200/60 dark:border-brand-500/20">
-            <div>
-                <div class="text-xs font-semibold text-brand-900 dark:text-brand-200 flex items-center gap-1.5">
-                    <i class="fa-solid fa-door-open text-brand-600 dark:text-brand-400"></i>
-                    <span x-text="roomName || 'Ruangan Terpilih'"></span>
-                </div>
-                <div class="text-[11px] text-gray-500 dark:text-gray-400" x-text="roomLocation + ' &bull; Kapasitas ' + roomCapacity + ' org'"></div>
-            </div>
-            <button type="button" @click="goToStep(1)" class="text-xs font-medium text-brand-600 hover:text-brand-700 dark:text-brand-400 underline ml-2">
-                Ubah
-            </button>
-        </div>
     </div>
 
     {{-- Race Condition / Conflict Error Banner --}}
@@ -187,5 +173,64 @@
             <span>Lanjut: Konfirmasi & Review (Step 3)</span>
             <i class="fa-solid fa-arrow-right text-sm"></i>
         </button>
+    </div>
+
+    <!-- Modal Detail Jadwal -->
+    <div id="step2-event-modal" class="fixed inset-0 z-[99999] hidden bg-black/50" style="display:none;">
+        <div class="flex items-center justify-center min-h-screen p-4">
+            <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md overflow-hidden">
+                <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                    <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Detail Pengajuan</h3>
+                    <button onclick="document.getElementById('step2-event-modal').style.display='none'" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        <i class="fa-solid fa-xmark text-lg"></i>
+                    </button>
+                </div>
+                <div class="p-6 space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">No. Booking</label>
+                        <p class="text-sm font-normal text-gray-600 dark:text-gray-400 font-mono" id="modal-booking-number">-</p>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Nama Kegiatan</label>
+                        <p class="text-sm font-normal text-gray-600 dark:text-gray-400" id="modal-activity-name">-</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Ruangan</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400" id="modal-room-name">-</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Organisasi</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400" id="modal-organization">-</p>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Tanggal & Waktu</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400" id="modal-time-range">-</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Status</label>
+                            <div class="mt-0.5" id="modal-status"></div>
+                        </div>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">Peserta</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400" id="modal-participant-count">-</p>
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-gray-800 dark:text-gray-200 mb-1">PIC</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400" id="modal-person-in-charge">-</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="flex items-center justify-end px-6 py-4 border-t border-gray-200 dark:border-gray-700">
+                    <button type="button" onclick="document.getElementById('step2-event-modal').style.display='none'" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                        <i class="fa-solid fa-xmark text-sm"></i> Tutup
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 </div>

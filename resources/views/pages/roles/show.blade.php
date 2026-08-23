@@ -52,22 +52,27 @@
             </div>
         </div>
 
-        @if($role->users->count() > 0)
+        @if($users->total() > 0)
             <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
-                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <div class="px-6 py-4 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Daftar Pengguna dengan Role ini</h2>
+                    <span class="text-xs font-semibold px-2.5 py-1 rounded-full bg-brand-50 text-brand-700 dark:bg-brand-500/10 dark:text-brand-300">
+                        Total: {{ $users->total() }} Pengguna
+                    </span>
                 </div>
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="bg-brand-500 text-white">
                         <tr>
+                            <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">No</th>
                             <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Nama</th>
                             <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Email</th>
                             <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Organisasi</th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200 dark:divide-gray-700">
-                        @foreach($role->users as $u)
+                        @foreach($users as $index => $u)
                         <tr>
+                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ ($users->currentPage() - 1) * $users->perPage() + $loop->iteration }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ $u->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $u->email }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">{{ $u->organization->name ?? '-' }}</td>
@@ -75,6 +80,10 @@
                         @endforeach
                     </tbody>
                 </table>
+            </div>
+
+            <div class="mt-4">
+                {{ $users->links() }}
             </div>
         @endif
     </div>

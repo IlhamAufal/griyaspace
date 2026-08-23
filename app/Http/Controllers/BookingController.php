@@ -307,7 +307,7 @@ class BookingController extends Controller
             $query->where('submitted_by', $request->user_id);
         }
 
-        $bookings = $query->latest()->paginate(15)->withQueryString();
+        $bookings = $query->latest()->paginate(10)->withQueryString();
         $users = $user->isAdmin() ? User::where('is_active', true)->get() : collect();
 
         return view('pages.bookings.history-all', compact('bookings', 'users'));
@@ -348,7 +348,7 @@ class BookingController extends Controller
             $query->where('submitted_by', $request->user_id);
         }
 
-        $bookings = $query->latest()->paginate(15)->withQueryString();
+        $bookings = $query->latest()->paginate(10)->withQueryString();
         $users = User::where('is_active', true)->get();
 
         return view('pages.bookings.konfirmasi', compact('bookings', 'users'));
@@ -372,7 +372,7 @@ class BookingController extends Controller
             });
         }
 
-        $bookings = $query->latest()->paginate(15)->withQueryString();
+        $bookings = $query->latest()->paginate(10)->withQueryString();
 
         return view('pages.bookings.progress', compact('bookings'));
     }

@@ -25,32 +25,25 @@
             title="Booking Disetujui"
             :value="$myApprovedCount"
             icon="fa-circle-check"
-            color="navy"
-            subtitle="Peminjaman aktif disetujui"
-            badge="Disetujui" />
+            color="navy"/>
 
         <x-dashboard.stat-card
             title="Pengajuan Menunggu"
             :value="$myPendingCount"
             icon="fa-clock-rotate-left"
-            color="kuning"
-            subtitle="Sedang ditinjau oleh admin"
-            badge="Antrean" />
+            color="kuning"/>
 
         <x-dashboard.stat-card
             title="Surat Izin Aktif"
             :value="$validPermitsCount"
             icon="fa-file-invoice"
-            color="toska"
-            subtitle="Siap untuk diunduh / cetak"
-            badge="Valid" />
+            color="toska"/>
 
         <x-dashboard.stat-card
             title="Perlu Revisi / Ditolak"
             :value="$myRevisionRejectedCount"
             icon="fa-triangle-exclamation"
-            color="kuning"
-            subtitle="Perlu perbaikan berkas" />
+            color="kuning"/>
     </div>
 
     <!-- Charts & Statistics Section -->
@@ -61,7 +54,6 @@
             <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 pb-4 mb-4 border-b border-gray-100 dark:border-gray-700/60">
                 <div>
                     <h2 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                        <span class="w-2.5 h-2.5 rounded-full bg-[#2F3185]"></span>
                         <span>Riwayat Peminjaman Ruangan</span>
                     </h2>
                     <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Statistik pengajuan dan persetujuan ruangan organisasi Anda (6 Bulan Terakhir)</p>
@@ -86,7 +78,6 @@
         <div class="lg:col-span-5 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700/60 p-5 sm:p-6 shadow-xs flex flex-col justify-between">
             <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100 dark:border-gray-700/60">
                 <h2 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                    <span class="w-2.5 h-2.5 rounded-full bg-[#FFB800]"></span>
                     <span>Status Pengajuan Saya</span>
                 </h2>
                 <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
@@ -98,18 +89,16 @@
 
             <!-- Custom Legend Badges (High Contrast & Clear Readability) -->
             <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-gray-100 dark:border-gray-700/60 text-xs">
-                <div class="flex items-center gap-2.5 p-2 rounded-xl bg-brand-50/60 dark:bg-brand-950/30 border border-brand-100 dark:border-brand-900/40">
-                    <span class="w-3 h-3 rounded-full bg-[#2F3185] shrink-0"></span>
+                <div class="flex items-center gap-2.5 p-2 rounded-xl bg-[#2F3185]">
                     <div class="min-w-0">
-                        <p class="text-gray-600 dark:text-gray-400 text-[11px] font-medium">Disetujui</p>
-                        <p class="font-extrabold text-[#2F3185] dark:text-brand-300 text-sm">{{ $myApprovedCount }}</p>
+                        <p class="text-white font-semibold text-[11px]">Disetujui</p>
+                        <p class="font-extrabold text-[#ffffff] text-sm">{{ $myApprovedCount }}</p>
                     </div>
                 </div>
-                <div class="flex items-center gap-2.5 p-2 rounded-xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/40">
-                    <span class="w-3 h-3 rounded-full bg-[#FFB800] shrink-0"></span>
+                <div class="flex items-center gap-2.5 p-2 rounded-xl bg-[#FFB800]">
                     <div class="min-w-0">
-                        <p class="text-gray-600 dark:text-gray-400 text-[11px] font-medium">Menunggu</p>
-                        <p class="font-extrabold text-amber-900 dark:text-amber-300 text-sm">{{ $myPendingCount }}</p>
+                        <p class="text-white bg-[#FFB800] font-semibold text-[11px]">Menunggu</p>
+                        <p class="font-extrabold text-[#ffffff] text-sm">{{ $myPendingCount }}</p>
                     </div>
                 </div>
             </div>
@@ -142,24 +131,24 @@
     </div>
 
     <!-- Table: Agenda Terdekat -->
-    <x-dashboard.section title="Agenda Peminjaman Terdekat" subtitle="Menampilkan 5 jadwal terdekat" :count="$nearestBookings->count()" href="{{ route('bookings.index') }}">
+    <x-dashboard.section title="Agenda Peminjaman Terdekat" href="{{ route('bookings.index') }}">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
                 <thead class="bg-[#2F3185] text-white">
                     <tr>
+                        <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Kegiatan</th>
                         <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Ruangan</th>
                         <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Tanggal</th>
                         <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Waktu</th>
-                        <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Status</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
                     @forelse($nearestBookings as $booking)
                         <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                            <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ $booking->activity_name ?? '-' }}</td>
                             <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ $booking->room->name ?? '-' }}</td>
                             <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') }}</td>
-                            <td class="px-4 py-3">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }}</td>
-                            <td class="px-4 py-3"><x-dashboard.status-badge :status="$booking->status" /></td>
+                            <td class="px-4 py-3">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }} WIB</td>
                         </tr>
                     @empty
                         <tr>

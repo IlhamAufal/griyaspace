@@ -57,8 +57,8 @@ class RoleController extends Controller
 
     public function show(Role $role)
     {
-        $role->load('users');
-        return view('pages.roles.show', compact('role'));
+        $users = $role->users()->with('organization')->paginate(10);
+        return view('pages.roles.show', compact('role', 'users'));
     }
 
     public function edit(Role $role)

@@ -94,14 +94,12 @@
                 <!-- Custom Legend Badges (High Contrast & Clear Readability) -->
                 <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-gray-100 dark:border-gray-700/60 text-xs">
                     <div class="flex items-center gap-2.5 p-2 rounded-xl bg-brand-50/60 dark:bg-brand-950/30 border border-brand-100 dark:border-brand-900/40">
-                        <span class="w-3 h-3 rounded-full bg-[#2F3185] shrink-0"></span>
                         <div class="min-w-0">
                             <p class="text-gray-600 dark:text-gray-400 text-[11px] font-medium">Disetujui</p>
                             <p class="font-extrabold text-[#2F3185] dark:text-brand-300 text-sm">{{ $approvedCount }}</p>
                         </div>
                     </div>
                     <div class="flex items-center gap-2.5 p-2 rounded-xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/40">
-                        <span class="w-3 h-3 rounded-full bg-[#FFB800] shrink-0"></span>
                         <div class="min-w-0">
                             <p class="text-gray-600 dark:text-gray-400 text-[11px] font-medium">Menunggu</p>
                             <p class="font-extrabold text-amber-900 dark:text-amber-300 text-sm">{{ $pendingCount }}</p>

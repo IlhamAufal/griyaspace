@@ -10,6 +10,7 @@ use App\Http\Controllers\OrganizationController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\RoleController;
 use App\Http\Controllers\PublicController;
+use App\Http\Controllers\NotificationController;
 
 // Public
 Route::get('/verifikasi/{token}', [PublicController::class, 'verify'])->name('public.verify');
@@ -54,6 +55,14 @@ Route::middleware(['auth'])->group(function () {
     Route::prefix('ruangan')->group(function () {
         Route::get('/', [RoomController::class, 'index'])->name('rooms.index');
         Route::get('/{room}', [RoomController::class, 'show'])->name('rooms.show');
+    });
+
+    // Notifications
+    Route::prefix('notifications')->group(function () {
+        Route::get('/', [NotificationController::class, 'page'])->name('notifications.index');
+        Route::get('/api', [NotificationController::class, 'api'])->name('notifications.api');
+        Route::post('/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
+        Route::post('/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
     });
 
     // Admin only

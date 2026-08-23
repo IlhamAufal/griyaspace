@@ -70,8 +70,10 @@
                 </div>
             </div>
 
-            <!-- ApexChart Container -->
-            <div id="orgMonthlyChart" class="w-full min-h-[290px] overflow-hidden"></div>
+            <!-- ApexChart Container with Skeleton Fallback -->
+            <div id="orgMonthlyChart" class="w-full min-h-[290px] overflow-hidden">
+                <x-skeleton.chart height="290px" type="area" />
+            </div>
         </div>
 
         <!-- Chart 2: Status Distribusi Pengajuan Organisasi (Donut Chart) -->
@@ -85,21 +87,25 @@
                 </span>
             </div>
 
-            <div id="orgStatusDonutChart" class="w-full min-h-[220px] flex items-center justify-center"></div>
+            <div id="orgStatusDonutChart" class="w-full min-h-[220px] flex items-center justify-center">
+                <x-skeleton.chart height="220px" type="donut" />
+            </div>
 
-            <!-- Custom Legend Badges (High Contrast & Clear Readability) -->
-            <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-gray-100 dark:border-gray-700/60 text-xs">
-                <div class="flex items-center gap-2.5 p-2 rounded-xl bg-[#2F3185]">
-                    <div class="min-w-0">
-                        <p class="text-white font-semibold text-[11px]">Disetujui</p>
-                        <p class="font-extrabold text-[#ffffff] text-sm">{{ $myApprovedCount }}</p>
+            <!-- Custom Legend Badges (High Contrast & Clear Readability - 2x2 Grid) -->
+            <div class="grid grid-cols-2 gap-2.5 mt-4 pt-3.5 border-t border-gray-100 dark:border-gray-700/60 text-xs">
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-brand-50/70 dark:bg-brand-950/40 border border-brand-200/80 dark:border-brand-800/60">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#2F3185] dark:bg-brand-400 shrink-0"></span>
+                        <span class="font-medium text-gray-700 dark:text-gray-300 truncate">Disetujui</span>
                     </div>
+                    <span class="font-extrabold text-sm text-[#2F3185] dark:text-brand-300">{{ $myApprovedCount }}</span>
                 </div>
-                <div class="flex items-center gap-2.5 p-2 rounded-xl bg-[#FFB800]">
-                    <div class="min-w-0">
-                        <p class="text-white bg-[#FFB800] font-semibold text-[11px]">Menunggu</p>
-                        <p class="font-extrabold text-[#ffffff] text-sm">{{ $myPendingCount }}</p>
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60">
+                    <div class="flex items-center gap-2 min-w-0">
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#FFB800] dark:bg-amber-400 shrink-0"></span>
+                        <span class="font-medium text-gray-700 dark:text-gray-300 truncate">Menunggu</span>
                     </div>
+                    <span class="font-extrabold text-sm text-amber-800 dark:text-amber-300">{{ $myPendingCount }}</span>
                 </div>
             </div>
         </div>

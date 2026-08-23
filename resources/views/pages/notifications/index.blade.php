@@ -48,8 +48,25 @@
         </a>
     </div>
 
-    <!-- Notification List -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700/60 shadow-xs overflow-hidden">
+    <!-- Notification List with Skeleton Loading -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700/60 shadow-xs overflow-hidden"
+         x-data="{ notifLoaded: false }"
+         x-init="notifLoaded = true">
+
+        <!-- Skeleton List Placeholder -->
+        <div x-show="!notifLoaded" class="divide-y divide-gray-100 dark:divide-gray-700/40 p-2 animate-pulse">
+            @for($i = 0; $i < 5; $i++)
+            <div class="flex items-start gap-4 px-5 py-4">
+                <div class="w-10 h-10 rounded-full bg-gray-200 dark:bg-gray-700 shrink-0"></div>
+                <div class="flex-1 space-y-2">
+                    <div class="h-4 bg-gray-200 dark:bg-gray-700 rounded w-3/4"></div>
+                    <div class="h-3 bg-gray-100 dark:bg-gray-800 rounded w-1/3"></div>
+                </div>
+            </div>
+            @endfor
+        </div>
+
+        <div x-show="notifLoaded" class="transition-opacity duration-300">
         @forelse($notifications as $notification)
             @php
                 $type = class_basename($notification->type);
@@ -132,6 +149,7 @@
                 <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Notifikasi akan muncul di sini</p>
             </div>
         @endforelse
+        </div>
     </div>
 
     <!-- Pagination -->

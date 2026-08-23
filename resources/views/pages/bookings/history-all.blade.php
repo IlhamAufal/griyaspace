@@ -58,8 +58,16 @@
             </form>
         </div>
 
-        <div class="bg-white shadow rounded-lg overflow-hidden">
-            <table class="min-w-full divide-y divide-gray-200">
+        <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden"
+             x-data="{ tableLoaded: false }"
+             x-init="tableLoaded = true">
+
+            <div x-show="!tableLoaded" class="p-6">
+                <x-skeleton.table :rows="5" :cols="auth()->user()->isAdmin() ? 7 : 6" :showHeader="false" />
+            </div>
+
+            <div x-show="tableLoaded" class="overflow-x-auto transition-opacity duration-300">
+                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                 <thead class="bg-brand-500 text-white">
                     <tr>
                         {{-- <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">No</th> --}}

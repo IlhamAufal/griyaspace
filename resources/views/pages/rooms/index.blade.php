@@ -66,21 +66,31 @@
                         </div>
                     @endif
 
-                    <!-- Photo Header -->
-                    <div class="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-700">
-                        <img src="{{ $imageSrc }}" alt="{{ $room->name }}" class="h-full w-full object-cover group-hover:scale-105 transition-transform duration-500">
-                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-black/30"></div>
+                    <!-- Photo Header with Image Skeleton Loading -->
+                    <div class="relative h-48 w-full overflow-hidden bg-gray-100 dark:bg-gray-700"
+                         x-data="{ imgLoaded: false }"
+                         x-init="if ($refs.roomImg && $refs.roomImg.complete) imgLoaded = true">
 
-                        <!-- Code Badge (Top Left) -->
-                        {{-- <div class="absolute top-3 left-3">
-                            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-brand-500/90 backdrop-blur-xs text-white text-xs font-bold shadow-xs">
-                                <i class="fa-solid fa-door-open text-xs"></i>
-                                <span>{{ $room->code }}</span>
-                            </span>
-                        </div> --}}
+                        <!-- Skeleton Shimmer Placeholder -->
+                        <div x-show="!imgLoaded"
+                             class="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 z-0">
+                            <i class="fa-regular fa-image text-3xl mb-1 opacity-50"></i>
+                            <span class="text-[11px] font-medium opacity-60">Memuat visual...</span>
+                        </div>
+
+                        <!-- Room Image with Smooth Transition -->
+                        <img x-ref="roomImg"
+                             src="{{ $imageSrc }}"
+                             alt="{{ $room->name }}"
+                             loading="lazy"
+                             @load="imgLoaded = true"
+                             class="h-full w-full object-cover group-hover:scale-105 transition-all duration-500"
+                             :class="imgLoaded ? 'opacity-100' : 'opacity-0'">
+
+                        <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-black/30 pointer-events-none"></div>
 
                         <!-- Room Name Overlay (Bottom) -->
-                        <div class="absolute bottom-3 left-3 right-3">
+                        <div class="absolute bottom-3 left-3 right-3 z-10">
                             <h3 class="text-lg font-bold text-white drop-shadow-sm truncate" title="{{ $room->name }}">
                                 {{ $room->name }}
                             </h3>

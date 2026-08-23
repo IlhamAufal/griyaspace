@@ -52,7 +52,12 @@
         </div>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4">
+    <!-- Calendar Skeleton Placeholder -->
+    <div x-show="calendarLoading" class="p-4 bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700/60 shadow-xs mb-4">
+        <x-skeleton.calendar />
+    </div>
+
+    <div x-show="!calendarLoading" class="bg-white dark:bg-gray-800 rounded-2xl shadow-xs border border-gray-200 dark:border-gray-700/60 p-4 transition-all duration-300">
         <div id="calendar" class="fc fc-media-screen fc-direction-ltr fc-theme-standard"></div>
     </div>
 
@@ -134,6 +139,7 @@
     function calendarApp() {
         return {
             calendar: null,
+            calendarLoading: true,
             currentTitle: '',
             currentView: 'timeGridWeek',
             selectedRoom: '',
@@ -184,6 +190,7 @@
                 });
 
                 this.calendar.render();
+                setTimeout(() => { self.calendarLoading = false; }, 200);
             },
 
             async fetchEvents(start, end, successCallback, failureCallback) {
@@ -213,6 +220,8 @@
                 } catch (error) {
                     console.error('Error fetching events:', error);
                     failureCallback(error);
+                } finally {
+                    this.calendarLoading = false;
                 }
             },
 

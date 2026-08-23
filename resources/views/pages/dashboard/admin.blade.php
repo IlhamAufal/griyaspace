@@ -71,8 +71,10 @@
                 </div>
             </div>
 
-            <!-- ApexChart Container -->
-            <div id="monthlyTrendChart" class="w-full min-h-[300px] overflow-hidden"></div>
+            <!-- ApexChart Container with Skeleton Shimmer Fallback -->
+            <div id="monthlyTrendChart" class="w-full min-h-[300px] overflow-hidden">
+                <x-skeleton.chart height="300px" type="area" />
+            </div>
         </div>
 
         <!-- Chart 2: Distribusi Status & Ruangan Terpopuler -->
@@ -89,7 +91,9 @@
                     </span> --}}
                 </div>
 
-                <div id="statusDonutChart" class="w-full min-h-[220px] flex items-center justify-center"></div>
+                <div id="statusDonutChart" class="w-full min-h-[220px] flex items-center justify-center">
+                    <x-skeleton.chart height="220px" type="donut" />
+                </div>
 
                 <!-- Custom Legend Badges (High Contrast & Clear Readability - 2x2 Grid) -->
                 <div class="grid grid-cols-2 gap-2.5 mt-4 pt-3.5 border-t border-gray-100 dark:border-gray-700/60 text-xs">

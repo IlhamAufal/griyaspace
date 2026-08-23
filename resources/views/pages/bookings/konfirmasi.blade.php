@@ -52,8 +52,15 @@
             </form>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl border border-gray-200 dark:border-gray-700/60 overflow-hidden">
-            <div class="overflow-x-auto">
+        <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl border border-gray-200 dark:border-gray-700/60 overflow-hidden"
+             x-data="{ tableLoaded: false }"
+             x-init="tableLoaded = true">
+
+            <div x-show="!tableLoaded" class="p-6">
+                <x-skeleton.table :rows="5" :cols="7" :showHeader="false" />
+            </div>
+
+            <div x-show="tableLoaded" class="overflow-x-auto transition-opacity duration-300">
                 <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
                     <thead class="bg-brand-500 text-white">
                         <tr>

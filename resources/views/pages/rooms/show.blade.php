@@ -99,31 +99,47 @@
                         </template>
                     </div>
 
-                    <!-- Main Stage Image with Navigation Overlay -->
+                    <!-- Main Stage Image with Navigation Overlay & Skeleton Loading -->
                     <template x-if="hasPhotos">
-                        <div class="relative h-72 sm:h-96 md:h-[420px] w-full rounded-2xl overflow-hidden bg-gray-900 shadow-inner group">
+                        <div class="relative h-72 sm:h-96 md:h-[420px] w-full rounded-2xl overflow-hidden bg-gray-900 shadow-inner group"
+                             x-data="{ activeLoaded: false }"
+                             x-effect="activeLoaded = false; $nextTick(() => { if ($refs.mainStageImg && $refs.mainStageImg.complete) activeLoaded = true; })">
+                            
+                            <!-- Skeleton Shimmer Placeholder -->
+                            <div x-show="!activeLoaded"
+                                 class="absolute inset-0 bg-gray-800 animate-pulse flex flex-col items-center justify-center text-gray-500 z-0">
+                                <i class="fa-regular fa-image text-4xl mb-2 opacity-40"></i>
+                                <span class="text-xs font-medium opacity-50">Memuat foto ruangan...</span>
+                            </div>
+
                             <!-- Active Image -->
-                            <img :src="photos[activeIndex].url" :alt="photos[activeIndex].caption" class="w-full h-full object-cover transition-all duration-500 cursor-pointer" @click="lightbox = true">
+                            <img x-ref="mainStageImg"
+                                 :src="photos[activeIndex].url"
+                                 :alt="photos[activeIndex].caption"
+                                 @load="activeLoaded = true"
+                                 class="w-full h-full object-cover transition-all duration-500 cursor-pointer"
+                                 :class="activeLoaded ? 'opacity-100' : 'opacity-0'"
+                                 @click="lightbox = true">
 
                             <!-- Ambient Gradient Overlay -->
                             <div class="absolute inset-0 bg-gradient-to-t from-gray-950/80 via-transparent to-black/20 pointer-events-none"></div>
 
                             <!-- Prev Button -->
-                            <button type="button" @click="prev()" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-xs flex items-center justify-center transition-all opacity-80 hover:opacity-100 hover:scale-110 shadow-md" aria-label="Foto Sebelumnya">
+                            <button type="button" @click="prev()" class="absolute left-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-xs flex items-center justify-center transition-all opacity-80 hover:opacity-100 hover:scale-110 shadow-md z-10" aria-label="Foto Sebelumnya">
                                 <i class="fa-solid fa-chevron-left text-sm"></i>
                             </button>
 
                             <!-- Next Button -->
-                            <button type="button" @click="next()" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-xs flex items-center justify-center transition-all opacity-80 hover:opacity-100 hover:scale-110 shadow-md" aria-label="Foto Selanjutnya">
+                            <button type="button" @click="next()" class="absolute right-3 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-black/40 hover:bg-black/70 text-white backdrop-blur-xs flex items-center justify-center transition-all opacity-80 hover:opacity-100 hover:scale-110 shadow-md z-10" aria-label="Foto Selanjutnya">
                                 <i class="fa-solid fa-chevron-right text-sm"></i>
                             </button>
 
                             <!-- Bottom Info Overlay -->
-                            <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4">
+                            <div class="absolute bottom-4 left-4 right-4 flex items-end justify-between gap-4 z-10">
                                 <div class="space-y-1">
                                     <h3 class="text-white font-bold text-base sm:text-lg drop-shadow-md" x-text="photos[activeIndex].caption"></h3>
                                 </div>
-                                <button type="button" @click="lightbox = true" class="inline-flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 shadow-sm" title="Lihat Layar Penuh">
+                                <button type="button" @click="lightbox = true" class="inline-flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 shadow-sm cursor-pointer" title="Lihat Layar Penuh">
                                     <i class="fa-solid fa-expand"></i>
                                     <span class="hidden sm:inline">Perbesar</span>
                                 </button>
@@ -313,10 +329,6 @@
                             <span class="text-sm font-semibold text-gray-800 dark:text-gray-200">{{ substr($room->open_time, 0, 5) }} - {{ substr($room->close_time, 0, 5) }}</span>
                         </div>
                         <hr class="border-gray-100 dark:border-gray-700/60">
-                        <div class="flex items-center justify-between">
-                            <span class="text-sm text-gray-500 dark:text-gray-400">Total Pemakaian</span>
-                            <span class="text-sm font-bold text-brand-500">{{ $room->bookings()->count() }} Kali Booking</span>
-                        </div>
                     </div>
                 </div>
 

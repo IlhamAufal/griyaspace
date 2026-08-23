@@ -194,12 +194,25 @@
                     <!-- Main Large Preview Container (Proportional aspect ratio) -->
                     <div class="relative w-full rounded-2xl overflow-hidden bg-gray-950 border border-gray-200 dark:border-gray-700/80 shadow-md flex items-center justify-center aspect-[4/3] max-h-[360px] sm:max-h-[380px] group">
 
-                        <!-- Photo Available State -->
+                        <!-- Photo Available State with Skeleton Loading -->
                         <template x-if="selectedPhoto">
-                            <div class="relative w-full h-full">
-                                <img :src="selectedPhoto.url"
+                            <div class="relative w-full h-full"
+                                 x-data="{ previewLoaded: false }"
+                                 x-effect="previewLoaded = false; $nextTick(() => { if ($refs.previewImg && $refs.previewImg.complete) previewLoaded = true; })">
+                                
+                                <!-- Skeleton Shimmer Placeholder -->
+                                <div x-show="!previewLoaded"
+                                     class="absolute inset-0 bg-gray-900 animate-pulse flex flex-col items-center justify-center text-gray-500 z-0">
+                                    <i class="fa-regular fa-image text-3xl mb-1.5 opacity-40"></i>
+                                    <span class="text-xs font-medium opacity-50">Memuat foto visual...</span>
+                                </div>
+
+                                <img x-ref="previewImg"
+                                     :src="selectedPhoto.url"
                                      :alt="'Preview ' + selectedPhoto.name"
-                                     class="w-full h-full object-cover transition-all duration-300">
+                                     @load="previewLoaded = true"
+                                     class="w-full h-full object-cover transition-all duration-300"
+                                     :class="previewLoaded ? 'opacity-100' : 'opacity-0'">
 
                                 <!-- Ambient Top/Bottom Gradients -->
                                 <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-black/30 pointer-events-none"></div>

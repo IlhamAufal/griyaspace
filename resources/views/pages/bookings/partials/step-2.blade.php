@@ -65,7 +65,7 @@
             <div class="flex items-center gap-2">
                 <div class="flex items-center gap-2 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg px-3 py-1.5 shadow-xs">
                     <i class="fa-solid fa-calendar-day text-brand-500 text-xs"></i>
-                    <input type="date" x-model="bookingDate" @change="onBookingDateInputChange()"
+                    <input type="date" x-model="bookingDate" @change="onBookingDateInputChange()" min="{{ date('Y-m-d') }}"
                         class="text-xs bg-transparent border-0 focus:ring-0 text-gray-800 dark:text-gray-200 p-0 font-medium cursor-pointer">
                 </div>
                 <span class="text-xs font-semibold text-gray-700 dark:text-gray-300 hidden sm:inline" x-text="formattedDateIndo"></span>
@@ -129,7 +129,7 @@
                 <label class="block text-xs font-medium text-gray-700 dark:text-gray-300 mb-1.5">
                     Tanggal Kegiatan <span class="text-red-500">*</span>
                 </label>
-                <input type="date" name="booking_date" x-model="bookingDate" @change="onBookingDateInputChange()" required
+                <input type="date" name="booking_date" x-model="bookingDate" @change="onBookingDateInputChange()" min="{{ date('Y-m-d') }}" required
                     class="h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
                 @error('booking_date') <p class="text-red-500 text-xs mt-1">{{ $message }}</p> @enderror
                 <p x-show="stepErrors.booking_date" x-text="stepErrors.booking_date" class="text-red-500 text-xs mt-1" style="display:none;"></p>

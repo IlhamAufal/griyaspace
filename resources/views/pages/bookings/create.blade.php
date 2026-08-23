@@ -272,6 +272,9 @@ function bookingWizard() {
                     ],
                     initialView: self.calendarViewMode,
                     headerToolbar: false,
+                    validRange: {
+                        start: new Date().toISOString().split('T')[0]
+                    },
                     slotMinTime: self.roomOpenTime ? (self.roomOpenTime + ':00') : '06:00:00',
                     slotMaxTime: self.roomCloseTime ? (self.roomCloseTime + ':00') : '22:00:00',
                     slotDuration: '00:30:00',
@@ -434,6 +437,13 @@ function bookingWizard() {
 
             if (!this.bookingDate) {
                 this.stepErrors.booking_date = 'Tanggal kegiatan wajib dipilih.';
+            } else {
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                const selectedDate = new Date(this.bookingDate + 'T00:00:00');
+                if (selectedDate < today) {
+                    this.stepErrors.booking_date = 'Tanggal kegiatan tidak boleh di masa lalu.';
+                }
             }
 
             if (!this.startTime) {

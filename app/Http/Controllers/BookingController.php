@@ -139,7 +139,7 @@ class BookingController extends Controller
             'start_time' => 'required',
             'end_time' => 'required|after:start_time',
             'activity_name' => 'required|string|max:255',
-            'purpose' => 'required|string',
+            'purpose' => 'nullable|string',
             'participant_count' => 'required|integer|min:1',
             'person_in_charge' => 'required|string|max:255',
             'contact_phone' => 'required|string|max:255',
@@ -371,5 +371,28 @@ class BookingController extends Controller
         $users = User::where('is_active', true)->get();
 
         return view('pages.bookings.konfirmasi', compact('bookings', 'users'));
+    }
+
+    public function progress(Request $request)
+    {
+        $query = Booking::with(['room', 'submittedBy'])
+            ->where('submitted_by', auth()->id())
+            ->whereIn('status', ['submitted', 'revision']);
+
+        if ($request->filled('status')) {
+            $query->where('status', $request->status);
+        }
+
+        if ($request->filled('search')) {
+            $search = $request->search;
+            $query->where(function ($q) use ($search) {
+                $q->where('booking_number', 'like', "%{$search}%")
+                  ->orWhere('activity_name', 'like', "%{$search}%");
+            });
+        }
+
+        $bookings = $query->latest()->paginate(15)->withQueryString();
+
+        return view('pages.bookings.progress', compact('bookings'));
     }
 }

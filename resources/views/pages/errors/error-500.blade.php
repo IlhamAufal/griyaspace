@@ -1,27 +1,27 @@
 @extends('layouts.fullscreen-right-layout')
 
 @php
-    $title = '404 - Halaman Tidak Ditemukan';
+    $title = '500 - Kesalahan Server Internal';
     $currentYear = date('Y');
 @endphp
 
 @section('content')
 <div class="text-center">
     <h1 class="mb-2 font-bold text-gray-800 text-title-md dark:text-white/90 xl:text-title-2xl">
-        404
+        500
     </h1>
 
     <div class="mx-auto my-6 max-w-[280px] sm:max-w-[340px]">
-        <img src="/images/error/404.svg" alt="404" class="dark:hidden w-full h-auto" />
-        <img src="/images/error/404-dark.svg" alt="404" class="hidden dark:block w-full h-auto" />
+        <img src="/images/error/500.svg" alt="500" class="dark:hidden w-full h-auto" />
+        <img src="/images/error/500-dark.svg" alt="500" class="hidden dark:block w-full h-auto" />
     </div>
 
     <h2 class="mb-2 text-xl font-semibold text-gray-800 dark:text-white sm:text-2xl">
-        Halaman Tidak Ditemukan
+        Terjadi Kesalahan Server
     </h2>
 
     <p class="mb-8 text-sm text-gray-500 dark:text-gray-400">
-        Maaf, halaman yang Anda tuju tidak ditemukan atau telah dipindahkan.
+        Terjadi masalah pada server. Silakan muat ulang atau coba beberapa saat lagi.
     </p>
 
     <a href="{{ url('/') }}"

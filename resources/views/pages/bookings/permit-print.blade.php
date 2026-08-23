@@ -4,130 +4,111 @@
     <meta charset="UTF-8">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
-        body { font-family: Arial, Helvetica, sans-serif; font-size: 12px; color: #1a1a1a; }
-
-        /* ============================================================
-           MARGIN HALAMAN
-           Meniru margin dokumen kantor (mis. Word): bagian atas sengaja
-           dikosongkan untuk tempat kop surat/letterhead, bagian bawah
-           dikosongkan untuk tempat QR code pojok kiri bawah.
-           Ubah nilai di sini kalau ukuran kop surat berbeda.
-        ============================================================ */
+        
         @page {
-            margin: 3.5cm 2cm 3.2cm 2cm; /* atas kanan bawah kiri */
+            margin: 0px;
         }
 
-        .content-wrapper {
-            padding: 0 10px;
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: 11px;
+            color: #1a1a1a;
+            padding-top: 4.1cm;
+            padding-left: 1.5cm;
+            padding-right: 1.5cm;
+            padding-bottom: 3.5cm;
+        }
+
+        .content-container {
+            width: 80%;
+            margin: 0 auto;
         }
 
         .permit-title {
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
 
         .permit-title h1 {
-            font-size: 16px;
+            font-size: 14px;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
+            color: #1a1a1a;
         }
 
         .permit-number {
-            font-size: 13px;
+            font-size: 11px;
             font-weight: bold;
-            margin-top: 4px;
+            margin-top: 3px;
+            color: #333;
+        }
+
+        .section-title {
+            font-size: 11px;
+            font-weight: bold;
+            text-transform: uppercase;
+            border-bottom: 1.5px solid #2F3185;
+            padding-bottom: 3px;
+            margin: 14px 0 6px 0;
+            color: #2F3185;
+            width: 100%;
         }
 
         .detail-table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 20px;
+            margin-bottom: 8px;
         }
 
         .detail-table td {
-            padding: 5px 8px;
+            padding: 3px 4px;
             vertical-align: top;
             font-size: 11px;
-            line-height: 1.5;
+            line-height: 1.45;
         }
 
         .detail-table .label {
-            width: 160px;
+            width: 165px;
             font-weight: bold;
             color: #333;
         }
 
         .detail-table .separator {
             width: 15px;
-            color: #999;
+            text-align: center;
+            color: #333;
         }
 
         .detail-table .value {
             color: #1a1a1a;
         }
 
-        .section-title {
-            font-size: 12px;
-            font-weight: bold;
-            text-transform: uppercase;
-            border-bottom: 1px solid #ccc;
-            padding-bottom: 4px;
-            margin: 18px 0 10px 0;
-            color: #333;
-        }
-
-        .verify-info {
-            margin-top: 25px;
-            padding: 10px;
-            border: 1px dashed #ccc;
-            text-align: center;
-        }
-
-        .verify-info .token {
-            font-size: 8px;
-            color: #888;
-            word-break: break-all;
-        }
-
-        .verify-info .url {
-            font-size: 9px;
-            color: #555;
-            margin-top: 3px;
-        }
-
-        /* ============================================================
-           QR CODE — POJOK KIRI BAWAH
-           position: fixed membuat elemen ini menempel di posisi yang
-           sama pada setiap halaman (dompdf memperlakukan fixed mirip
-           header/footer berulang). Karena surat ini biasanya 1 halaman,
-           efeknya QR akan selalu nangkring di pojok kiri bawah.
-
-           Kalau mau geser posisi atau ukuran QR, cukup ubah 4 nilai
-           di bawah ini (left, bottom, width/height gambar).
-        ============================================================ */
         .qr-corner {
             position: fixed;
-            left: 0;
-            bottom: -60px;   /* jarak dari tepi bawah margin @page */
-            width: 110px;
+            left: 2.0cm;
+            bottom: 2.0cm;
+            width: 180px;
             text-align: center;
         }
 
         .qr-corner img.qr-code {
-            width: 90px;
-            height: 90px;
+            width: 180px;
+            height: 180px;
+            display: block;
         }
 
         .qr-corner .qr-label {
-            font-size: 8px;
+            font-size: 14px;
             color: #666;
-            margin-top: 3px;
+            margin-top: 2px;
         }
     </style>
 </head>
 <body>
-    <div class="content-wrapper">
+
+    <div class="content-container">
+        <!-- ===== JUDUL ===== -->
         <div class="permit-title">
             <h1>Surat Izin Peminjaman Ruangan</h1>
             <div class="permit-number">No. {{ $permit->permit_number }}</div>
@@ -188,7 +169,7 @@
             </tr>
         </table>
 
-        <div class="section-title">Peserta & Penanggung Jawab</div>
+        <div class="section-title">Peserta &amp; Penanggung Jawab</div>
         <table class="detail-table">
             <tr>
                 <td class="label">Jumlah Peserta</td>
@@ -207,7 +188,7 @@
             </tr>
         </table>
 
-        <div class="section-title">Informasi Izin</div>
+        {{-- <div class="section-title">Informasi Izin</div>
         <table class="detail-table">
             <tr>
                 <td class="label">Nomor Izin</td>
@@ -224,18 +205,14 @@
                 <td class="separator">:</td>
                 <td class="value" style="text-transform: uppercase; font-weight: bold;">{{ $permit->status }}</td>
             </tr>
-        </table>
-
-        <div class="verify-info">
-            <div class="url">{{ $verifyUrl }}</div>
-            <div class="token">Token: {{ $permit->verification_token }}</div>
-        </div>
+        </table> --}}
     </div>
 
-    <!-- QR Code — pojok kiri bawah, lihat blok .qr-corner di <style> untuk atur posisi -->
+    <!-- ===== QR CODE — pojok kiri bawah ===== -->
     <div class="qr-corner">
         <img class="qr-code" src="data:image/png;base64,{{ $qrBase64 }}" alt="QR Code Verifikasi">
         <div class="qr-label">Scan untuk verifikasi</div>
     </div>
+
 </body>
 </html>

@@ -47,13 +47,18 @@ beforeEach(function () {
         'close_time' => '22:00:00',
     ]);
 
-    Booking::whereIn('activity_name', [
+    $testActivityNames = [
         'Seminar Teknologi Masa Depan',
         'Existing Booking',
         'Conflicting Seminar',
         'Overcapacity Event',
         'Morning Meeting'
-    ])->delete();
+    ];
+    $testBookingIds = Booking::whereIn('activity_name', $testActivityNames)->pluck('id');
+    \App\Models\Permit::whereIn('booking_id', $testBookingIds)->delete();
+    BookingHistory::whereIn('booking_id', $testBookingIds)->delete();
+    BookingDocument::whereIn('booking_id', $testBookingIds)->delete();
+    Booking::whereIn('id', $testBookingIds)->delete();
 });
 
 test('user can view 3-step booking creation page', function () {

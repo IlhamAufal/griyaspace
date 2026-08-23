@@ -37,7 +37,12 @@ class MenuHelper
                         'name' => 'Konfirmasi',
                         'path' => '/pengajuan/konfirmasi',
                     ],
-                ] : [], [
+                ] : [
+                    [
+                        'name' => 'Progress',
+                        'path' => '/pengajuan/progress',
+                    ],
+                ], [
                     [
                         'name' => 'Riwayat Pengajuan',
                         'path' => '/pengajuan/riwayat',

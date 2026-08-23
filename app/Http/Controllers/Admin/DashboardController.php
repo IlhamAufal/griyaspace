@@ -17,6 +17,47 @@ class DashboardController extends Controller
         $todayBookings = Booking::where('booking_date', today())
             ->where('status', 'approved')
             ->count();
+        $totalBookings = Booking::count();
+
+        // 6 Bulan Terakhir untuk Chart Tren (Navy & Kuning & Toska)
+        $monthlyLabels = [];
+        $monthlySubmitted = [];
+        $monthlyApproved = [];
+
+        for ($i = 5; $i >= 0; $i--) {
+            $date = Carbon::now()->subMonths($i);
+            $year = $date->year;
+            $month = $date->month;
+
+            $monthlyLabels[] = $date->translatedFormat('M Y');
+            $monthlySubmitted[] = Booking::whereYear('created_at', $year)
+                ->whereMonth('created_at', $month)
+                ->count();
+            $monthlyApproved[] = Booking::whereYear('booking_date', $year)
+                ->whereMonth('booking_date', $month)
+                ->where('status', 'approved')
+                ->count();
+        }
+
+        // Ruangan Terpopuler (Top 5 Rooms by Approved Bookings)
+        $topRooms = Room::withCount(['bookings' => function ($q) {
+                $q->where('status', 'approved');
+            }])
+            ->orderByDesc('bookings_count')
+            ->limit(5)
+            ->get();
+
+        $topRoomLabels = $topRooms->pluck('name')->toArray();
+        $topRoomCounts = $topRooms->pluck('bookings_count')->toArray();
+
+        // Distribusi Status Pengajuan
+        $revisionCount = Booking::where('status', 'revision')->count();
+        $rejectedOrCancelledCount = Booking::whereIn('status', ['rejected', 'cancelled'])->count();
+
+        $statusData = [
+            'labels' => ['Disetujui', 'Menunggu Review', 'Perlu Revisi', 'Ditolak / Batal'],
+            'series' => [$approvedCount, $pendingCount, $revisionCount, $rejectedOrCancelledCount],
+        ];
 
         $recentSubmissions = Booking::with(['room', 'organization', 'submittedBy'])
             ->latest()
@@ -36,6 +77,13 @@ class DashboardController extends Controller
             'approvedCount',
             'activeRooms',
             'todayBookings',
+            'totalBookings',
+            'monthlyLabels',
+            'monthlySubmitted',
+            'monthlyApproved',
+            'topRoomLabels',
+            'topRoomCounts',
+            'statusData',
             'recentSubmissions',
             'upcomingBookings'
         ));

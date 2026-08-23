@@ -119,10 +119,15 @@
 <div id="decisionModal" class="fixed inset-0 z-[99999] hidden bg-black/50" style="display:none;">
     <div class="flex items-center justify-center min-h-screen p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-lg overflow-hidden">
-            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white" id="decisionModalTitle">Keputusan Pengajuan</h3>
-                <button onclick="closeDecisionModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+            <div class="flex items-center justify-between px-6 py-4 bg-brand-500 text-white">
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/15 text-white">
+                        <i class="fa-solid fa-gavel text-sm"></i>
+                    </span>
+                    <h3 class="text-lg font-bold text-white" id="decisionModalTitle">Keputusan Pengajuan</h3>
+                </div>
+                <button onclick="closeDecisionModal()" type="button" class="text-white/80 hover:text-white hover:bg-white/15 p-1.5 rounded-lg transition-colors cursor-pointer" aria-label="Tutup">
+                    <i class="fa-solid fa-xmark text-lg text-white"></i>
                 </button>
             </div>
             <form id="decisionForm" method="POST" class="p-6">

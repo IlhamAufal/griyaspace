@@ -28,19 +28,19 @@
         <div class="bg-white dark:bg-gray-800 shadow rounded-lg p-6 mb-6">
             <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                    <label class="block text-sm font-medium text-gray-500 dark:text-gray-400">Nama Role</label>
-                    <p class="mt-1 text-base font-medium text-gray-900 dark:text-white">{{ $role->name }}</p>
+                    <label class="block text-sm font-semibold text-gray-800 dark:text-gray-200">Nama Role</label>
+                    <p class="mt-1 text-base font-normal text-gray-600 dark:text-gray-300">{{ $role->name }}</p>
                 </div>
                 <div>
-                    <label class="block text-sm font-medium text-gray-500 dark:text-gray-400">Jumlah Pengguna</label>
-                    <p class="mt-1 text-base font-medium text-gray-900 dark:text-white">{{ $role->users->count() }} Pengguna</p>
+                    <label class="block text-sm font-semibold text-gray-800 dark:text-gray-200">Jumlah Pengguna</label>
+                    <p class="mt-1 text-base font-normal text-gray-600 dark:text-gray-300">{{ $role->users->count() }} Pengguna</p>
                 </div>
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-500 dark:text-gray-400">Deskripsi</label>
-                    <p class="mt-1 text-sm text-gray-900 dark:text-gray-200">{{ $role->description ?: '-' }}</p>
+                    <label class="block text-sm font-semibold text-gray-800 dark:text-gray-200">Deskripsi</label>
+                    <p class="mt-1 text-sm font-normal text-gray-600 dark:text-gray-300">{{ $role->description ?: '-' }}</p>
                 </div>
                 <div class="md:col-span-2">
-                    <label class="block text-sm font-medium text-gray-500 dark:text-gray-400">Status</label>
+                    <label class="block text-sm font-semibold text-gray-800 dark:text-gray-200">Status</label>
                     <p class="mt-1">
                         @if($role->is_active)
                             <span class="px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Aktif</span>

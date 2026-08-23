@@ -88,13 +88,13 @@
             position: fixed;
             left: 2.0cm;
             bottom: 2.0cm;
-            width: 180px;
+            width: 150px;
             text-align: center;
         }
 
         .qr-corner img.qr-code {
-            width: 180px;
-            height: 180px;
+            width: 150px;
+            height: 150px;
             display: block;
         }
 

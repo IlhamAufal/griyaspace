@@ -154,8 +154,8 @@
                                 <i class="fa-solid fa-barcode text-sm"></i>
                             </span>
                             <div class="min-w-0">
-                                <p class="text-xs text-gray-400 dark:text-gray-500">Kode Ruangan</p>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white truncate">{{ $room->code }}</p>
+                                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Kode Ruangan</p>
+                                <p class="text-sm font-normal text-gray-600 dark:text-gray-400 truncate font-mono">{{ $room->code }}</p>
                             </div>
                         </div>
 
@@ -165,8 +165,8 @@
                                 <i class="fa-solid fa-users text-sm"></i>
                             </span>
                             <div class="min-w-0">
-                                <p class="text-xs text-gray-400 dark:text-gray-500">Kapasitas Maksimal</p>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white truncate">{{ $room->capacity }} Orang</p>
+                                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Kapasitas Maksimal</p>
+                                <p class="text-sm font-normal text-gray-600 dark:text-gray-400 truncate">{{ $room->capacity }} Orang</p>
                             </div>
                         </div>
 
@@ -176,8 +176,8 @@
                                 <i class="fa-solid fa-location-dot text-sm"></i>
                             </span>
                             <div class="min-w-0">
-                                <p class="text-xs text-gray-400 dark:text-gray-500">Lokasi / Gedung</p>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white truncate" title="{{ $room->location }}">{{ $room->location }}</p>
+                                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Lokasi / Gedung</p>
+                                <p class="text-sm font-normal text-gray-600 dark:text-gray-400 truncate" title="{{ $room->location }}">{{ $room->location }}</p>
                             </div>
                         </div>
 
@@ -187,8 +187,8 @@
                                 <i class="fa-regular fa-clock text-sm"></i>
                             </span>
                             <div class="min-w-0">
-                                <p class="text-xs text-gray-400 dark:text-gray-500">Jam Buka</p>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">{{ substr($room->open_time, 0, 5) }} WIB</p>
+                                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Jam Buka</p>
+                                <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ substr($room->open_time, 0, 5) }} WIB</p>
                             </div>
                         </div>
 
@@ -198,8 +198,8 @@
                                 <i class="fa-solid fa-clock-rotate-left text-sm"></i>
                             </span>
                             <div class="min-w-0">
-                                <p class="text-xs text-gray-400 dark:text-gray-500">Jam Tutup</p>
-                                <p class="text-sm font-bold text-gray-900 dark:text-white">{{ substr($room->close_time, 0, 5) }} WIB</p>
+                                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Jam Tutup</p>
+                                <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ substr($room->close_time, 0, 5) }} WIB</p>
                             </div>
                         </div>
 
@@ -209,8 +209,8 @@
                                 <i class="fa-solid fa-circle-check text-sm"></i>
                             </span>
                             <div class="min-w-0">
-                                <p class="text-xs text-gray-400 dark:text-gray-500">Status Ruangan</p>
-                                <p class="text-sm font-bold {{ $room->isActive() ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
+                                <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Status Ruangan</p>
+                                <p class="text-sm font-normal {{ $room->isActive() ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
                                     {{ $room->isActive() ? 'Tersedia (Aktif)' : 'Tidak Aktif' }}
                                 </p>
                             </div>

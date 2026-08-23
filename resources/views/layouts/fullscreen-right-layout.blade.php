@@ -83,7 +83,7 @@
 
             <!-- Right Side: Content Area -->
             <div class="flex w-full flex-1 flex-col justify-center min-h-screen lg:w-1/2 overflow-y-auto">
-                <div class="mx-auto flex w-full max-w-lg flex-1 flex-col justify-center p-6 sm:p-8 lg:p-12">
+                <div class="mx-auto flex w-full max-w-xl flex-1 flex-col justify-center p-6 sm:p-8 lg:p-12">
                     <!-- Mobile Logo (Screens smaller than lg) -->
                     <div class="mb-8 flex justify-center lg:hidden">
                         <a href="{{ url('/') }}">

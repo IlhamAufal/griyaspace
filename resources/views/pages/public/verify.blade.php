@@ -89,38 +89,94 @@
     </div>
 
     @if(in_array($status, ['valid', 'active', 'upcoming', 'expired', 'revoked']) && $permit)
-    <!-- Permit Details Card -->
-    <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-theme-xs dark:border-gray-800 dark:bg-gray-900/60 mb-6">
-        <div class="divide-y divide-gray-100 dark:divide-gray-800">
+    <!-- Permit Details Card (Gaya Spesifikasi & Informasi Ruangan) -->
+    <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-gray-200 dark:border-gray-700/60 p-5 sm:p-6 mb-6">
+        <h2 class="text-base sm:text-lg font-bold text-gray-900 dark:text-white mb-5 flex items-center gap-2.5">
+            <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-500">
+                <i class="fa-solid fa-file-circle-check text-sm"></i>
+            </span>
+            <span>Detail Surat Izin</span>
+        </h2>
+
+        <!-- Grid Items -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3.5">
             @if(!empty($permit->permit_number))
-            <div class="pb-3 flex justify-between items-start gap-4">
-                <span class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Nomor Izin</span>
-                <span class="text-sm font-semibold text-gray-900 dark:text-white text-right font-mono">{{ $permit->permit_number }}</span>
+            <!-- Nomor Izin -->
+            <div class="p-3.5 sm:p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700/50 flex items-center gap-3.5 sm:col-span-2">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-500 shrink-0">
+                    <i class="fa-solid fa-barcode text-sm"></i>
+                </span>
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Nomor Izin</p>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400 truncate font-mono">{{ $permit->permit_number }}</p>
+                </div>
             </div>
             @endif
-            <div class="{{ !empty($permit->permit_number) ? 'py-3' : 'pb-3' }} flex justify-between items-start gap-4">
-                <span class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Kegiatan</span>
-                <span class="text-sm font-medium text-gray-900 dark:text-white text-right">{{ $permit->booking->activity_name }}</span>
+
+            <!-- Kegiatan -->
+            <div class="p-3.5 sm:p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700/50 flex items-center gap-3.5 sm:col-span-2">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-500 shrink-0">
+                    <i class="fa-solid fa-bullhorn text-sm"></i>
+                </span>
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Kegiatan</p>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $permit->booking->activity_name }}</p>
+                </div>
             </div>
-            <div class="py-3 flex justify-between items-start gap-4">
-                <span class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Ruangan</span>
-                <span class="text-sm font-medium text-gray-900 dark:text-white text-right">{{ $permit->booking->room->name }}</span>
+
+            <!-- Ruangan -->
+            <div class="p-3.5 sm:p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700/50 flex items-center gap-3.5">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-500 shrink-0">
+                    <i class="fa-solid fa-door-open text-sm"></i>
+                </span>
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Ruangan</p>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400 truncate">{{ $permit->booking->room->name }}</p>
+                </div>
             </div>
-            <div class="py-3 flex justify-between items-start gap-4">
-                <span class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Tanggal</span>
-                <span class="text-sm font-medium text-gray-900 dark:text-white text-right">{{ $permit->booking->booking_date->format('d/m/Y') }}</span>
+
+            <!-- Organisasi -->
+            <div class="p-3.5 sm:p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700/50 flex items-center gap-3.5">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-500 shrink-0">
+                    <i class="fa-solid fa-sitemap text-sm"></i>
+                </span>
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Organisasi</p>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400 truncate">{{ $permit->booking->organization->name ?? '-' }}</p>
+                </div>
             </div>
-            <div class="py-3 flex justify-between items-start gap-4">
-                <span class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Waktu</span>
-                <span class="text-sm font-medium text-gray-900 dark:text-white text-right">{{ substr($permit->booking->start_time, 0, 5) }} - {{ substr($permit->booking->end_time, 0, 5) }} WIB</span>
+
+            <!-- Tanggal -->
+            <div class="p-3.5 sm:p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700/50 flex items-center gap-3.5">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-500 shrink-0">
+                    <i class="fa-solid fa-calendar-day text-sm"></i>
+                </span>
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Tanggal</p>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $permit->booking->booking_date->format('d/m/Y') }}</p>
+                </div>
             </div>
-            <div class="py-3 flex justify-between items-start gap-4">
-                <span class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Organisasi</span>
-                <span class="text-sm font-medium text-gray-900 dark:text-white text-right">{{ $permit->booking->organization->name ?? '-' }}</span>
+
+            <!-- Waktu -->
+            <div class="p-3.5 sm:p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700/50 flex items-center gap-3.5">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-500 shrink-0">
+                    <i class="fa-regular fa-clock text-sm"></i>
+                </span>
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Waktu</p>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ substr($permit->booking->start_time, 0, 5) }} - {{ substr($permit->booking->end_time, 0, 5) }} WIB</p>
+                </div>
             </div>
-            <div class="pt-3 flex justify-between items-start gap-4">
-                <span class="text-xs font-medium uppercase tracking-wider text-gray-500 dark:text-gray-400">Penanggung Jawab</span>
-                <span class="text-sm font-medium text-gray-900 dark:text-white text-right">{{ $permit->booking->person_in_charge }}</span>
+
+            <!-- Penanggung Jawab -->
+            <div class="p-3.5 sm:p-4 rounded-xl bg-gray-50 dark:bg-gray-900/50 border border-gray-100 dark:border-gray-700/50 flex items-center gap-3.5 sm:col-span-2">
+                <span class="inline-flex items-center justify-center w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 text-brand-500 shrink-0">
+                    <i class="fa-solid fa-user-tie text-sm"></i>
+                </span>
+                <div class="min-w-0">
+                    <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Penanggung Jawab</p>
+                    <p class="text-sm font-normal text-gray-600 dark:text-gray-400 truncate">{{ $permit->booking->person_in_charge }}</p>
+                </div>
             </div>
         </div>
     </div>

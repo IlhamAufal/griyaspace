@@ -39,55 +39,55 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-4">
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">No. Booking</label>
-                            <p class="text-sm font-semibold text-gray-900 dark:text-white">{{ $booking->booking_number }}</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">No. Booking</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400 font-mono">{{ $booking->booking_number }}</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Organisasi</label>
-                            <p class="text-sm text-gray-900 dark:text-white">{{ $booking->organization->name ?? '-' }}</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Organisasi</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->organization->name ?? '-' }}</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Ruangan</label>
-                            <p class="text-sm text-gray-900 dark:text-white">{{ $booking->room->name }}</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Ruangan</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->room->name }}</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Tanggal</label>
-                            <p class="text-sm text-gray-900 dark:text-white">{{ $booking->booking_date->format('d/m/Y') }}</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Tanggal</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->booking_date->format('d/m/Y') }}</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Waktu</label>
-                            <p class="text-sm text-gray-900 dark:text-white">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }} WIB</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Waktu</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }} WIB</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Kegiatan</label>
-                            <p class="text-sm text-gray-900 dark:text-white">{{ $booking->activity_name }}</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Kegiatan</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->activity_name }}</p>
                         </div>
                         <div class="md:col-span-2">
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Deskripsi Kegiatan</label>
-                            <p class="text-sm text-gray-900 dark:text-white">{{ $booking->purpose }}</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Deskripsi Kegiatan</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->purpose }}</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Jumlah Peserta</label>
-                            <p class="text-sm text-gray-900 dark:text-white">{{ $booking->participant_count }} orang</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Jumlah Peserta</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->participant_count }} orang</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Penanggung Jawab</label>
-                            <p class="text-sm text-gray-900 dark:text-white">{{ $booking->person_in_charge }}</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Penanggung Jawab</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->person_in_charge }}</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">No. Telepon</label>
-                            <p class="text-sm text-gray-900 dark:text-white">{{ $booking->contact_phone }}</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">No. Telepon</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->contact_phone }}</p>
                         </div>
                         <div>
-                            <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Pengaju</label>
-                            <p class="text-sm text-gray-900 dark:text-white">{{ $booking->submittedBy->name ?? '-' }}</p>
+                            <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Pengaju</label>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->submittedBy->name ?? '-' }}</p>
                         </div>
                     </div>
 
                     @if($booking->admin_note)
                     <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700/60">
-                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400 mb-1">Catatan Admin</label>
-                        <p class="text-sm text-gray-900 dark:text-white">{{ $booking->admin_note }}</p>
+                        <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Catatan Admin</label>
+                        <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->admin_note }}</p>
                     </div>
                     @endif
                 </div>
@@ -117,6 +117,25 @@
                             <i class="fa-solid fa-ban text-sm"></i> Batalkan Pengajuan
                         </button>
                     </form>
+                </div>
+                @endif
+
+                @if($booking->status === 'approved' && auth()->user()->isAdmin() && (!$booking->permit || !$booking->permit->pdf_storage_key))
+                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-green-200 dark:border-green-700/40 p-6">
+                    <div class="flex items-center justify-between">
+                        <div class="flex items-center gap-3">
+                            <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
+                                <i class="fa-solid fa-file-circle-plus text-green-600 dark:text-green-400"></i>
+                            </div>
+                            <div>
+                                <h2 class="text-lg font-semibold text-green-800 dark:text-green-200">Generate Dokumen Izin</h2>
+                                <p class="text-xs text-green-600/80 dark:text-green-400/80">Klik tombol untuk membuat dokumen izin peminjaman ruangan.</p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="openGeneratePermitModal()" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors">
+                            <i class="fa-solid fa-file-pdf text-sm"></i> Generate Dokumen
+                        </button>
+                    </div>
                 </div>
                 @endif
 
@@ -234,6 +253,20 @@
                 </div>
                 @endif
 
+                @if($booking->status === 'approved' && !auth()->user()->isAdmin() && (!$booking->permit || !$booking->permit->pdf_storage_key))
+                <div class="bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-200 dark:border-green-700/40 p-5">
+                    <div class="flex items-start gap-3">
+                        <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-circle-check text-green-600 dark:text-green-400"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-sm font-semibold text-green-800 dark:text-green-200">Pengajuan Disetujui</h3>
+                            <p class="text-sm text-green-700 dark:text-green-300 mt-1">Pengajuan Anda telah disetujui. Silakan hubungi admin jika dokumen izin belum muncul.</p>
+                        </div>
+                    </div>
+                </div>
+                @endif
+
                 <div class="flex justify-start">
                     <a href="{{ route('bookings.index') }}" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
                         <i class="fa-solid fa-arrow-left text-sm"></i> Kembali
@@ -300,10 +333,15 @@
 <div id="decisionModal" class="fixed inset-0 z-[99999] hidden bg-black/50" style="display:none;">
     <div class="flex items-center justify-center min-h-screen p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-lg overflow-hidden">
-            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
-                <h3 class="text-lg font-semibold text-gray-900 dark:text-white" id="decisionModalTitle">Keputusan Pengajuan</h3>
-                <button onclick="closeDecisionModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
-                    <i class="fa-solid fa-xmark text-lg"></i>
+            <div class="flex items-center justify-between px-6 py-4 bg-brand-500 text-white">
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/15 text-white">
+                        <i class="fa-solid fa-gavel text-sm"></i>
+                    </span>
+                    <h3 class="text-lg font-bold text-white" id="decisionModalTitle">Keputusan Pengajuan</h3>
+                </div>
+                <button onclick="closeDecisionModal()" type="button" class="text-white/80 hover:text-white hover:bg-white/15 p-1.5 rounded-lg transition-colors cursor-pointer" aria-label="Tutup">
+                    <i class="fa-solid fa-xmark text-lg text-white"></i>
                 </button>
             </div>
             <form id="decisionForm" method="POST" class="p-6">
@@ -322,6 +360,55 @@
                     </button>
                     <button type="submit" id="decisionSubmitBtn" class="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors text-white bg-gray-400 cursor-not-allowed">
                         <span id="decisionSubmitText">Pilih Keputusan</span>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<div id="generatePermitModal" class="fixed inset-0 z-[99999] hidden bg-black/50" style="display:none;">
+    <div class="flex items-center justify-center min-h-screen p-4">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-lg overflow-hidden">
+            <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Preview Dokumen Izin</h3>
+                <button onclick="closeGeneratePermitModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                    <i class="fa-solid fa-xmark text-lg"></i>
+                </button>
+            </div>
+            <form id="generatePermitForm" method="POST" action="{{ route('bookings.generatePermit', $booking) }}" class="p-6">
+                @csrf
+                <p class="text-sm text-gray-600 dark:text-gray-400 mb-5">Review data berikut sebelum generate dokumen izin.</p>
+
+                <div class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">No. Booking</label>
+                        <input type="text" name="booking_number" value="{{ $booking->booking_number }}"
+                            class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">No. Izin</label>
+                        <input type="text" name="permit_number" value="{{ $booking->permit?->permit_number ?? \App\Models\Permit::generatePermitNumber() }}"
+                            class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Tanggal Penerbitan</label>
+                        <input type="text" value="{{ now()->locale('id')->translatedFormat('d F Y') }}" disabled
+                            class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2.5 text-sm text-gray-500 dark:text-gray-400 cursor-not-allowed">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1.5">Nama Kegiatan</label>
+                        <input type="text" value="{{ $booking->activity_name }}" disabled
+                            class="w-full rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800 px-4 py-2.5 text-sm text-gray-500 dark:text-gray-400 cursor-not-allowed">
+                    </div>
+                </div>
+
+                <div class="flex items-center justify-end gap-3 mt-6 pt-5 border-t border-gray-200 dark:border-gray-700">
+                    <button type="button" onclick="closeGeneratePermitModal()" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+                        Batal
+                    </button>
+                    <button type="submit" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors">
+                        <i class="fa-solid fa-file-pdf text-sm"></i> Generate
                     </button>
                 </div>
             </form>
@@ -373,6 +460,16 @@ function openDecisionModal(action) {
 
 function closeDecisionModal() {
     var modal = document.getElementById('decisionModal');
+    modal.style.display = 'none';
+}
+
+function openGeneratePermitModal() {
+    var modal = document.getElementById('generatePermitModal');
+    modal.style.display = 'block';
+}
+
+function closeGeneratePermitModal() {
+    var modal = document.getElementById('generatePermitModal');
     modal.style.display = 'none';
 }
 </script>

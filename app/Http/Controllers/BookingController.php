@@ -270,26 +270,6 @@ class BookingController extends Controller
             'created_at' => now(),
         ]);
 
-        // Generate PDF permit saat approve
-        if ($validated['action'] === 'approve' && !$booking->permit) {
-            $permit = Permit::create([
-                'booking_id' => $booking->id,
-                'status' => 'valid',
-                'issued_at' => now(),
-                'template_version' => '1.0',
-            ]);
-
-            try {
-                $pdfService = new PermitPdfService();
-                $pdfContent = $pdfService->generatePdf($permit);
-
-                Storage::disk('local')->put("permits/{$permit->id}.pdf", $pdfContent);
-                $permit->update(['pdf_storage_key' => "permits/{$permit->id}.pdf"]);
-            } catch (\Exception $e) {
-                // PDF generation gagal, tetap lanjut tanpa PDF
-            }
-        }
-
         return redirect()->route('bookings.show', $booking)->with('success', 'Keputusan berhasil disimpan.');
     }
 
@@ -394,5 +374,45 @@ class BookingController extends Controller
         $bookings = $query->latest()->paginate(15)->withQueryString();
 
         return view('pages.bookings.progress', compact('bookings'));
+    }
+
+    public function generatePermit(Request $request, Booking $booking)
+    {
+        abort_unless($booking->status === 'approved', 403);
+        abort_unless(auth()->user()->isAdmin(), 403);
+
+        $validated = $request->validate([
+            'booking_number' => 'nullable|string|max:255',
+            'permit_number' => 'nullable|string|max:255',
+        ]);
+
+        if (!empty($validated['booking_number'])) {
+            $booking->update(['booking_number' => $validated['booking_number']]);
+        }
+
+        $permit = Permit::firstOrCreate(
+            ['booking_id' => $booking->id],
+            [
+                'status' => 'valid',
+                'issued_at' => now(),
+                'template_version' => '1.0',
+            ]
+        );
+
+        if (!empty($validated['permit_number'])) {
+            $permit->update(['permit_number' => $validated['permit_number']]);
+        }
+
+        try {
+            $pdfService = new PermitPdfService();
+            $pdfContent = $pdfService->generatePdf($permit);
+
+            Storage::disk('local')->put("permits/{$permit->id}.pdf", $pdfContent);
+            $permit->update(['pdf_storage_key' => "permits/{$permit->id}.pdf"]);
+
+            return redirect()->route('bookings.show', $booking)->with('success', 'Dokumen izin berhasil digenerate.');
+        } catch (\Exception $e) {
+            return back()->withErrors(['error' => 'Gagal generate dokumen: ' . $e->getMessage()]);
+        }
     }
 }

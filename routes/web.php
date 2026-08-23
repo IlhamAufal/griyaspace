@@ -43,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
         Route::put('/{booking}', [BookingController::class, 'update'])->name('bookings.update');
         Route::post('/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
         Route::post('/{booking}/decision', [BookingController::class, 'decision'])->name('bookings.decision');
+        Route::post('/{booking}/generate-permit', [BookingController::class, 'generatePermit'])->name('bookings.generatePermit')->middleware('role:admin');
         Route::get('/{booking}/riwayat', [BookingController::class, 'history'])->name('bookings.history');
         Route::get('/{booking}/permit-download', [BookingController::class, 'downloadPermit'])->name('bookings.downloadPermit');
     });

@@ -71,12 +71,12 @@ $maxWidthClass = match ($maxWidth) {
              @click.stop
              class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 text-left shadow-2xl transition-all w-full {{ $maxWidthClass }} border-0 outline-hidden">
 
-            <!-- Header -->
+            <!-- Header (Navy #2F3185) -->
             @if ($title || isset($header) || $icon)
-                <div class="flex items-center justify-between {{ $headerBg === 'brand' ? 'bg-brand-500 text-white' : 'border-b border-gray-100 dark:border-gray-700/60 text-gray-900 dark:text-white' }} px-6 py-4 border-0">
+                <div class="flex items-center justify-between bg-brand-500 text-white px-6 py-4 border-0">
                     <div class="flex items-center gap-3">
                         @if ($icon)
-                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg {{ $headerBg === 'brand' ? 'bg-white/15 text-white' : 'bg-brand-50 dark:bg-brand-500/10 text-brand-600 dark:text-brand-400' }}">
+                            <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/15 text-white">
                                 <i class="{{ $icon }} text-base"></i>
                             </span>
                         @endif
@@ -84,7 +84,7 @@ $maxWidthClass = match ($maxWidth) {
                         @if (isset($header))
                             {{ $header }}
                         @else
-                            <h3 class="text-lg font-bold {{ $headerBg === 'brand' ? 'text-white' : 'text-gray-900 dark:text-white' }}">
+                            <h3 class="text-lg font-bold text-white">
                                 <span x-text="modalData.title || '{{ addslashes($title ?? '') }}'">{{ $title }}</span>
                             </h3>
                         @endif
@@ -92,9 +92,9 @@ $maxWidthClass = match ($maxWidth) {
 
                     <button @click="close()"
                             type="button"
-                            class="{{ $headerBg === 'brand' ? 'text-white/80 hover:text-white hover:bg-white/15' : 'text-gray-400 hover:text-gray-600 dark:hover:text-gray-200' }} p-1.5 rounded-lg transition-colors"
+                            class="text-white/80 hover:text-white hover:bg-white/15 p-1.5 rounded-lg transition-colors cursor-pointer"
                             aria-label="Tutup Modal">
-                        <i class="fa-solid fa-xmark text-lg {{ $headerBg === 'brand' ? 'text-white' : '' }}"></i>
+                        <i class="fa-solid fa-xmark text-lg text-white"></i>
                     </button>
                 </div>
             @endif

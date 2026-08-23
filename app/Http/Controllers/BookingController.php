@@ -12,6 +12,7 @@ use App\Models\Organization;
 use App\Models\BookingHistory;
 use App\Models\BookingDocument;
 use App\Models\Permit;
+use App\Enums\BookingStatus;
 use App\Services\BookingService;
 use App\Services\PermitPdfService;
 use App\Exceptions\BookingConflictException;
@@ -109,7 +110,7 @@ class BookingController extends Controller
         $booking->load(['room', 'organization', 'submittedBy', 'approvedBy', 'documents', 'permit', 'history.changedBy']);
 
         $rooms = collect();
-        if ($booking->status === 'revision' && !auth()->user()->isAdmin()) {
+        if ($booking->status === BookingStatus::Revision && !auth()->user()->isAdmin()) {
             $rooms = Room::where('status', 'active')->get();
         }
 
@@ -194,14 +195,14 @@ class BookingController extends Controller
                 ]);
             }
 
-            if ($oldStatus === 'revision') {
-                $booking->update(['status' => 'submitted']);
+            if ($oldStatus === BookingStatus::Revision) {
+                $booking->update(['status' => BookingStatus::Submitted->value]);
             }
 
             BookingHistory::create([
                 'booking_id' => $booking->id,
-                'previous_status' => $oldStatus,
-                'new_status' => $booking->status,
+                'previous_status' => $oldStatus instanceof BookingStatus ? $oldStatus->value : $oldStatus,
+                'new_status' => $booking->status instanceof BookingStatus ? $booking->status->value : $booking->status,
                 'note' => 'Data diperbarui.',
                 'changed_by' => auth()->id(),
                 'created_at' => now(),
@@ -224,14 +225,14 @@ class BookingController extends Controller
 
         $oldStatus = $booking->status;
         $booking->update([
-            'status' => 'cancelled',
+            'status' => BookingStatus::Cancelled,
             'cancelled_at' => now(),
         ]);
 
         BookingHistory::create([
             'booking_id' => $booking->id,
-            'previous_status' => $oldStatus,
-            'new_status' => 'cancelled',
+            'previous_status' => $oldStatus instanceof BookingStatus ? $oldStatus->value : $oldStatus,
+            'new_status' => BookingStatus::Cancelled->value,
             'note' => 'Dibatalkan oleh pengguna.',
             'changed_by' => auth()->id(),
             'created_at' => now(),
@@ -250,9 +251,9 @@ class BookingController extends Controller
         $oldStatus = $booking->status;
 
         $newStatus = match ($validated['action']) {
-            'approve' => 'approved',
-            'reject' => 'rejected',
-            'revision' => 'revision',
+            'approve' => BookingStatus::Approved,
+            'reject' => BookingStatus::Rejected,
+            'revision' => BookingStatus::Revision,
         };
 
         $booking->update([
@@ -264,8 +265,8 @@ class BookingController extends Controller
 
         BookingHistory::create([
             'booking_id' => $booking->id,
-            'previous_status' => $oldStatus,
-            'new_status' => $newStatus,
+            'previous_status' => $oldStatus instanceof BookingStatus ? $oldStatus->value : $oldStatus,
+            'new_status' => $newStatus->value,
             'note' => $validated['admin_note'],
             'changed_by' => auth()->id(),
             'created_at' => now(),
@@ -379,7 +380,7 @@ class BookingController extends Controller
 
     public function generatePermit(Request $request, Booking $booking)
     {
-        abort_unless($booking->status === 'approved', 403);
+        abort_unless($booking->status === BookingStatus::Approved, 403);
         abort_unless(auth()->user()->isAdmin(), 403);
 
         $validated = $request->validate([

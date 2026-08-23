@@ -75,18 +75,8 @@
                             <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200 font-medium" title="{{ $booking->activity_name }}">{{ $booking->activity_name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{{ $booking->booking_date->format('d/m/Y') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @php
-                                    $statusColors = [
-                                        'submitted' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300',
-                                        'revision' => 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300',
-                                    ];
-                                    $statusLabels = [
-                                        'submitted' => 'Diajukan',
-                                        'revision' => 'Revisi',
-                                    ];
-                                @endphp
-                                <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusColors[$booking->status] ?? 'bg-gray-100 text-gray-800' }}">
-                                    {{ $statusLabels[$booking->status] ?? $booking->status }}
+                                <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $booking->status->colorClasses() }}">
+                                    {{ $booking->status->label() }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
@@ -94,7 +84,7 @@
                                     <a href="{{ route('bookings.show', $booking) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors" title="Lihat Detail">
                                         <i class="fa-solid fa-eye text-sm"></i>
                                     </a>
-                                    @if($booking->status !== 'revision')
+                                    @if($booking->status !== \App\Enums\BookingStatus::Revision)
                                     <button type="button" onclick="openDecisionModal('{{ $booking->id }}', '{{ $booking->booking_number }}', '{{ $booking->activity_name }}')" class="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-green-900 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-lg transition-colors" title="Keputusan">
                                         <i class="fa-solid fa-gavel text-sm"></i>
                                     </button>

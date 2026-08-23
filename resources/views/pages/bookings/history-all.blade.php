@@ -85,26 +85,8 @@
                         <td class="px-6 py-4 text-sm text-gray-500">{{ $booking->activity_name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $booking->booking_date->format('d/m/Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">
-                            @php
-                                $statusColors = [
-                                    'draft' => 'bg-gray-100 text-gray-700',
-                                    'submitted' => 'bg-blue-100 text-blue-700',
-                                    'approved' => 'bg-green-100 text-green-700',
-                                    'revision' => 'bg-yellow-100 text-yellow-700',
-                                    'rejected' => 'bg-red-100 text-red-700',
-                                    'cancelled' => 'bg-gray-100 text-gray-500',
-                                ];
-                                $statusLabels = [
-                                    'draft' => 'Draft',
-                                    'submitted' => 'Diajukan',
-                                    'approved' => 'Disetujui',
-                                    'revision' => 'Revisi',
-                                    'rejected' => 'Ditolak',
-                                    'cancelled' => 'Dibatalkan',
-                                ];
-                            @endphp
-                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $statusColors[$booking->status] ?? 'bg-gray-100 text-gray-700' }}">
-                                {{ $statusLabels[$booking->status] ?? $booking->status }}
+                            <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium {{ $booking->status->colorClasses() }}">
+                                {{ $booking->status->label() }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">

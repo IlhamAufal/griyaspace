@@ -16,24 +16,8 @@
                 <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-gray-200 dark:border-gray-700/60 p-6">
                     <div class="flex items-center justify-between mb-6">
                         <h1 class="text-xl font-bold text-gray-900 dark:text-white">Detail Pengajuan</h1>
-                        @php
-                            $statusColors = [
-                                'submitted' => 'bg-yellow-100 text-yellow-800',
-                                'approved' => 'bg-green-100 text-green-800',
-                                'rejected' => 'bg-red-100 text-red-800',
-                                'revision' => 'bg-orange-100 text-orange-800',
-                                'cancelled' => 'bg-gray-100 text-gray-800',
-                            ];
-                            $statusLabels = [
-                                'submitted' => 'Diajukan',
-                                'approved' => 'Disetujui',
-                                'rejected' => 'Ditolak',
-                                'revision' => 'Revisi',
-                                'cancelled' => 'Dibatalkan',
-                            ];
-                        @endphp
-                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusColors[$booking->status] ?? 'bg-gray-100 text-gray-800' }}">
-                            {{ $statusLabels[$booking->status] ?? $booking->status }}
+                        <span class="px-3 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $booking->status->colorClasses() }}">
+                            {{ $booking->status->label() }}
                         </span>
                     </div>
 
@@ -92,7 +76,7 @@
                     @endif
                 </div>
 
-                @if($booking->status === 'submitted' && auth()->user()->isAdmin())
+                @if($booking->status === \App\Enums\BookingStatus::Submitted && auth()->user()->isAdmin())
                 <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-gray-200 dark:border-gray-700/60 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Aksi Pengajuan</h2>
                     <div class="flex flex-wrap gap-3">
@@ -109,7 +93,7 @@
                 </div>
                 @endif
 
-                @if(in_array($booking->status, ['submitted', 'revision']) && !auth()->user()->isAdmin())
+                @if(in_array($booking->status, [\App\Enums\BookingStatus::Submitted, \App\Enums\BookingStatus::Revision], true) && !auth()->user()->isAdmin())
                 <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-gray-200 dark:border-gray-700/60 p-6">
                     <form action="{{ route('bookings.cancel', $booking) }}" method="POST" onsubmit="return confirm('Yakin ingin membatalkan pengajuan ini?')">
                         @csrf
@@ -120,7 +104,7 @@
                 </div>
                 @endif
 
-                @if($booking->status === 'approved' && auth()->user()->isAdmin() && (!$booking->permit || !$booking->permit->pdf_storage_key))
+                @if($booking->status === \App\Enums\BookingStatus::Approved && auth()->user()->isAdmin() && (!$booking->permit || !$booking->permit->pdf_storage_key))
                 <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-green-200 dark:border-green-700/40 p-6">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
@@ -139,7 +123,7 @@
                 </div>
                 @endif
 
-                @if($booking->status === 'approved' && $booking->permit && $booking->permit->pdf_storage_key)
+                @if($booking->status === \App\Enums\BookingStatus::Approved && $booking->permit && $booking->permit->pdf_storage_key)
                 <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-green-200 dark:border-green-700/40 p-6">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
@@ -158,7 +142,7 @@
                 </div>
                 @endif
 
-                @if($booking->status === 'revision' && !auth()->user()->isAdmin())
+                @if($booking->status === \App\Enums\BookingStatus::Revision && !auth()->user()->isAdmin())
                 <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-orange-200 dark:border-orange-700/40 p-6">
                     <div class="flex items-center gap-3 mb-5 pb-4 border-b border-orange-100 dark:border-orange-900/30">
                         <div class="w-10 h-10 rounded-full bg-orange-100 dark:bg-orange-900/30 flex items-center justify-center">
@@ -253,7 +237,7 @@
                 </div>
                 @endif
 
-                @if($booking->status === 'approved' && !auth()->user()->isAdmin() && (!$booking->permit || !$booking->permit->pdf_storage_key))
+                @if($booking->status === \App\Enums\BookingStatus::Approved && !auth()->user()->isAdmin() && (!$booking->permit || !$booking->permit->pdf_storage_key))
                 <div class="bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-200 dark:border-green-700/40 p-5">
                     <div class="flex items-start gap-3">
                         <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center shrink-0">
@@ -280,11 +264,11 @@
 
                     @php
                         $timelineConfig = [
-                            'submitted' => ['color' => 'bg-yellow-500', 'ring' => 'ring-yellow-100', 'icon' => 'fa-solid fa-paper-plane', 'label' => 'Diajukan'],
-                            'revision' => ['color' => 'bg-orange-500', 'ring' => 'ring-orange-100', 'icon' => 'fa-solid fa-rotate-left', 'label' => 'Revisi'],
-                            'approved' => ['color' => 'bg-green-500', 'ring' => 'ring-green-100', 'icon' => 'fa-solid fa-check', 'label' => 'Disetujui'],
-                            'rejected' => ['color' => 'bg-red-500', 'ring' => 'ring-red-100', 'icon' => 'fa-solid fa-xmark', 'label' => 'Ditolak'],
-                            'cancelled' => ['color' => 'bg-gray-400', 'ring' => 'ring-gray-100', 'icon' => 'fa-solid fa-ban', 'label' => 'Dibatalkan'],
+                            \App\Enums\BookingStatus::Submitted->value => ['color' => 'bg-yellow-500', 'ring' => 'ring-yellow-100', 'icon' => 'fa-solid fa-paper-plane', 'label' => \App\Enums\BookingStatus::Submitted->label()],
+                            \App\Enums\BookingStatus::Revision->value => ['color' => 'bg-orange-500', 'ring' => 'ring-orange-100', 'icon' => 'fa-solid fa-rotate-left', 'label' => \App\Enums\BookingStatus::Revision->label()],
+                            \App\Enums\BookingStatus::Approved->value => ['color' => 'bg-green-500', 'ring' => 'ring-green-100', 'icon' => 'fa-solid fa-check', 'label' => \App\Enums\BookingStatus::Approved->label()],
+                            \App\Enums\BookingStatus::Rejected->value => ['color' => 'bg-red-500', 'ring' => 'ring-red-100', 'icon' => 'fa-solid fa-xmark', 'label' => \App\Enums\BookingStatus::Rejected->label()],
+                            \App\Enums\BookingStatus::Cancelled->value => ['color' => 'bg-gray-400', 'ring' => 'ring-gray-100', 'icon' => 'fa-solid fa-ban', 'label' => \App\Enums\BookingStatus::Cancelled->label()],
                         ];
                     @endphp
 

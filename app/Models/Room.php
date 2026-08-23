@@ -35,4 +35,12 @@ class Room extends Model
     {
         return $this->status === 'active';
     }
+
+    public function getCoverPhotoUrlAttribute(): string
+    {
+        $firstPhoto = $this->photos->first();
+        return $firstPhoto
+            ? asset('storage/' . $firstPhoto->photo_path)
+            : asset('images/cards/card-01.jpg');
+    }
 }

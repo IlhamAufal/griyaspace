@@ -71,24 +71,8 @@
                         <td class="px-6 py-4 text-sm text-gray-500">{{ $booking->activity_name }}</td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $booking->booking_date->format('d/m/Y') }}</td>
                         <td class="px-6 py-4 whitespace-nowrap">
-                            @php
-                                $statusColors = [
-                                    'submitted' => 'bg-yellow-100 text-yellow-800',
-                                    'approved' => 'bg-green-100 text-green-800',
-                                    'rejected' => 'bg-red-100 text-red-800',
-                                    'revision' => 'bg-orange-100 text-orange-800',
-                                    'cancelled' => 'bg-gray-100 text-gray-800',
-                                ];
-                                $statusLabels = [
-                                    'submitted' => 'Diajukan',
-                                    'approved' => 'Disetujui',
-                                    'rejected' => 'Ditolak',
-                                    'revision' => 'Revisi',
-                                    'cancelled' => 'Dibatalkan',
-                                ];
-                            @endphp
-                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusColors[$booking->status] ?? 'bg-gray-100 text-gray-800' }}">
-                                {{ $statusLabels[$booking->status] ?? $booking->status }}
+                            <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full {{ $booking->status->colorClasses() }}">
+                                {{ $booking->status->label() }}
                             </span>
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-sm">

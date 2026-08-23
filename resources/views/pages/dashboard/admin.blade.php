@@ -84,26 +84,49 @@
                     <h2 class="text-base font-bold text-gray-900 dark:text-white flex items-center gap-2">
                         <span>Distribusi Status Pengajuan</span>
                     </h2>
-                    <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                    {{-- <span class="text-xs font-semibold px-2 py-0.5 rounded-md bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
                         Total: {{ $totalBookings }}
-                    </span>
+                    </span> --}}
                 </div>
 
                 <div id="statusDonutChart" class="w-full min-h-[220px] flex items-center justify-center"></div>
 
-                <!-- Custom Legend Badges (High Contrast & Clear Readability) -->
-                <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-gray-100 dark:border-gray-700/60 text-xs">
-                    <div class="flex items-center gap-2.5 p-2 rounded-xl bg-brand-50/60 dark:bg-brand-950/30 border border-brand-100 dark:border-brand-900/40">
-                        <div class="min-w-0">
-                            <p class="text-gray-600 dark:text-gray-400 text-[11px] font-medium">Disetujui</p>
-                            <p class="font-extrabold text-[#2F3185] dark:text-brand-300 text-sm">{{ $approvedCount }}</p>
+                <!-- Custom Legend Badges (High Contrast & Clear Readability - 2x2 Grid) -->
+                <div class="grid grid-cols-2 gap-2.5 mt-4 pt-3.5 border-t border-gray-100 dark:border-gray-700/60 text-xs">
+                    <!-- 1. Disetujui -->
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-brand-50/70 dark:bg-brand-950/40 border border-brand-200/80 dark:border-brand-800/60">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#2F3185] dark:bg-brand-400 shrink-0"></span>
+                            <span class="font-medium text-gray-700 dark:text-gray-300 truncate">Disetujui</span>
                         </div>
+                        <span class="font-extrabold text-sm text-[#2F3185] dark:text-brand-300">{{ $approvedCount }}</span>
                     </div>
-                    <div class="flex items-center gap-2.5 p-2 rounded-xl bg-amber-50/60 dark:bg-amber-950/30 border border-amber-100 dark:border-amber-900/40">
-                        <div class="min-w-0">
-                            <p class="text-gray-600 dark:text-gray-400 text-[11px] font-medium">Menunggu</p>
-                            <p class="font-extrabold text-amber-900 dark:text-amber-300 text-sm">{{ $pendingCount }}</p>
+
+                    <!-- 2. Menunggu -->
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-teal-50/70 dark:bg-teal-950/40 border border-teal-200/80 dark:border-teal-800/60">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#1CBDB3] dark:bg-teal-400 shrink-0"></span>
+                            <span class="font-medium text-gray-700 dark:text-gray-300 truncate">Menunggu</span>
                         </div>
+                        <span class="font-extrabold text-sm text-[#0D9488] dark:text-teal-300">{{ $pendingCount }}</span>
+                    </div>
+
+                    <!-- 3. Revisi -->
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#FFB800] dark:bg-amber-400 shrink-0"></span>
+                            <span class="font-medium text-gray-700 dark:text-gray-300 truncate">Revisi</span>
+                        </div>
+                        <span class="font-extrabold text-sm text-amber-800 dark:text-amber-300">{{ $revisionCount }}</span>
+                    </div>
+
+                    <!-- 4. Ditolak -->
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-red-50/70 dark:bg-red-950/40 border border-red-200/80 dark:border-red-800/60">
+                        <div class="flex items-center gap-2 min-w-0">
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#EF4444] dark:bg-red-400 shrink-0"></span>
+                            <span class="font-medium text-gray-700 dark:text-gray-300 truncate">Ditolak</span>
+                        </div>
+                        <span class="font-extrabold text-sm text-red-700 dark:text-red-300">{{ $rejectedCount }}</span>
                     </div>
                 </div>
             </div>
@@ -256,7 +279,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const trendOptions = {
         series: [
             {
-                name: 'Booking Disetujui',
+                name: 'Pengajuan Disetujui',
                 data: @json($monthlyApproved)
             },
             {
@@ -350,7 +373,7 @@ document.addEventListener('DOMContentLoaded', function () {
             height: 220,
             fontFamily: 'Poppins, sans-serif'
         },
-        colors: [primaryNavy, secondaryYellow, thirdToska, grayNeutral],
+        colors: [primaryNavy, thirdToska, secondaryYellow, '#EF4444'],
         plotOptions: {
             pie: {
                 donut: {

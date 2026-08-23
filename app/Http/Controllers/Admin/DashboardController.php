@@ -52,11 +52,11 @@ class DashboardController extends Controller
 
         // Distribusi Status Pengajuan
         $revisionCount = Booking::where('status', 'revision')->count();
-        $rejectedOrCancelledCount = Booking::whereIn('status', ['rejected', 'cancelled'])->count();
+        $rejectedCount = Booking::whereIn('status', ['rejected', 'cancelled'])->count();
 
         $statusData = [
             'labels' => ['Disetujui', 'Menunggu Review', 'Perlu Revisi', 'Ditolak / Batal'],
-            'series' => [$approvedCount, $pendingCount, $revisionCount, $rejectedOrCancelledCount],
+            'series' => [$approvedCount, $pendingCount, $revisionCount, $rejectedCount],
         ];
 
         $recentSubmissions = Booking::with(['room', 'organization', 'submittedBy'])
@@ -75,6 +75,8 @@ class DashboardController extends Controller
         return view('pages.dashboard.admin', compact(
             'pendingCount',
             'approvedCount',
+            'revisionCount',
+            'rejectedCount',
             'activeRooms',
             'todayBookings',
             'totalBookings',

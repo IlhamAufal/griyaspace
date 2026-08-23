@@ -11,7 +11,7 @@ class RoomController extends Controller
 {
     public function index()
     {
-        $rooms = Room::latest()->paginate(10);
+        $rooms = Room::with('photos')->latest()->paginate(10);
         return view('pages.rooms.index', compact('rooms'));
     }
 

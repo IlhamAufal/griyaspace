@@ -33,20 +33,12 @@
 
         <!-- Room Cards Grid -->
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            @php
-                $dummyImages = [
-                    asset('images/cards/card-01.jpg'),
-                    asset('images/cards/card-02.jpg'),
-                    asset('images/cards/card-03.jpg'),
-                    asset('images/carousel/carousel-01.png'),
-                    asset('images/carousel/carousel-02.png'),
-                    asset('images/carousel/carousel-03.png'),
-                ];
-            @endphp
-
             @forelse($rooms as $room)
                 @php
-                    $imageSrc = $dummyImages[$loop->index % count($dummyImages)];
+                    $coverPhoto = $room->photos->first();
+                    $imageSrc = $coverPhoto
+                        ? asset('storage/' . $coverPhoto->photo_path)
+                        : asset('images/cards/card-01.jpg');
                     $isInactive = $room->status !== 'active';
                 @endphp
                 <div class="relative group flex flex-col bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700/60 shadow-sm hover:shadow-lg transition-all duration-300 overflow-hidden">
@@ -80,12 +72,12 @@
                         <div class="absolute inset-0 bg-gradient-to-t from-gray-900/80 via-gray-900/20 to-black/30"></div>
 
                         <!-- Code Badge (Top Left) -->
-                        <div class="absolute top-3 left-3">
+                        {{-- <div class="absolute top-3 left-3">
                             <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-lg bg-brand-500/90 backdrop-blur-xs text-white text-xs font-bold shadow-xs">
                                 <i class="fa-solid fa-door-open text-xs"></i>
                                 <span>{{ $room->code }}</span>
                             </span>
-                        </div>
+                        </div> --}}
 
                         <!-- Room Name Overlay (Bottom) -->
                         <div class="absolute bottom-3 left-3 right-3">

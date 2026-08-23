@@ -240,13 +240,7 @@
 
             showEventDetail(event) {
                 const props = event.extendedProps || {};
-                const statusLabels = {
-                    'approved': 'Disetujui',
-                    'submitted': 'Diajukan',
-                    'revision': 'Revisi',
-                    'rejected': 'Ditolak',
-                    'cancelled': 'Dibatalkan'
-                };
+                const statusLabels = @json(\App\Enums\BookingStatus::labels());
                 const timeRange = props.start_time && props.end_time
                     ? `${props.booking_date || ''} (${props.start_time} - ${props.end_time} WIB)`
                     : (event.start ? event.start.toLocaleString('id-ID', { date: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }) : '-');

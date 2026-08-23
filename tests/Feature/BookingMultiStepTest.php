@@ -7,6 +7,7 @@ use App\Models\Room;
 use App\Models\Booking;
 use App\Models\BookingHistory;
 use App\Models\BookingDocument;
+use App\Enums\BookingStatus;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Foundation\Testing\DatabaseTransactions;
@@ -94,7 +95,7 @@ test('user can submit new booking and status is submitted with timeline updated'
     $booking = Booking::where('activity_name', 'Seminar Teknologi Masa Depan')->first();
 
     expect($booking)->not->toBeNull();
-    expect($booking->status)->toBe('submitted');
+    expect($booking->status->value)->toBe('submitted');
     expect($booking->submitted_by)->toBe($this->user->id);
     expect($booking->organization_id)->toBe($this->org->id);
 
@@ -228,5 +229,5 @@ test('user can submit booking without purpose since purpose is optional', functi
     $response->assertSessionHasNoErrors();
     $booking = Booking::where('activity_name', 'Acara Tanpa Tujuan Terisi')->first();
     expect($booking)->not->toBeNull();
-    expect($booking->status)->toBe('submitted');
+    expect($booking->status->value)->toBe('submitted');
 });

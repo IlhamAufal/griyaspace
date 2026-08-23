@@ -67,24 +67,8 @@
                             <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200 font-medium" title="{{ $booking->activity_name }}">{{ $booking->activity_name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{{ $booking->booking_date->format('d/m/Y') }}</td>
                             <td class="px-6 py-4 whitespace-nowrap">
-                                @php
-                                    $statusColors = [
-                                        'submitted' => 'bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-300',
-                                        'revision' => 'bg-orange-100 text-orange-800 dark:bg-orange-900/30 dark:text-orange-300',
-                                        'approved' => 'bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-300',
-                                        'rejected' => 'bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-300',
-                                        'cancelled' => 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300',
-                                    ];
-                                    $statusLabels = [
-                                        'submitted' => 'Diajukan',
-                                        'revision' => 'Revisi',
-                                        'approved' => 'Disetujui',
-                                        'rejected' => 'Ditolak',
-                                        'cancelled' => 'Dibatalkan',
-                                    ];
-                                @endphp
-                                <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $statusColors[$booking->status] ?? 'bg-gray-100 text-gray-800' }}">
-                                    {{ $statusLabels[$booking->status] ?? $booking->status }}
+                                <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $booking->status->colorClasses() }}">
+                                    {{ $booking->status->label() }}
                                 </span>
                             </td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-center">

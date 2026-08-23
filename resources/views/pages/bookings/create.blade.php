@@ -533,13 +533,7 @@ function bookingWizard() {
 
         showEventDetail(event) {
             const props = event.extendedProps || {};
-            const statusLabels = {
-                'approved': 'Disetujui',
-                'submitted': 'Diajukan',
-                'revision': 'Revisi',
-                'rejected': 'Ditolak',
-                'cancelled': 'Dibatalkan'
-            };
+            const statusLabels = @json(\App\Enums\BookingStatus::labels());
             const timeRange = props.start_time && props.end_time
                 ? `${props.booking_date || ''} (${props.start_time} - ${props.end_time} WIB)`
                 : (event.start ? event.start.toLocaleString('id-ID', { date: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit', hour12: false }) : '-');
@@ -553,12 +547,7 @@ function bookingWizard() {
             document.getElementById('modal-person-in-charge').textContent = props.person_in_charge || '-';
 
             const statusEl = document.getElementById('modal-status');
-            const statusClass = {
-                'approved': 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400',
-                'submitted': 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400',
-                'revision': 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400',
-                'rejected': 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400',
-            };
+            const statusClass = @json(\App\Enums\BookingStatus::colors());
             const cls = statusClass[props.status] || 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300';
             statusEl.innerHTML = `<span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-normal ${cls}">${statusLabels[props.status] || props.status || '-'}</span>`;
 

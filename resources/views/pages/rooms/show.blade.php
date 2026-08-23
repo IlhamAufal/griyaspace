@@ -270,12 +270,12 @@
                                     <td class="py-3 px-3">{{ \Carbon\Carbon::parse($b->start_time)->format('H:i') }} - {{ \Carbon\Carbon::parse($b->end_time)->format('H:i') }}</td>
                                     <td class="py-3 px-3 truncate max-w-[180px]">{{ $b->event_name ?? $b->purpose ?? '-' }}</td>
                                     <td class="py-3 px-3">
-                                        @if($b->status === 'approved')
+                                        @if($b->status === \App\Enums\BookingStatus::Approved)
                                             <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Disetujui</span>
-                                        @elseif($b->status === 'submitted' || $b->status === 'pending')
-                                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">Diajukan</span>
+                                        @elseif(in_array($b->status, [\App\Enums\BookingStatus::Submitted, \App\Enums\BookingStatus::Revision], true))
+                                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">{{ $b->status->label() }}</span>
                                         @else
-                                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">{{ ucfirst($b->status) }}</span>
+                                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300">{{ $b->status->label() }}</span>
                                         @endif
                                     </td>
                                 </tr>

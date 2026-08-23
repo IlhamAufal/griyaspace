@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Enums\BookingStatus;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -34,6 +35,7 @@ class Booking extends Model
     protected $casts = [
         'booking_date' => 'date',
         'participant_count' => 'integer',
+        'status' => BookingStatus::class,
         'submitted_at' => 'datetime',
         'decided_at' => 'datetime',
         'cancelled_at' => 'datetime',
@@ -123,11 +125,11 @@ class Booking extends Model
 
     public function isEditable(): bool
     {
-        return in_array($this->status, ['submitted', 'revision']);
+        return in_array($this->status, [BookingStatus::Submitted, BookingStatus::Revision], true);
     }
 
     public function canBeCancelled(): bool
     {
-        return in_array($this->status, ['submitted', 'revision']);
+        return in_array($this->status, [BookingStatus::Submitted, BookingStatus::Revision], true);
     }
 }

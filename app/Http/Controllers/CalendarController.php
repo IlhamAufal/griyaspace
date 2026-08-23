@@ -70,10 +70,10 @@ class CalendarController extends Controller
                     'start' => $booking->booking_date->format('Y-m-d') . 'T' . $booking->start_time,
                     'end' => $booking->booking_date->format('Y-m-d') . 'T' . $booking->end_time,
                     'color' => match ($booking->status) {
-                        'approved' => '#16a34a',
-                        'submitted' => '#eab308',
-                        'revision' => '#f97316',
-                        'rejected' => '#dc2626',
+                        \App\Enums\BookingStatus::Approved => '#16a34a',
+                        \App\Enums\BookingStatus::Submitted => '#eab308',
+                        \App\Enums\BookingStatus::Revision => '#f97316',
+                        \App\Enums\BookingStatus::Rejected => '#dc2626',
                         default => '#6b7280',
                     },
                     'extendedProps' => [

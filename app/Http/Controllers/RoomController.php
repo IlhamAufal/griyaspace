@@ -94,6 +94,10 @@ class RoomController extends Controller
 
     public function storePhoto(Request $request, Room $room)
     {
+        if ($room->photos()->count() >= 6) {
+            return redirect()->route('rooms.edit', $room)->with('error', 'Maksimal 6 foto yang diperbolehkan untuk satu ruangan.');
+        }
+
         $request->validate([
             'photo' => 'required|image|mimes:jpeg,png,jpg,webp|max:5120',
         ]);

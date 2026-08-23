@@ -22,7 +22,9 @@ Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
 // Protected
 Route::middleware(['auth'])->group(function () {
 
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
+    // Dashboard - role-based routing via single dispatcher
+    Route::get('/', fn() => redirect()->route('dashboard'));
+    Route::get('/dashboard', [App\Http\Controllers\DashboardController::class, 'index'])->name('dashboard');
 
     // Kalender
     Route::prefix('kalender')->group(function () {

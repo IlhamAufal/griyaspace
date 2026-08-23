@@ -2,97 +2,120 @@
 
 @section('content')
 <div class="space-y-6">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard Admin</h1>
 
+    <!-- Page Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard Admin</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Ringkasan data dan statistik pemesanan ruangan</p>
+        </div>
+        <div class="text-right">
+            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ now()->translatedFormat('l, d F Y') }}</p>
+            <p class="text-xs text-gray-400">Last updated: {{ now()->format('H:i') }}</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Pengajuan Menunggu</p>
-            <p class="mt-2 text-3xl font-bold text-yellow-500">{{ $pendingCount }}</p>
-        </div>
-        <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Booking Disetujui</p>
-            <p class="mt-2 text-3xl font-bold text-green-500">{{ $approvedCount }}</p>
-        </div>
-        <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Ruangan Aktif</p>
-            <p class="mt-2 text-3xl font-bold text-blue-500">{{ $activeRooms }}</p>
-        </div>
-        <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Jadwal Hari Ini</p>
-            <p class="mt-2 text-3xl font-bold text-purple-500">{{ $todayBookings }}</p>
-        </div>
+        <x-dashboard.stat-card title="Pengajuan Menunggu" :value="$pendingCount" icon="fa-clock-rotate-left" color="yellow" />
+        <x-dashboard.stat-card title="Booking Disetujui" :value="$approvedCount" icon="fa-circle-check" color="green" />
+        <x-dashboard.stat-card title="Ruangan Aktif" :value="$activeRooms" icon="fa-door-open" color="blue" />
+        <x-dashboard.stat-card title="Jadwal Hari Ini" :value="$todayBookings" icon="fa-calendar-day" color="purple" />
     </div>
 
-    <div class="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
-        <div class="border-b border-gray-200 px-5 py-4 dark:border-gray-700">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Pengajuan Terbaru</h2>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
-                <thead class="bg-brand-500 text-white">
-                    <tr>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Organisasi</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Ruangan</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Tanggal</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                    @forelse($recentSubmissions as $submission)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                            <td class="px-5 py-3">{{ $submission->organization->name ?? '-' }}</td>
-                            <td class="px-5 py-3">{{ $submission->room->name ?? '-' }}</td>
-                            <td class="px-5 py-3">{{ \Carbon\Carbon::parse($submission->booking_date)->format('d M Y') }}</td>
-                            <td class="px-5 py-3">
-                                <span class="inline-block rounded-full px-2 py-0.5 text-xs font-medium
-                                    {{ $submission->status === 'pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : '' }}
-                                    {{ $submission->status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : '' }}
-                                    {{ $submission->status === 'rejected' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : '' }}
-                                    {{ $submission->status === 'revision' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : '' }}">
-                                    {{ ucfirst($submission->status) }}
-                                </span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="px-5 py-8 text-center text-gray-400">Tidak ada pengajuan terbaru</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+    <!-- Shortcuts -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <a href="{{ route('bookings.konfirmasi') }}" class="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 hover:shadow-md hover:border-brand-300 dark:hover:border-brand-500 transition-all">
+            <div class="w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-clipboard-check text-brand-500"></i>
+            </div>
+            <div>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Pemeriksaan Pengajuan</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Review dan putuskan pengajuan masuk</p>
+            </div>
+            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto group-hover:text-brand-500 transition-colors"></i>
+        </a>
+        <a href="{{ route('calendar.index') }}" class="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 hover:shadow-md hover:border-brand-300 dark:hover:border-brand-500 transition-all">
+            <div class="w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-calendar-days text-brand-500"></i>
+            </div>
+            <div>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Kalender Booking</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Lihat seluruh jadwal pemesanan</p>
+            </div>
+            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto group-hover:text-brand-500 transition-colors"></i>
+        </a>
     </div>
 
-    <div class="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
-        <div class="border-b border-gray-200 px-5 py-4 dark:border-gray-700">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Booking Mendatang</h2>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
-                <thead class="bg-brand-500 text-white">
-                    <tr>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Organisasi</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Ruangan</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Tanggal</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Waktu</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                    @forelse($upcomingBookings as $booking)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                            <td class="px-5 py-3">{{ $booking->organization->name ?? '-' }}</td>
-                            <td class="px-5 py-3">{{ $booking->room->name ?? '-' }}</td>
-                            <td class="px-5 py-3">{{ \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') }}</td>
-                            <td class="px-5 py-3">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }} WIB</td>
-                        </tr>
-                    @empty
+    <!-- Tables Row -->
+    <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
+
+        <!-- Pengajuan Terbaru -->
+        <x-dashboard.section title="Pengajuan Terbaru" :count="$recentSubmissions->count()" dot-color="brand">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
+                    <thead class="bg-brand-500 text-white">
                         <tr>
-                            <td colspan="4" class="px-5 py-8 text-center text-gray-400">Tidak ada booking mendatang</td>
+                            <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Organisasi</th>
+                            <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Ruangan</th>
+                            <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Tanggal</th>
+                            <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Status</th>
                         </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                        @forelse($recentSubmissions as $submission)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ $submission->organization->name ?? '-' }}</td>
+                                <td class="px-4 py-3">{{ $submission->room->name ?? '-' }}</td>
+                                <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ \Carbon\Carbon::parse($submission->booking_date)->format('d M Y') }}</td>
+                                <td class="px-4 py-3"><x-dashboard.status-badge :status="$submission->status" /></td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-4 py-8 text-center text-gray-400">
+                                    <i class="fa-regular fa-folder-open text-2xl mb-2 block"></i>
+                                    Tidak ada pengajuan terbaru
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </x-dashboard.section>
+
+        <!-- Booking Mendatang -->
+        <x-dashboard.section title="Booking Mendatang" :count="$upcomingBookings->count()" dot-color="green">
+            <div class="overflow-x-auto">
+                <table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
+                    <thead class="bg-brand-500 text-white">
+                        <tr>
+                            <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Organisasi</th>
+                            <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Ruangan</th>
+                            <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Tanggal</th>
+                            <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Waktu</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
+                        @forelse($upcomingBookings as $booking)
+                            <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                                <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ $booking->organization->name ?? '-' }}</td>
+                                <td class="px-4 py-3">{{ $booking->room->name ?? '-' }}</td>
+                                <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') }}</td>
+                                <td class="px-4 py-3">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }}</td>
+                            </tr>
+                        @empty
+                            <tr>
+                                <td colspan="4" class="px-4 py-8 text-center text-gray-400">
+                                    <i class="fa-regular fa-calendar-xmark text-2xl mb-2 block"></i>
+                                    Tidak ada booking mendatang
+                                </td>
+                            </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </x-dashboard.section>
+
     </div>
 </div>
 @endsection

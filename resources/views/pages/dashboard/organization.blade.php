@@ -2,98 +2,81 @@
 
 @section('content')
 <div class="space-y-6">
-    <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
 
+    <!-- Page Header -->
+    <div class="flex items-center justify-between">
+        <div>
+            <h1 class="text-2xl font-bold text-gray-900 dark:text-white">Dashboard</h1>
+            <p class="text-sm text-gray-500 dark:text-gray-400 mt-1">Selamat datang, {{ auth()->user()->name }}</p>
+        </div>
+        <div class="text-right">
+            <p class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ now()->translatedFormat('l, d F Y') }}</p>
+        </div>
+    </div>
+
+    <!-- Stats Cards -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-3">
-        <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Menunggu</p>
-            <p class="mt-2 text-3xl font-bold text-yellow-500">{{ $myPendingCount }}</p>
-        </div>
-        <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Disetujui</p>
-            <p class="mt-2 text-3xl font-bold text-green-500">{{ $myApprovedCount }}</p>
-        </div>
-        <div class="rounded-xl border border-gray-200 bg-white p-5 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-            <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Perlu Revisi</p>
-            <p class="mt-2 text-3xl font-bold text-orange-500">{{ $myRevisionCount }}</p>
-        </div>
+        <x-dashboard.stat-card title="Pengajuan Menunggu" :value="$myPendingCount" icon="fa-clock-rotate-left" color="yellow" />
+        <x-dashboard.stat-card title="Booking Disetujui" :value="$myApprovedCount" icon="fa-circle-check" color="green" />
+        <x-dashboard.stat-card title="Perlu Revisi / Ditolak" :value="$myRevisionRejectedCount" icon="fa-pen-to-square" color="orange" />
     </div>
 
-    <div class="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
-        <div class="border-b border-gray-200 px-5 py-4 dark:border-gray-700">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Booking Mendatang</h2>
-        </div>
+    <!-- Shortcuts -->
+    <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+        <a href="{{ route('bookings.create') }}" class="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 hover:shadow-md hover:border-brand-300 dark:hover:border-brand-500 transition-all">
+            <div class="w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-plus text-brand-500"></i>
+            </div>
+            <div>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Ajukan Pengajuan Baru</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">Buat pengajuan pemesanan ruangan</p>
+            </div>
+            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto group-hover:text-brand-500 transition-colors"></i>
+        </a>
+        <a href="{{ route('bookings.index') }}" class="group flex items-center gap-4 rounded-xl border border-gray-200 bg-white p-4 shadow-sm dark:border-gray-700 dark:bg-gray-800 hover:shadow-md hover:border-brand-300 dark:hover:border-brand-500 transition-all">
+            <div class="w-10 h-10 rounded-lg bg-brand-50 dark:bg-brand-500/10 flex items-center justify-center group-hover:scale-110 transition-transform">
+                <i class="fa-solid fa-file-invoice text-brand-500"></i>
+            </div>
+            <div>
+                <p class="text-sm font-semibold text-gray-900 dark:text-white">Daftar Surat Izin</p>
+                <p class="text-xs text-gray-500 dark:text-gray-400">{{ $validPermitsCount }} surat izin aktif</p>
+            </div>
+            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto group-hover:text-brand-500 transition-colors"></i>
+        </a>
+    </div>
+
+    <!-- Table -->
+    <x-dashboard.section title="Booking Terdekat" :count="$nearestBookings->count()" dot-color="green" href="{{ route('bookings.index') }}">
         <div class="overflow-x-auto">
             <table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
                 <thead class="bg-brand-500 text-white">
                     <tr>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Ruangan</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Tanggal</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Waktu</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Status</th>
+                        <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Ruangan</th>
+                        <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Tanggal</th>
+                        <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Waktu</th>
+                        <th class="px-4 py-3 text-xs font-bold uppercase tracking-wider">Status</th>
                     </tr>
                 </thead>
                 <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                    @forelse($upcomingBookings as $booking)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                            <td class="px-5 py-3">{{ $booking->room->name ?? '-' }}</td>
-                            <td class="px-5 py-3">{{ \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') }}</td>
-                            <td class="px-5 py-3">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }} WIB</td>
-                            <td class="px-5 py-3">
-                                <span class="inline-block rounded-full px-2 py-0.5 text-xs font-medium
-                                    {{ $booking->status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : '' }}
-                                    {{ $booking->status === 'pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : '' }}
-                                    {{ $booking->status === 'revision' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : '' }}">
-                                    {{ ucfirst($booking->status) }}
-                                </span>
-                            </td>
+                    @forelse($nearestBookings as $booking)
+                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors">
+                            <td class="px-4 py-3 font-medium text-gray-900 dark:text-white">{{ $booking->room->name ?? '-' }}</td>
+                            <td class="px-4 py-3 text-gray-500 dark:text-gray-400">{{ \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') }}</td>
+                            <td class="px-4 py-3">{{ substr($booking->start_time, 0, 5) }} - {{ substr($booking->end_time, 0, 5) }}</td>
+                            <td class="px-4 py-3"><x-dashboard.status-badge :status="$booking->status" /></td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="px-5 py-8 text-center text-gray-400">Tidak ada booking mendatang</td>
+                            <td colspan="4" class="px-4 py-8 text-center text-gray-400">
+                                <i class="fa-regular fa-calendar-xmark text-2xl mb-2 block"></i>
+                                Tidak ada booking mendatang
+                            </td>
                         </tr>
                     @endforelse
                 </tbody>
             </table>
         </div>
-    </div>
+    </x-dashboard.section>
 
-    <div class="rounded-xl border border-gray-200 bg-white shadow-sm dark:border-gray-700 dark:bg-gray-800">
-        <div class="border-b border-gray-200 px-5 py-4 dark:border-gray-700">
-            <h2 class="text-lg font-semibold text-gray-900 dark:text-white">Pengajuan Terakhir</h2>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="w-full text-left text-sm text-gray-600 dark:text-gray-300">
-                <thead class="bg-brand-500 text-white">
-                    <tr>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Ruangan</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Tanggal</th>
-                        <th class="px-5 py-3 text-xs font-bold text-white uppercase tracking-wider">Status</th>
-                    </tr>
-                </thead>
-                <tbody class="divide-y divide-gray-100 dark:divide-gray-700">
-                    @forelse($recentBookings as $booking)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/50">
-                            <td class="px-5 py-3">{{ $booking->room->name ?? '-' }}</td>
-                            <td class="px-5 py-3">{{ \Carbon\Carbon::parse($booking->booking_date)->format('d M Y') }}</td>
-                            <td class="px-5 py-3">
-                                <span class="inline-block rounded-full px-2 py-0.5 text-xs font-medium
-                                    {{ $booking->status === 'approved' ? 'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400' : '' }}
-                                    {{ $booking->status === 'pending' ? 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400' : '' }}
-                                    {{ $booking->status === 'rejected' ? 'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400' : '' }}
-                                    {{ $booking->status === 'revision' ? 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400' : '' }}">
-                                    {{ ucfirst($booking->status) }}
-                                </span>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="3" class="px-5 py-8 text-center text-gray-400">Tidak ada pengajuan terakhir</td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
-        </div>
-    </div>
 </div>
 @endsection

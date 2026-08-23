@@ -346,10 +346,11 @@
     </div>
 
     <!-- FULLSCREEN LIGHTBOX MODAL -->
-    <div x-show="lightbox && hasPhotos" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6" style="display: none;">
+    <div x-show="lightbox" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6" style="display: none;">
         <!-- Top Bar -->
         <div class="flex items-center justify-between text-white z-10">
             <div class="flex items-center gap-3">
+                <span class="text-sm font-bold bg-white/20 px-3 py-1 rounded-lg" x-text="photos[activeIndex].tag"></span>
                 <span class="text-sm font-medium text-gray-300" x-text="photos[activeIndex].caption"></span>
             </div>
             <button type="button" @click="lightbox = false" class="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 text-white flex items-center justify-center transition-colors">

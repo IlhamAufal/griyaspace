@@ -119,16 +119,16 @@
         </div>
 
         <x-slot:footer>
-            @if (auth()->user()->isAdmin() || auth()->user()->isStaff())
+            @if (auth()->user()->isAdmin())
                 <a :href="modalData.booking_id ? '/pengajuan/' + modalData.booking_id : '#'"
                     class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                     <i class="fa-solid fa-eye text-xs"></i> Lihat Detail
                 </a>
             @endif
-            <button type="button" @click="close()" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
+            {{-- <button type="button" @click="close()" class="inline-flex items-center gap-2 bg-gray-200 hover:bg-gray-300 text-gray-700 px-4 py-2 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
                 <i class="fa-solid fa-xmark text-sm"></i>
-                <span>Tutup</span>
-            </button>
+                <span>Tutup</span>/
+            </button> --}}
         </x-slot:footer>
     </x-common.modal>
 </div>

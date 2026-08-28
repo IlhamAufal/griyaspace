@@ -28,6 +28,17 @@ tailadmin-laravel.png
 /public/js
 /public/images
 
+# PDF templates and generated files
+storage/app/private/*.pdf
+storage/app/private/**/*.pdf
+*.pdf
+
+# Logo and template images
+storage/app/private/logo.png
+storage/app/private/**/*.png
+storage/app/private/**/*.jpg
+storage/app/private/**/*.jpeg
+
 # IDE
 *.swp
 *.swo
@@ -39,4 +50,4 @@ Desktop.ini
 
 
 docs
-storage\framework
+/storage/framework

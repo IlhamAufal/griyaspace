@@ -4,13 +4,13 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
+
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class User extends Authenticatable
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
 
     protected $fillable = [
         'organization_id',
@@ -62,11 +62,16 @@ class User extends Authenticatable
 
     public function isAdmin(): bool
     {
-        return $this->role->slug === 'admin';
+        return $this->role?->slug === 'admin';
+    }
+
+    public function isStaff(): bool
+    {
+        return $this->role?->slug === 'staff';
     }
 
     public function isOrganization(): bool
     {
-        return $this->role->slug === 'organization';
+        return $this->role?->slug === 'organization';
     }
 }

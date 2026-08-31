@@ -70,10 +70,7 @@
                 </div>
             </div>
 
-            <!-- ApexChart Container with Skeleton Fallback -->
-            <div id="orgMonthlyChart" class="w-full min-h-[290px] overflow-hidden">
-                <x-skeleton.chart height="290px" type="area" />
-            </div>
+            <div id="orgMonthlyChart" class="w-full min-h-[290px]"></div>
         </div>
 
         <!-- Chart 2: Status Distribusi Pengajuan Organisasi (Donut Chart) -->
@@ -87,9 +84,7 @@
                 </span>
             </div>
 
-            <div id="orgStatusDonutChart" class="w-full min-h-[220px] flex items-center justify-center">
-                <x-skeleton.chart height="220px" type="donut" />
-            </div>
+            <div id="orgStatusDonutChart" class="w-full min-h-[220px] flex items-center justify-center"></div>
 
             <!-- Custom Legend Badges (High Contrast & Clear Readability - 2x2 Grid) -->
             <div class="grid grid-cols-2 gap-2.5 mt-4 pt-3.5 border-t border-gray-100 dark:border-gray-700/60 text-xs">

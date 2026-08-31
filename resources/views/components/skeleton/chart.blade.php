@@ -11,16 +11,16 @@
         </div>
     </div>
     @elseif($type === 'bar')
-    <div class="flex items-end justify-between gap-3 flex-1 px-4 pb-2 pt-6">
+    <div class="grid grid-cols-7 gap-3 flex-1 px-4 pb-2 pt-6">
         @for($b = 0; $b < 7; $b++)
         <div class="w-full bg-gray-200 dark:bg-gray-700 rounded-t-md" style="height: {{ [40, 75, 55, 90, 65, 80, 45][$b] }}%;"></div>
         @endfor
     </div>
     @else
     <!-- Area / Line Wave Chart Skeleton -->
-    <div class="flex items-end justify-between gap-2 flex-1 px-2 pb-2 pt-8">
+    <div class="grid grid-cols-8 gap-2 flex-1 px-2 pb-2 pt-8">
         @for($l = 0; $l < 8; $l++)
-        <div class="flex flex-col items-center gap-1 w-full">
+        <div class="flex flex-col items-center gap-1">
             <div class="w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600"></div>
             <div class="w-full bg-gradient-to-t from-gray-200 to-gray-100 dark:from-gray-700 dark:to-gray-800 rounded-t-md" style="height: {{ [30, 60, 45, 85, 50, 70, 95, 60][$l] }}%;"></div>
         </div>
@@ -29,9 +29,9 @@
     @endif
 
     <!-- Bottom X-axis labels skeleton -->
-    <div class="flex justify-between pt-3 border-t border-gray-100 dark:border-gray-700/50">
+    <div class="grid {{ $type === 'donut' ? 'grid-cols-4' : 'grid-cols-6' }} gap-2 pt-3 border-t border-gray-100 dark:border-gray-700/50">
         @for($x = 0; $x < ($type === 'donut' ? 4 : 6); $x++)
-        <div class="h-2.5 bg-gray-200 dark:bg-gray-700 rounded w-10"></div>
+        <div class="h-2.5 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
         @endfor
     </div>
 </div>

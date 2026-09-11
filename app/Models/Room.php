@@ -12,6 +12,7 @@ class Room extends Model
         'name',
         'capacity',
         'location',
+        'facilities',
         'open_time',
         'close_time',
         'status',
@@ -19,6 +20,7 @@ class Room extends Model
 
     protected $casts = [
         'capacity' => 'integer',
+        'facilities' => 'array',
     ];
 
     public function photos(): HasMany

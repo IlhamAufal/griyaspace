@@ -1,56 +1,27 @@
-# TailAdmin Laravel - Tailwind CSS Free Laravel Dashboard
+# GriyaSpace - Sistem Manajemen Ruangan & Booking
 
-**TailAdmin Laravel** is a modern, production-ready admin dashboard template powered by **Laravel 12**, **Tailwind CSS v4**, **Alpine.js**, and a clean, modular architecture. TailAdmin is one of the most popular Tailwind CSS dashboard now also available for Larvael. It’s designed for building fast, scalable admin panels, CRM dashboards, SaaS backends, and any data-driven application where clarity and performance matter.
-![TailAdmin - Next.js Dashboard Preview](./tailadmin-laravel.png)
+GriyaSpace adalah aplikasi web untuk manajemen ruangan dan pengajuan booking, dibangun dengan **Laravel 12**, **Tailwind CSS v4**, dan **Alpine.js**. Aplikasi ini dirancang untuk institusi seperti universitas atau organisasi yang membutuhkan sistem peminjaman ruangan yang terstruktur.
 
+## Fitur Utama
 
-## Quick Links
+- **Manajemen Ruangan** - CRUD ruangan dengan foto, kapasitas, lokasi, fasilitas, dan jam operasional
+- **Pengajuan Booking** - Pengguna organisasi dapat mengajukan peminjaman ruangan
+- **Alur Persetujuan** - Admin dapat menyetujui/menolak pengajuan, dengan generate surat izin (PDF)
+- **Kalender** - Visualisasi booking dalam tampilan kalender
+- **Manajemen Organisasi** - Data organisasi/ormawa pengguna
+- **Manajemen Pengguna & Role** - Dua role: Admin dan Organisasi
+- **Riwayat & Audit Log** - Pelacakan riwayat booking dan log aktivitas
+- **Dashboard Berbasis Role** - Dashboard berbeda untuk Admin dan Organisasi
 
-* [✨ Get TailAdmin Laravel](https://tailadmin.com/laravel)
-* [📄 Documentation](https://tailadmin.com/docs)
-* [⬇️ Download](https://tailadmin.com/download)
-* [🌐 Live Demo](https://laravel-demo.tailadmin.com)
+## Requirements
 
-Here’s a tighter, more search-friendly version that highlights value and avoids fluff while keeping your structure intact.
+- **PHP 8.2+**
+- **Composer** (PHP dependency manager)
+- **Node.js 18+** dan **npm** (untuk frontend assets)
+- **MySQL** (database default)
+- **Storage link** untuk file upload
 
-## ✨ Key Features
-
-* 🚀 **Laravel 12 Core** - Built on the latest Laravel release with improved routing, security, and Blade templating
-* 🎨 **Tailwind CSS v4** - Utility-first styling for rapid, consistent UI development
-* ⚡ **Alpine.js Interactivity** - Lightweight reactivity without a heavy JavaScript framework
-* 📦 **Vite Build System** - Fast dev server, instant HMR, and optimized production builds
-* 📱 **Fully Responsive Layouts** - Smooth, mobile-first design that adapts across all screen sizes
-* 🌙 **Built-in Dark Mode** - Ready-to-use modern dark theme for better usability and aesthetics
-* 📊 **Advanced UI Components** - Charts, data tables, forms, calendars, modals, and reusable blocks for complex dashboards
-* 🎯 **Production-Ready Dashboard UI** - Clean, modern interface crafted for real apps, not placeholder demos
-
-### Other Versions
-
-- [Next.js Version](https://github.com/TailAdmin/free-nextjs-admin-dashboard)
-- [React.js Version](https://github.com/TailAdmin/free-react-tailwind-admin-dashboard)
-- [Vue.js Version](https://github.com/TailAdmin/vue-tailwind-admin-dashboard)
-- [Angular Version](https://github.com/TailAdmin/free-angular-tailwind-dashboard)
-- [Laravel Version](https://github.com/TailAdmin/tailadmin-laravel)
-
-## 📋 Requirements
-To set up TailAdmin Laravel, make sure your environment includes:
-
-* **PHP 8.2+**
-* **Composer** (PHP dependency manager)
-* **Node.js 18+** and **npm** (for compiling frontend assets)
-* **Database** - Works with SQLite (default), MySQL, or PostgreSQL
-
-### Tailwind CSS Laravel Dashboard
-
-TailAdmin delivers a refined Tailwind CSS Laravel Dashboard experience, combining Laravel’s robust backend with Tailwind’s flexible utility classes. The result is a clean, fast, and customizable dashboard that helps developers build modern admin interfaces without the usual front-end complexity. It’s ideal for teams looking for a Tailwind-powered Laravel starter that stays lightweight and easy to scale.
-
-### Laravel Admin Dashboard
-
-If you’re searching for a dependable Laravel Admin Dashboard template that’s easy to set up and ready for production, TailAdmin fits the job. It offers a polished UI, reusable components, optimized performance, and all the essentials needed to launch dashboards, CRM systems, and internal tools quickly. It gives developers a solid foundation, so projects move faster with fewer decisions to worry about.
-
-### Check Your Environment
-
-Verify your installations:
+### Cek Environment
 
 ```bash
 php -v
@@ -59,13 +30,13 @@ node -v
 npm -v
 ```
 
-## 🚀 Quick Start Installation
+## Quick Start Installation
 
-### Step 1: Clone the Repository
+### Step 1: Clone Repository
 
 ```bash
-git clone https://github.com/TailAdmin/tailadmin-laravel.git
-cd tailadmin-laravel
+git clone <url-repo>
+cd griyaspace
 ```
 
 ### Step 2: Install PHP Dependencies
@@ -74,42 +45,22 @@ cd tailadmin-laravel
 composer install
 ```
 
-This command will install all Laravel dependencies defined in `composer.json`.
-
 ### Step 3: Install Node.js Dependencies
 
 ```bash
 npm install
 ```
 
-Or if you prefer yarn or pnpm:
-
-```bash
-# Using yarn
-yarn install
-
-# Using pnpm
-pnpm install
-```
-
 ### Step 4: Environment Configuration
-
-Copy the example environment file:
 
 ```bash
 cp .env.example .env
 ```
 
-**For Windows users:**
+**Windows:**
 
 ```bash
 copy .env.example .env
-```
-
-**Or create it programmatically:**
-
-```bash
-php -r "file_exists('.env') || copy('.env.example', '.env');"
 ```
 
 ### Step 5: Generate Application Key
@@ -118,76 +69,60 @@ php -r "file_exists('.env') || copy('.env.example', '.env');"
 php artisan key:generate
 ```
 
-This creates a unique encryption key for your application.
+### Step 6: Konfigurasi Database
 
-### Step 6: Configure Database
-
-#### Option A: Using MySQL/PostgreSQL
-
-Update your `.env` file with your database credentials:
+Update file `.env` dengan kredensial database kamu:
 
 ```env
 DB_CONNECTION=mysql
 DB_HOST=127.0.0.1
 DB_PORT=3306
-DB_DATABASE=tailadmin_db
-DB_USERNAME=your_username
-DB_PASSWORD=your_password
+DB_DATABASE=griyaspace
+DB_USERNAME=root
+DB_PASSWORD=
 ```
 
-Create the database:
+Buat database:
 
 ```bash
-# MySQL
-mysql -u root -p -e "CREATE DATABASE tailadmin_db;"
-
-# PostgreSQL
-createdb tailadmin_db
+mysql -u root -p -e "CREATE DATABASE griyaspace;"
 ```
 
-Run migrations:
+### Step 7: Jalankan Migrations & Seeders
 
 ```bash
 php artisan migrate
-```
-
-### Step 7: (Optional) Seed the Database
-
-If you want sample data:
-
-```bash
 php artisan db:seed
 ```
 
-### Step 8: Storage Link
+Ini akan membuat:
+- **Admin**: `admin@griyaspace.test` / `password`
+- **Organisasi**: `ormawa@griyaspace.test` / `password`
+- 3 sample ruangan
 
-Create a symbolic link for file storage:
+### Step 8: Storage Link
 
 ```bash
 php artisan storage:link
 ```
 
-## 🏃 Running the Application
+## Menjalankan Aplikasi
 
 ### Development Mode (Recommended)
-
-The easiest way to start development is using the built-in script:
 
 ```bash
 composer run dev
 ```
 
-This single command starts:
-- ✅ Laravel development server (http://localhost:8000)
-- ✅ Vite dev server for hot module reloading
-- ✅ Queue worker for background jobs
-- ✅ Log monitoring
+Perintah ini menjalankan secara bersamaan:
+- Laravel development server (http://localhost:8000)
+- Vite dev server untuk HMR
+- Queue worker
+- Log monitoring (Pail)
 
-**Access your application at:** [http://localhost:8000](http://localhost:8000)
+**Akses aplikasi di:** [http://localhost:8000](http://localhost:8000)
 
-### Manual Development Setup
-
-If you prefer to run services individually in separate terminal windows:
+### Manual Development
 
 **Terminal 1 - Laravel Server:**
 ```bash
@@ -199,33 +134,17 @@ php artisan serve
 npm run dev
 ```
 
-### Building for Production
-
-#### Build Frontend Assets
+### Build untuk Production
 
 ```bash
 npm run build
-```
-
-#### Optimize Laravel
-
-```bash
-# Clear and cache configuration
 php artisan config:cache
-
-# Cache routes
 php artisan route:cache
-
-# Cache views
 php artisan view:cache
-
-# Optimize autoloader
 composer install --optimize-autoloader --no-dev
 ```
 
-#### Production Environment
-
-Update your `.env` for production:
+Update `.env` untuk production:
 
 ```env
 APP_ENV=production
@@ -233,207 +152,158 @@ APP_DEBUG=false
 APP_URL=https://yourdomain.com
 ```
 
+## Deployment (Vercel)
 
-## 🧪 Testing
+Project ini sudah dikonfigurasi untuk deployment di Vercel via `vercel.json`. Build command yang digunakan:
 
-Run the test suite using Pest:
+```bash
+composer install --no-dev --no-scripts && npm ci && npm run build
+```
+
+## Testing
 
 ```bash
 composer run test
 ```
 
-Or manually:
+Atau manual:
 
 ```bash
 php artisan test
 ```
 
-Run with coverage:
-
-```bash
-php artisan test --coverage
-```
-
-Run specific tests:
-
-```bash
-php artisan test --filter=ExampleTest
-```
-
-## 📜 Available Commands
+## Available Commands
 
 ### Composer Scripts
 
 ```bash
-# Start development environment
-composer run dev
-
-# Run tests
-composer run test
-
-# Code formatting (if configured)
-composer run format
-
-# Static analysis (if configured)
-composer run analyze
+composer run dev       # Start development environment
+composer run test      # Run tests
 ```
 
 ### NPM Scripts
 
 ```bash
-# Start Vite dev server
-npm run dev
-
-# Build for production
-npm run build
-
-# Preview production build
-npm run preview
-
-# Lint JavaScript/TypeScript
-npm run lint
-
-# Format code
-npm run format
+npm run dev           # Start Vite dev server
+npm run build         # Build untuk production
+npm run lint          # Lint JavaScript
+npm run format        # Format code
 ```
 
 ### Artisan Commands
 
 ```bash
-# Start development server
-php artisan serve
-
-# Run migrations
-php artisan migrate
-
-# Rollback migrations
-php artisan migrate:rollback
-
-# Fresh migrations with seeding
-php artisan migrate:fresh --seed
-
-# Generate application key
-php artisan key:generate
-
-# Clear all caches
-php artisan optimize:clear
-
-# Cache everything for production
-php artisan optimize
-
-# Create symbolic link for storage
-php artisan storage:link
-
-# Start queue worker
-php artisan queue:work
-
-# List all routes
-php artisan route:list
-
-# Create a new controller
-php artisan make:controller YourController
-
-# Create a new model
-php artisan make:model YourModel -m
-
-# Create a new migration
-php artisan make:migration create_your_table
+php artisan serve                    # Start development server
+php artisan migrate                  # Run migrations
+php artisan migrate:fresh --seed     # Fresh migrations + seeding
+php artisan db:seed                  # Run seeders
+php artisan key:generate             # Generate app key
+php artisan storage:link             # Create storage symlink
+php artisan optimize:clear           # Clear all caches
+php artisan route:list               # List all routes
 ```
 
-## 📁 Project Structure
+## Project Structure
 
 ```
-tailadmin-laravel/
-├── app/                    # Application logic
-│   ├── Http/              # Controllers, Middleware, Requests
-│   ├── Models/            # Eloquent models
-│   └── Providers/         # Service providers
-├── bootstrap/             # Framework bootstrap files
-├── config/                # Configuration files
-├── database/              # Migrations, seeders, factories
-│   ├── migrations/
-│   ├── seeders/
-│   └── factories/
-├── public/                # Public assets (entry point)
-│   ├── build/            # Compiled assets (generated)
-│   └── index.php         # Application entry point
-├── resources/             # Views and raw assets
-│   ├── css/              # Stylesheets (Tailwind)
-│   ├── js/               # JavaScript files (Alpine.js)
-│   └── views/            # Blade templates
-├── routes/                # Route definitions
-│   ├── web.php           # Web routes
-│   ├── api.php           # API routes
-│   └── console.php       # Console routes
-├── storage/               # Logs, cache, uploads
-│   ├── app/
-│   ├── framework/
-│   └── logs/
-├── tests/                 # Pest test files
-│   ├── Feature/
-│   └── Unit/
-├── .env.example           # Example environment file
-├── artisan                # Artisan CLI
-├── composer.json          # PHP dependencies
-├── package.json           # Node dependencies
-├── vite.config.js         # Vite configuration
-└── tailwind.config.js     # Tailwind configuration
+griyaspace/
+├── app/
+│   ├── Console/Commands/         # Custom artisan commands
+│   ├── Enums/                    # Enumerasi (BookingStatus)
+│   ├── Exceptions/               # Custom exceptions
+│   ├── Helpers/                  # Helper functions
+│   ├── Http/
+│   │   ├── Controllers/
+│   │   │   ├── Admin/            # Admin dashboard controller
+│   │   │   └── Organization/     # Org dashboard controller
+│   │   └── Middleware/           # EnsureRole, EnsureOwnership
+│   ├── Models/                  # Eloquent models
+│   └── Services/                # BookingService, PermitPdfService
+├── database/
+│   ├── migrations/              # Database schema
+│   └── seeders/                 # Database seeders
+├── resources/
+│   ├── css/                     # Stylesheets (Tailwind)
+│   ├── js/                      # JavaScript (Alpine.js)
+│   └── views/                   # Blade templates
+│       ├── components/          # Reusable components
+│       ├── layouts/             # Layout templates
+│       └── pages/               # Page views
+├── routes/
+│   └── web.php                  # Web routes
+├── vercel.json                  # Vercel deployment config
+└── vite.config.js               # Vite configuration
 ```
 
-## 🐛 Troubleshooting
+## Models
 
-### Common Issues
+| Model | Deskripsi |
+|-------|-----------|
+| `User` | Pengguna sistem (admin & organisasi) |
+| `Role` | Role pengguna (admin, organization) |
+| `Organization` | Data organisasi/ormawa |
+| `Room` | Data ruangan |
+| `RoomPhoto` | Foto ruangan |
+| `Booking` | Pengajuan booking ruangan |
+| `BookingDocument` | Dokumen lampiran booking |
+| `BookingHistory` | Riwayat perubahan status booking |
+| `Permit` | Surat izin penggunaan ruangan (PDF) |
+| `AuditLog` | Log aktivitas sistem |
 
-#### "Class not found" errors
+## Akses & Role
+
+### Admin
+- Dashboard admin dengan statistik
+- Kelola ruangan (CRUD + foto)
+- Kelola organisasi
+- Kelola pengguna & role
+- Konfirmasi/penolakan booking
+- Generate surat izin (PDF)
+
+### Organisasi
+- Dashboard organisasi
+- Lihat daftar ruangan
+- Ajukan booking baru
+- Lihat status & riwayat booking
+- Download surat izin
+
+## Troubleshooting
+
+### "Class not found" errors
 ```bash
 composer dump-autoload
 ```
 
-#### Permission errors on storage/bootstrap/cache
+### Permission errors on storage/bootstrap/cache
 ```bash
 chmod -R 775 storage bootstrap/cache
 ```
 
-#### NPM build errors
+### NPM build errors
 ```bash
 rm -rf node_modules package-lock.json
 npm install
 ```
 
-#### Clear all caches
+### Clear all caches
 ```bash
 php artisan optimize:clear
 ```
 
-#### Database connection errors
-- Check `.env` database credentials
-- Ensure database server is running
-- Verify database exists
+### Database connection errors
+- Cek kredensial database di `.env`
+- Pastikan database server running
+- Pastikan database sudah dibuat
 
-## 🔄 Update Log
+## Tech Stack
 
-### [2026-05-23]
-
-- Added **AI Settings** page to configure models, keys, and token limits.
-- Added **Maps** page with MapLibre GL, Leaflet, and iframe styles.
-- Added **Vector Maps** page powered by AmCharts 5 geodata (World & USA).
-- Added **Radar Charts** page with 3 unique formats.
-- Added **Radial Progress Charts** page featuring 4 custom layout templates.
-- Introduced new **Bar Charts Five & Six** and **Pie Charts Four & Five**.
-
-### [April 28, 2026]
-- Added **AI Dashboard** with token usage and revenue tracking.
-- Added **Sales Dashboard** with retention and multi-channel analytics.
-- Added **Finance Dashboard** with cashflow and balance management.
-- Introduced **6 New Layout variations** for improved UI flexibility.
-- Integrated **Advanced Data Visualization** with 7+ new chart types.
-
-### [2026-03-15]
-- Fixed PHP 8.5 deprecation warning
-
-### [2025-12-29]
-- Added Date Picker in Statistics Chart
+- **Backend:** Laravel 12, PHP 8.2+
+- **Frontend:** Tailwind CSS v4, Alpine.js, Vite
+- **Database:** MySQL
+- **PDF Generation:** DomPDF, FPDF/FPDI
+- **QR Code:** endroid/qr-code
+- **Deployment:** Vercel
 
 ## License
 
-Refer to our [LICENSE](https://tailadmin.com/license) page for more information.
+MIT

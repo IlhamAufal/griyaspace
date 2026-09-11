@@ -55,6 +55,11 @@ class RoomPhotoSeeder extends Seeder
             $filename = 'rooms/' . $room->code . '_photo_' . ($index + 1) . '.png';
             $fullPath = Storage::disk('public')->path($filename);
 
+            $dir = dirname($fullPath);
+            if (!is_dir($dir)) {
+                mkdir($dir, 0755, true);
+            }
+
             imagepng($image, $fullPath);
             imagedestroy($image);
 

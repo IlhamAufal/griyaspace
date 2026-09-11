@@ -37,7 +37,7 @@ class DatabaseSeeder extends Seeder
         ]);
 
         // Organization
-        Organization::create([
+        $org = Organization::create([
             'name' => 'Himpunan Mahasiswa Informatika',
             'abbreviation' => 'HMI',
             'leader_name' => 'Budi Santoso',
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
             'username' => 'ormawa',
             'password' => bcrypt('password'),
             'role_id' => $orgRole->id,
-            'organization_id' => 1,
+            'organization_id' => $org->id,
             'is_active' => true,
             'must_change_password' => false,
         ]);
@@ -62,6 +62,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ruang Meeting Besar',
             'capacity' => 30,
             'location' => 'Gedung A Lt.2',
+            'facilities' => ['Projector', 'Whiteboard', 'Sound System', 'AC', 'WiFi'],
             'status' => 'active',
         ]);
 
@@ -70,6 +71,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ruang Meeting Kecil 1',
             'capacity' => 10,
             'location' => 'Gedung A Lt.1',
+            'facilities' => ['Whiteboard', 'AC', 'WiFi'],
             'status' => 'active',
         ]);
 
@@ -78,6 +80,7 @@ class DatabaseSeeder extends Seeder
             'name' => 'Ruang Meeting Kecil 2',
             'capacity' => 10,
             'location' => 'Gedung A Lt.1',
+            'facilities' => ['Whiteboard', 'AC', 'WiFi'],
             'status' => 'active',
         ]);
 

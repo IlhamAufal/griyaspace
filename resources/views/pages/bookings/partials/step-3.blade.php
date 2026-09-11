@@ -1,8 +1,11 @@
 {{-- Step 3: Konfirmasi & Review Keseluruhan Data Sebelum Submit --}}
-<div x-show="step === 3" x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0" style="display:none;">
+<div x-show="step === 3" x-transition:enter="transition ease-out duration-300"
+    x-transition:enter-start="opacity-0 translate-y-2" x-transition:enter-end="opacity-100 translate-y-0"
+    style="display:none;">
     <div class="mb-6 pb-4 border-b border-gray-100 dark:border-gray-700/60">
         <h2 class="text-lg font-semibold text-gray-900 dark:text-white flex items-center gap-2">
-            <span class="w-7 h-7 rounded-full bg-[#1CBDB3] text-white flex items-center justify-center text-xs font-bold">3</span>
+            <span
+                class="w-7 h-7 rounded-full bg-[#1CBDB3] text-white flex items-center justify-center text-xs font-bold">3</span>
             <span>Konfirmasi & Review Pengajuan</span>
         </h2>
         <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 ml-9">
@@ -34,12 +37,16 @@
                     </div>
                     <div class="pt-2.5 border-t border-gray-100 dark:border-gray-700/60 grid grid-cols-2 gap-3">
                         <div>
-                            <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Organisasi / Ormawa</span>
-                            <p class="font-semibold text-gray-900 dark:text-white" x-text="organizationName || 'Pengaju Mandiri'"></p>
+                            <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Organisasi /
+                                Ormawa</span>
+                            <p class="font-semibold text-gray-900 dark:text-white"
+                                x-text="organizationName || 'Pengaju Mandiri'"></p>
                         </div>
                         <div>
-                            <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Kapasitas Ruangan</span>
-                            <p class="font-semibold text-gray-900 dark:text-white"><span x-text="roomCapacity || '0'"></span> orang</p>
+                            <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Kapasitas
+                                Ruangan</span>
+                            <p class="font-semibold text-gray-900 dark:text-white"><span
+                                    x-text="roomCapacity || '0'"></span> orang</p>
                         </div>
                     </div>
                 </div>
@@ -60,15 +67,18 @@
                 <div class="p-5 bg-white dark:bg-gray-800 flex-1 space-y-3.5 text-xs">
                     <div>
                         <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Tanggal Pelaksanaan</span>
-                        <template x-if="selectedDates.length <= 1">
-                            <p class="font-bold text-gray-900 dark:text-white text-sm" x-text="formattedDateIndo || '-'"></p>
+                        <template x-if="totalDays <= 1">
+                            <p class="font-bold text-gray-900 dark:text-white text-sm"
+                                x-text="formatDateShort(startDate)"></p>
                         </template>
-                        <template x-if="selectedDates.length > 1">
+                        <template x-if="totalDays > 1">
                             <div>
-                                <p class="font-bold text-gray-900 dark:text-white text-sm mb-2" x-text="formattedDateIndo"></p>
+                                <p class="font-bold text-gray-900 dark:text-white text-sm mb-2"
+                                    x-text="formattedDateIndo"></p>
                                 <div class="flex flex-wrap gap-1.5">
-                                    <template x-for="(date, i) in selectedDates" :key="'review-'+date">
-                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-brand-50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 rounded text-[11px] font-medium border border-brand-200 dark:border-brand-800">
+                                    <template x-for="date in generatedDates" :key="'review-' + date">
+                                        <span
+                                            class="inline-flex items-center gap-1 px-2 py-0.5 bg-brand-50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 rounded text-[11px] font-medium border border-brand-200 dark:border-brand-800">
                                             <i class="fa-solid fa-calendar-day text-[9px]"></i>
                                             <span x-text="formatDateShort(date)"></span>
                                         </span>
@@ -86,13 +96,15 @@
                         </div>
                         <div>
                             <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Durasi per Hari</span>
-                            <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 font-semibold text-gray-800 dark:text-gray-200" x-text="formattedDuration"></span>
+                            <span
+                                class="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 font-semibold text-gray-800 dark:text-gray-200"
+                                x-text="formattedDuration"></span>
                         </div>
                     </div>
-                    <div x-show="selectedDates.length > 1" class="pt-2.5 border-t border-gray-100 dark:border-gray-700/60">
+                    <div x-show="totalDays > 1" class="pt-2.5 border-t border-gray-100 dark:border-gray-700/60">
                         <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Total Hari</span>
                         <p class="font-bold text-gray-900 dark:text-white">
-                            <span x-text="selectedDates.length"></span> hari
+                            <span x-text="totalDays"></span> hari
                             <span class="text-gray-500 text-[11px] font-normal">(setiap hari waktu yang sama)</span>
                         </p>
                     </div>
@@ -120,21 +132,25 @@
                     </div>
                     <div class="sm:col-span-2 md:col-span-3">
                         <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Tujuan Kegiatan</span>
-                        <p class="text-gray-800 dark:text-gray-200 leading-relaxed bg-gray-50 dark:bg-gray-900/50 p-3 rounded-lg border border-gray-200 dark:border-gray-700" x-text="purpose || '-'"></p>
+                        <p class="text-gray-800 dark:text-gray-200 leading-relaxed bg-gray-50 dark:bg-gray-900/50 p-3 rounded-lg border border-gray-200 dark:border-gray-700"
+                            x-text="purpose || '-'"></p>
                     </div>
                     <div>
                         <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Jumlah Peserta</span>
                         <p class="font-semibold text-gray-900 dark:text-white">
                             <span x-text="participantCount || '0'"></span> orang
-                            <span class="text-green-600 dark:text-green-400 text-[11px] font-normal" x-show="participantCount <= roomCapacity">(Sesuai Kapasitas)</span>
+                            <span class="text-green-600 dark:text-green-400 text-[11px] font-normal"
+                                x-show="participantCount <= roomCapacity">(Sesuai Kapasitas)</span>
                         </p>
                     </div>
                     <div>
-                        <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Penanggung Jawab (PIC)</span>
+                        <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Penanggung Jawab
+                            (PIC)</span>
                         <p class="font-semibold text-gray-900 dark:text-white" x-text="personInCharge || '-'"></p>
                     </div>
                     <div>
-                        <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">No. Telepon / WhatsApp</span>
+                        <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">No. Telepon /
+                            WhatsApp</span>
                         <p class="font-semibold text-gray-900 dark:text-white" x-text="contactPhone || '-'"></p>
                     </div>
                 </div>
@@ -155,13 +171,17 @@
 
             <div class="p-5 bg-white dark:bg-gray-800">
                 <div class="text-xs">
-                    <span class="text-gray-500 dark:text-gray-400 block mb-1.5 font-medium">Dokumen Surat Permohonan (PDF)</span>
-                    <div class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 max-w-md">
-                        <div class="w-9 h-9 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 flex items-center justify-center shrink-0">
+                    <span class="text-gray-500 dark:text-gray-400 block mb-1.5 font-medium">Dokumen Surat Permohonan
+                        (PDF)</span>
+                    <div
+                        class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 max-w-md">
+                        <div
+                            class="w-9 h-9 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 flex items-center justify-center shrink-0">
                             <i class="fa-solid fa-file-pdf text-lg"></i>
                         </div>
                         <div class="min-w-0 flex-1">
-                            <p class="font-medium text-gray-900 dark:text-white truncate" x-text="documentFileName || 'File PDF Terlampir'"></p>
+                            <p class="font-medium text-gray-900 dark:text-white truncate"
+                                x-text="documentFileName || 'File PDF Terlampir'"></p>
                             <p class="text-[11px] text-gray-400 mt-0.5" x-text="documentFileSize"></p>
                         </div>
                     </div>
@@ -170,11 +190,14 @@
         </div>
 
         {{-- Terms & Confirmation Checkbox --}}
-        <div class="p-4 rounded-xl bg-brand-50/40 dark:bg-brand-500/5 border border-brand-200 dark:border-brand-500/20">
+        <div
+            class="p-4 rounded-xl bg-brand-50/40 dark:bg-brand-500/5 border border-brand-200 dark:border-brand-500/20">
             <label class="flex items-start gap-3 cursor-pointer">
-                <input type="checkbox" x-model="agreedToTerms" class="mt-1 h-4 w-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500 cursor-pointer">
+                <input type="checkbox" x-model="agreedToTerms"
+                    class="mt-1 h-4 w-4 rounded border-gray-300 text-brand-600 focus:ring-brand-500 cursor-pointer">
                 <span class="text-xs text-gray-700 dark:text-gray-300 leading-relaxed">
-                    Saya menyatakan bahwa data dan jadwal yang diisikan sudah benar serta bersedia mematuhi semua tata tertib dan ketentuan penggunaan fasilitas ruangan yang berlaku.
+                    Saya menyatakan bahwa data dan jadwal yang diisikan sudah benar serta bersedia mematuhi semua tata
+                    tertib dan ketentuan penggunaan fasilitas ruangan yang berlaku.
                 </span>
             </label>
         </div>
@@ -188,9 +211,9 @@
             <span>Kembali ke Jadwal (Step 2)</span>
         </button>
 
-        <button type="button" :disabled="!agreedToTerms || isSubmitting"
-            @click="submitBooking()"
-            :class="!agreedToTerms ? 'opacity-50 cursor-not-allowed bg-brand-400' : 'bg-brand-500 hover:bg-brand-600 cursor-pointer'"
+        <button type="button" :disabled="!agreedToTerms || isSubmitting" @click="submitBooking()"
+            :class="!agreedToTerms ? 'opacity-50 cursor-not-allowed bg-brand-400' :
+                'bg-brand-500 hover:bg-brand-600 cursor-pointer'"
             class="inline-flex items-center gap-2 text-white px-7 py-2.5 rounded-lg text-sm font-semibold shadow-theme-xs transition-colors">
             <template x-if="!isSubmitting">
                 <i class="fa-solid fa-paper-plane text-sm"></i>

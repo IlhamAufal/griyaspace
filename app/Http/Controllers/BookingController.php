@@ -63,6 +63,28 @@ class BookingController extends Controller
     {
         $user = $request->user();
 
+        // Support start_date & end_date format
+        if ($request->filled('start_date')) {
+            $startDate = \Carbon\Carbon::parse($request->start_date);
+            $endDate = $request->filled('end_date') ? \Carbon\Carbon::parse($request->end_date) : $startDate->copy();
+
+            if ($endDate->lt($startDate)) {
+                return back()
+                    ->withErrors(['end_date' => 'Tanggal akhir tidak boleh lebih awal dari tanggal mulai.'])
+                    ->withInput()
+                    ->with('conflict_step', 2);
+            }
+
+            $dates = [];
+            $current = $startDate->copy();
+            while ($current->lte($endDate)) {
+                $dates[] = $current->format('Y-m-d');
+                $current->addDay();
+            }
+
+            $request->merge(['booking_dates' => $dates]);
+        }
+
         // Accept either booking_dates[] (multi-day) or booking_date (single)
         $hasMultiDay = $request->has('booking_dates') && is_array($request->booking_dates);
 
@@ -80,6 +102,13 @@ class BookingController extends Controller
             'organization_id' => 'nullable|exists:organizations,id',
         ];
 
+        $messages = [
+            'booking_dates.max' => 'Maksimal durasi peminjaman adalah 3 hari.',
+            'booking_dates.*.after_or_equal' => 'Tanggal peminjaman tidak boleh di masa lalu.',
+            'booking_date.after_or_equal' => 'Tanggal peminjaman tidak boleh di masa lalu.',
+            'end_time.after' => 'Jam selesai harus lebih besar dari jam mulai.',
+        ];
+
         if ($hasMultiDay) {
             $rules['booking_dates'] = 'required|array|min:1|max:3';
             $rules['booking_dates.*'] = 'required|date|after_or_equal:today';
@@ -87,7 +116,7 @@ class BookingController extends Controller
             $rules['booking_date'] = 'required|date|after_or_equal:today';
         }
 
-        $validated = $request->validate($rules);
+        $validated = $request->validate($rules, $messages);
 
         // Normalize: always pass booking_dates array to service
         if (!$hasMultiDay) {

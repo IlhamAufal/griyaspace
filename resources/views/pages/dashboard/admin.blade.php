@@ -20,6 +20,22 @@
         </div>
     </div>
 
+    <!-- Pending Bookings Alert Banner -->
+    @if($pendingCount > 0)
+    <a href="{{ route('bookings.konfirmasi') }}" class="flex items-center gap-4 p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/60 hover:shadow-md hover:border-amber-300 dark:hover:border-amber-600 transition-all group">
+        <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+            <i class="fa-solid fa-bell text-lg"></i>
+        </div>
+        <div class="flex-1 min-w-0">
+            <p class="text-sm font-semibold text-amber-800 dark:text-amber-200">
+                Anda memiliki <span class="text-amber-600 dark:text-amber-300 font-bold">{{ $pendingCount }}</span> pengajuan untuk dikonfirmasi
+            </p>
+            <p class="text-xs text-amber-600/70 dark:text-amber-400/60 mt-0.5">Klik untuk menuju halaman konfirmasi</p>
+        </div>
+        <i class="fa-solid fa-arrow-right text-amber-400 dark:text-amber-500 group-hover:text-amber-600 dark:group-hover:text-amber-300 group-hover:translate-x-1 transition-all"></i>
+    </a>
+    @endif
+
     <!-- Stats Cards (Menggunakan Palette: Navy #2F3185, Kuning #FFB800, Toska #1CBDB3) -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <x-dashboard.stat-card

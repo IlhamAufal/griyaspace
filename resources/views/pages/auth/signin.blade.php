@@ -80,3 +80,15 @@
         </div>
     </div>
 @endsection
+
+@push('scripts')
+@if(request('expired'))
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        if (window.toast) {
+            window.toast.warning('Session telah expired. Silakan login kembali.', 'Session Berakhir');
+        }
+    });
+</script>
+@endif
+@endpush

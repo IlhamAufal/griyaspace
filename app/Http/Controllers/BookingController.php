@@ -63,9 +63,11 @@ class BookingController extends Controller
     {
         $user = $request->user();
 
-        $validated = $request->validate([
+        // Accept either booking_dates[] (multi-day) or booking_date (single)
+        $hasMultiDay = $request->has('booking_dates') && is_array($request->booking_dates);
+
+        $rules = [
             'room_id' => 'required|exists:rooms,id',
-            'booking_date' => 'required|date|after_or_equal:today',
             'start_time' => 'required',
             'end_time' => 'required|after:start_time',
             'activity_name' => 'required|string|max:255',
@@ -76,16 +78,39 @@ class BookingController extends Controller
             'document' => 'required|file|mimes:pdf|max:10240',
             'user_id' => $user->isAdmin() ? 'nullable|exists:users,id' : 'nullable',
             'organization_id' => 'nullable|exists:organizations,id',
-        ]);
+        ];
+
+        if ($hasMultiDay) {
+            $rules['booking_dates'] = 'required|array|min:1|max:3';
+            $rules['booking_dates.*'] = 'required|date|after_or_equal:today';
+        } else {
+            $rules['booking_date'] = 'required|date|after_or_equal:today';
+        }
+
+        $validated = $request->validate($rules);
+
+        // Normalize: always pass booking_dates array to service
+        if (!$hasMultiDay) {
+            $validated['booking_dates'] = [$validated['booking_date']];
+        }
+        unset($validated['booking_date']);
 
         try {
-            $booking = $bookingService->create(
+            $result = $bookingService->create(
                 $validated,
                 $user,
                 $request->file('document')
             );
 
-            return redirect()->route('bookings.show', $booking)->with('success', 'Pengajuan berhasil dikirim.');
+            // $result is either a single Booking or an array of Bookings
+            $booking = is_array($result) ? $result[0] : $result;
+
+            $count = is_array($result) ? count($result) : 1;
+            $message = $count > 1
+                ? "Pengajuan {$count} hari berhasil dikirim."
+                : 'Pengajuan berhasil dikirim.';
+
+            return redirect()->route('bookings.show', $booking)->with('success', $message);
         } catch (BookingConflictException $e) {
             return back()
                 ->withErrors([

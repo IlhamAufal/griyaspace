@@ -38,6 +38,19 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | AFK Timeout (seconds)
+    |--------------------------------------------------------------------------
+    |
+    | This option determines the number of seconds a user can be inactive
+    | before the session expires. This is enforced client-side via a
+    | floating timer component. Use 30 for testing, 1800 for production.
+    |
+    */
+
+    'afk_timeout' => (int) env('AFK_TIMEOUT', 1800),
+
+    /*
+    |--------------------------------------------------------------------------
     | Session Encryption
     |--------------------------------------------------------------------------
     |

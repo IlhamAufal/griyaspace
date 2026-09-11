@@ -60,8 +60,22 @@
                 <div class="p-5 bg-white dark:bg-gray-800 flex-1 space-y-3.5 text-xs">
                     <div>
                         <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Tanggal Pelaksanaan</span>
-                        <p class="font-bold text-gray-900 dark:text-white text-sm" x-text="formattedDateIndo || '-'"></p>
-                        <p class="text-gray-500 text-[11px] mt-0.5" x-text="bookingDate"></p>
+                        <template x-if="selectedDates.length <= 1">
+                            <p class="font-bold text-gray-900 dark:text-white text-sm" x-text="formattedDateIndo || '-'"></p>
+                        </template>
+                        <template x-if="selectedDates.length > 1">
+                            <div>
+                                <p class="font-bold text-gray-900 dark:text-white text-sm mb-2" x-text="formattedDateIndo"></p>
+                                <div class="flex flex-wrap gap-1.5">
+                                    <template x-for="(date, i) in selectedDates" :key="'review-'+date">
+                                        <span class="inline-flex items-center gap-1 px-2 py-0.5 bg-brand-50 dark:bg-brand-900/20 text-brand-700 dark:text-brand-300 rounded text-[11px] font-medium border border-brand-200 dark:border-brand-800">
+                                            <i class="fa-solid fa-calendar-day text-[9px]"></i>
+                                            <span x-text="formatDateShort(date)"></span>
+                                        </span>
+                                    </template>
+                                </div>
+                            </div>
+                        </template>
                     </div>
                     <div class="pt-2.5 border-t border-gray-100 dark:border-gray-700/60 grid grid-cols-2 gap-3">
                         <div>
@@ -71,9 +85,16 @@
                             </p>
                         </div>
                         <div>
-                            <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Total Durasi</span>
+                            <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Durasi per Hari</span>
                             <span class="inline-flex items-center px-2.5 py-1 rounded-md bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 font-semibold text-gray-800 dark:text-gray-200" x-text="formattedDuration"></span>
                         </div>
+                    </div>
+                    <div x-show="selectedDates.length > 1" class="pt-2.5 border-t border-gray-100 dark:border-gray-700/60">
+                        <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Total Hari</span>
+                        <p class="font-bold text-gray-900 dark:text-white">
+                            <span x-text="selectedDates.length"></span> hari
+                            <span class="text-gray-500 text-[11px] font-normal">(setiap hari waktu yang sama)</span>
+                        </p>
                     </div>
                 </div>
             </div>

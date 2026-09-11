@@ -144,6 +144,9 @@ function bookingWizard() {
         contactPhone: '{{ old('contact_phone', '') }}',
 
         bookingDate: '{{ old('booking_date', date('Y-m-d')) }}',
+        selectedDates: @json(old('booking_dates', [])),
+        manualDate: '',
+        calendarTitle: '',
         startTime: '{{ old('start_time', '') }}',
         endTime: '{{ old('end_time', '') }}',
 
@@ -156,7 +159,7 @@ function bookingWizard() {
 
         // Calendar variables
         calendar: null,
-        calendarViewMode: 'timeGridDay',
+        calendarViewMode: 'dayGridMonth',
 
         init() {
             // Populate room information if roomId is already selected
@@ -266,75 +269,56 @@ function bookingWizard() {
             if (!this.calendar) {
                 this.calendar = new FullCalendar.Calendar(calendarEl, {
                     plugins: [
-                        FullCalendar.timeGridPlugin,
-                        FullCalendar.interactionPlugin,
-                        FullCalendar.dayGridPlugin
+                        FullCalendar.dayGridPlugin,
+                        FullCalendar.interactionPlugin
                     ],
-                    initialView: self.calendarViewMode,
+                    initialView: 'dayGridMonth',
                     headerToolbar: false,
                     validRange: {
                         start: new Date().toISOString().split('T')[0]
                     },
-                    slotMinTime: self.roomOpenTime ? (self.roomOpenTime + ':00') : '06:00:00',
-                    slotMaxTime: self.roomCloseTime ? (self.roomCloseTime + ':00') : '22:00:00',
-                    slotDuration: '00:30:00',
-                    slotLabelInterval: '01:00',
-                    slotLabelFormat: {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: false
-                    },
-                    eventTimeFormat: {
-                        hour: '2-digit',
-                        minute: '2-digit',
-                        hour12: false
-                    },
-                    allDaySlot: false,
-                    nowIndicator: true,
                     selectable: true,
                     selectMirror: true,
                     selectOverlap: false,
                     unselectAuto: false,
                     locale: 'id',
                     height: 'auto',
-                    contentHeight: 520,
+                    contentHeight: 420,
+                    fixedWeekCount: false,
+                    showNonCurrentDates: false,
 
-                    // Events source filtered by selected room
                     events: function(info, successCallback, failureCallback) {
                         self.fetchRoomEvents(info.startStr, info.endStr, successCallback, failureCallback);
                     },
 
-                    // Handle selection/drag of empty slot
                     select: function(selectionInfo) {
-                        self.handleSlotSelection(selectionInfo);
+                        self.handleDateSelect(selectionInfo);
                     },
 
-                    // Handle click on existing event
                     eventClick: function(info) {
                         info.jsEvent.preventDefault();
                         self.showEventDetail(info.event);
                     },
 
                     datesSet: function(dateInfo) {
-                        // Keep bookingDate aligned with calendar date view
                         const d = dateInfo.view.currentStart;
-                        const year = d.getFullYear();
-                        const month = String(d.getMonth() + 1).padStart(2, '0');
-                        const day = String(d.getDate()).padStart(2, '0');
-                        self.bookingDate = `${year}-${month}-${day}`;
+                        const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+                        self.calendarTitle = `${months[d.getMonth()]} ${d.getFullYear()}`;
                     }
                 });
 
                 this.calendar.render();
 
-                if (this.bookingDate) {
+                if (this.selectedDates.length > 0) {
+                    this.calendar.gotoDate(this.selectedDates[0]);
+                } else if (this.bookingDate) {
                     this.calendar.gotoDate(this.bookingDate);
                 }
             } else {
                 this.calendar.updateSize();
                 this.calendar.refetchEvents();
-                if (this.bookingDate) {
-                    this.calendar.gotoDate(this.bookingDate);
+                if (this.selectedDates.length > 0) {
+                    this.calendar.gotoDate(this.selectedDates[0]);
                 }
             }
         },
@@ -369,21 +353,75 @@ function bookingWizard() {
             }
         },
 
-        handleSlotSelection(selectionInfo) {
-            const startIso = selectionInfo.startStr;
-            const endIso = selectionInfo.endStr;
+        handleDateSelect(selectionInfo) {
+            const startStr = selectionInfo.startStr.substring(0, 10);
+            const endStr = selectionInfo.endStr.substring(0, 10);
 
-            // Extract YYYY-MM-DD
-            this.bookingDate = startIso.substring(0, 10);
+            // Generate array of selected dates
+            const dates = [];
+            let current = new Date(startStr + 'T00:00:00');
+            const end = new Date(endStr + 'T00:00:00');
 
-            // Extract HH:MM
-            this.startTime = startIso.substring(11, 16);
-            this.endTime = endIso.substring(11, 16);
+            while (current < end) {
+                dates.push(current.toISOString().substring(0, 10));
+                current.setDate(current.getDate() + 1);
+            }
 
-            // Clear errors on time
-            delete this.stepErrors.booking_date;
+            // Limit to 3 days max
+            if (dates.length > 3) {
+                dates.splice(3);
+            }
+
+            // Merge with existing selections (avoid duplicates)
+            const combined = [...new Set([...this.selectedDates, ...dates])].sort();
+
+            // Enforce max 3
+            if (combined.length > 3) {
+                combined.splice(3);
+            }
+
+            this.selectedDates = combined;
+
+            // Clear errors
+            delete this.stepErrors.booking_dates;
             delete this.stepErrors.start_time;
             delete this.stepErrors.end_time;
+
+            if (this.calendar) {
+                this.calendar.unselect();
+            }
+        },
+
+        addManualDate() {
+            if (!this.manualDate) return;
+
+            if (this.selectedDates.includes(this.manualDate)) {
+                this.manualDate = '';
+                return;
+            }
+
+            if (this.selectedDates.length >= 3) {
+                this.stepErrors.booking_dates = 'Maksimal 3 hari.';
+                this.manualDate = '';
+                return;
+            }
+
+            const today = new Date();
+            today.setHours(0, 0, 0, 0);
+            if (new Date(this.manualDate + 'T00:00:00') < today) {
+                this.stepErrors.booking_dates = 'Tanggal tidak boleh di masa lalu.';
+                this.manualDate = '';
+                return;
+            }
+
+            this.selectedDates.push(this.manualDate);
+            this.selectedDates.sort();
+            this.manualDate = '';
+            delete this.stepErrors.booking_dates;
+        },
+
+        removeDate(index) {
+            this.selectedDates.splice(index, 1);
         },
 
         calendarPrev() {
@@ -417,38 +455,20 @@ function bookingWizard() {
             }
         },
 
-        onBookingDateInputChange() {
-            if (this.calendar && this.bookingDate) {
-                this.calendar.gotoDate(this.bookingDate);
-                this.calendar.refetchEvents();
-            }
-        },
-
-        onTimeInputChange() {
-            // Update calendar visual selection if possible
-            if (this.calendar && this.bookingDate && this.startTime && this.endTime) {
-                try {
-                    const start = `${this.bookingDate}T${this.startTime}:00`;
-                    const end = `${this.bookingDate}T${this.endTime}:00`;
-                    this.calendar.select(start, end);
-                } catch (e) {
-                    // Ignore selection errors
-                }
-            }
-        },
-
         // Step 2 Validation & Proceed to Step 3
         goToStep3() {
             this.stepErrors = {};
 
-            if (!this.bookingDate) {
-                this.stepErrors.booking_date = 'Tanggal kegiatan wajib dipilih.';
+            if (!this.selectedDates || this.selectedDates.length === 0) {
+                this.stepErrors.booking_dates = 'Minimal satu tanggal wajib dipilih.';
             } else {
                 const today = new Date();
                 today.setHours(0, 0, 0, 0);
-                const selectedDate = new Date(this.bookingDate + 'T00:00:00');
-                if (selectedDate < today) {
-                    this.stepErrors.booking_date = 'Tanggal kegiatan tidak boleh di masa lalu.';
+                for (const date of this.selectedDates) {
+                    if (new Date(date + 'T00:00:00') < today) {
+                        this.stepErrors.booking_dates = 'Tidak boleh ada tanggal di masa lalu.';
+                        break;
+                    }
                 }
             }
 
@@ -492,20 +512,22 @@ function bookingWizard() {
         },
 
         // Helper Getters
+        formatDateShort(dateStr) {
+            if (!dateStr) return '-';
+            const d = new Date(dateStr + 'T00:00:00');
+            const days = ['Min', 'Sen', 'Sel', 'Rab', 'Kam', 'Jum', 'Sab'];
+            const months = ['Jan', 'Feb', 'Mar', 'Apr', 'Mei', 'Jun', 'Jul', 'Agu', 'Sep', 'Okt', 'Nov', 'Des'];
+            return `${days[d.getDay()]}, ${d.getDate()} ${months[d.getMonth()]} ${d.getFullYear()}`;
+        },
+
         get formattedDateIndo() {
-            if (!this.bookingDate) return '-';
-            const dateObj = new Date(this.bookingDate + 'T00:00:00');
-            if (isNaN(dateObj.getTime())) return this.bookingDate;
-
-            const days = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
-            const months = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
-
-            const dayName = days[dateObj.getDay()];
-            const dayNum = dateObj.getDate();
-            const monthName = months[dateObj.getMonth()];
-            const year = dateObj.getFullYear();
-
-            return `${dayName}, ${dayNum} ${monthName} ${year}`;
+            if (!this.selectedDates || this.selectedDates.length === 0) return '-';
+            if (this.selectedDates.length === 1) {
+                return this.formatDateShort(this.selectedDates[0]);
+            }
+            const first = this.formatDateShort(this.selectedDates[0]);
+            const last = this.formatDateShort(this.selectedDates[this.selectedDates.length - 1]);
+            return `${first} - ${last} (${this.selectedDates.length} hari)`;
         },
 
         get formattedDuration() {

@@ -14,7 +14,6 @@ return new class extends Migration
             $table->string('name');
             $table->integer('capacity');
             $table->string('location');
-            $table->json('facilities');
             $table->time('open_time')->default('06:00');
             $table->time('close_time')->default('22:00');
             $table->string('status')->default('active');

@@ -214,6 +214,11 @@
         </nav>
 
     </div>
+
+    <!-- Session Timer -->
+    @if(Auth::check())
+    <x-common.session-timer />
+    @endif
 </aside>
 
 <!-- Mobile Overlay -->

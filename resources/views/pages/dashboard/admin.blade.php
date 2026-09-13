@@ -343,6 +343,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (trendChartEl && window.ApexCharts) {
         const trendChart = new ApexCharts(trendChartEl, trendOptions);
         trendChart.render();
+        setTimeout(() => trendChart.updateOptions({}), 100);
     }
 
     // 2. Status Donut Chart

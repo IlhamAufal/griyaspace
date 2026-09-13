@@ -263,6 +263,7 @@ document.addEventListener('DOMContentLoaded', function () {
     if (orgTrendChartEl && window.ApexCharts) {
         const orgTrendChart = new ApexCharts(orgTrendChartEl, orgTrendOptions);
         orgTrendChart.render();
+        setTimeout(() => orgTrendChart.updateOptions({}), 100);
     }
 
     // 2. Org Status Donut Chart

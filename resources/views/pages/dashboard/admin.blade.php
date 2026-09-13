@@ -146,40 +146,6 @@
                 </div>
             </div>
 
-            <!-- Top 5 Ruangan Terpopuler -->
-            @if(count($topRoomLabels) > 0)
-            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700/60 p-5 sm:p-6 shadow-xs">
-                <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100 dark:border-gray-700/60">
-                    <h2 class="text-sm font-bold text-gray-900 dark:text-white flex items-center gap-2">
-                        <span>Ruangan Terbanyak Digunakan</span>
-                    </h2>
-                    <span class="text-[11px] text-gray-400">Paling diminati</span>
-                </div>
-
-                <div class="space-y-3">
-                    @php
-                        $maxBookingsCount = max($topRoomCounts) > 0 ? max($topRoomCounts) : 1;
-                    @endphp
-                    @foreach($topRoomLabels as $index => $roomName)
-                        @php
-                            $count = $topRoomCounts[$index] ?? 0;
-                            $percentage = round(($count / $maxBookingsCount) * 100);
-                        @endphp
-                        <div class="space-y-1">
-                            <div class="flex items-center justify-between text-xs">
-                                <span class="font-medium text-gray-800 dark:text-gray-200 truncate max-w-[200px]">{{ $roomName }}</span>
-                                <span class="font-bold text-[#2F3185] dark:text-brand-300">{{ $count }} Ajuan</span>
-                            </div>
-                            <div class="w-full h-2 rounded-full bg-gray-100 dark:bg-gray-700 overflow-hidden">
-                                <div class="h-full rounded-full transition-all duration-500 {{ $index === 0 ? 'bg-[#2F3185]' : ($index === 1 ? 'bg-[#1CBDB3]' : 'bg-[#FFB800]') }}"
-                                     style="width: {{ $percentage }}%"></div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-            </div>
-            @endif
-
         </div>
 
     </div>
@@ -331,8 +297,8 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'gradient',
             gradient: {
                 shadeIntensity: 1,
-                opacityFrom: [0.45, 0.25],
-                opacityTo: [0.05, 0.02],
+                opacityFrom: 0.4,
+                opacityTo: 0.05,
                 stops: [0, 90, 100]
             }
         },

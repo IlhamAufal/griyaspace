@@ -30,7 +30,6 @@ beforeEach(function () {
 
     $this->user = User::firstOrCreate(['email' => 'user.test@griyaspace.test'], [
         'name' => 'User Test Ormawa',
-        'username' => 'usertest',
         'password' => bcrypt('password'),
         'role_id' => $this->orgRole->id,
         'organization_id' => $this->org->id,

@@ -17,23 +17,23 @@ class AuthController extends Controller
 
     public function login(Request $request)
     {
-        $credentials = $request->validate([
-            'username' => 'required|string',
+        $request->validate([
+            'email' => 'required|email',
             'password' => 'required|string',
         ]);
 
-        $user = \App\Models\User::where('username', $credentials['username'])->first();
+        $user = \App\Models\User::where('email', $request->email)->first();
 
         if (!$user || !$user->is_active) {
             return back()->withErrors([
-                'username' => 'Username atau password salah.',
-            ])->onlyInput('username');
+                'email' => 'Email atau password salah.',
+            ])->onlyInput('email');
         }
 
-        if (!Auth::attempt($credentials)) {
+        if (!Auth::attempt($request->only('email', 'password'))) {
             return back()->withErrors([
-                'username' => 'Username atau password salah.',
-            ])->onlyInput('username');
+                'email' => 'Email atau password salah.',
+            ])->onlyInput('email');
         }
 
         $user->update(['last_login_at' => now()]);

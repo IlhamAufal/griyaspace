@@ -97,8 +97,8 @@ Route::middleware(['auth'])->group(function () {
             Route::get('/create', [UserController::class, 'create'])->name('users.create');
             Route::post('/', [UserController::class, 'store'])->name('users.store');
             Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
-            Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-            Route::put('/{user}', [UserController::class, 'update'])->name('users.update');
+            Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware('bagmawa');
+            Route::put('/{user}', [UserController::class, 'update'])->name('users.update')->middleware('bagmawa');
             Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
             Route::post('/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
         });

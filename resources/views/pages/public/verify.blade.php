@@ -11,7 +11,7 @@
             Verifikasi Izin
         </h1>
         <p class="text-sm text-gray-500 dark:text-gray-400">
-            Informasi validitas surat izin peminjaman ruangan GriyaSpace
+            Informasi validitas surat izin peminjaman ruangan Griya Mahasiswa
         </p>
     </div>
 

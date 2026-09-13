@@ -31,7 +31,7 @@
     </a>
 
     <p class="mt-8 text-xs text-gray-400 dark:text-gray-500">
-        &copy; {{ $currentYear }} GriyaSpace
+        &copy; {{ $currentYear }} Griya Mahasiswa
     </p>
 </div>
 @endsection

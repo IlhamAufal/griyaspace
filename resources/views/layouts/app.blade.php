@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="afk-timeout" content="{{ config('session.afk_timeout', 1800) }}">
 
-    <title>{{ $title ?? 'Dashboard' }} | GriyaSpace</title>
+    <title>{{ $title ?? 'Dashboard' }} | Griya Mahasiswa</title>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])

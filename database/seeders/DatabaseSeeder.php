@@ -29,7 +29,6 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Administrator',
             'email' => 'admin@griyaspace.test',
-            'username' => 'admin',
             'password' => bcrypt('password'),
             'role_id' => $adminRole->id,
             'is_active' => true,
@@ -48,7 +47,6 @@ class DatabaseSeeder extends Seeder
         User::create([
             'name' => 'Ormawa HMI',
             'email' => 'ormawa@griyaspace.test',
-            'username' => 'ormawa',
             'password' => bcrypt('password'),
             'role_id' => $orgRole->id,
             'organization_id' => $org->id,

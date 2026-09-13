@@ -7,7 +7,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <meta name="afk-timeout" content="{{ config('session.afk_timeout', 1800) }}">
 
-    <title>{{ $title ?? 'GriyaSpace' }} | GriyaSpace</title>
+    <title>{{ $title ?? 'Griya Mahasiswa' }} | Griya Mahasiswa</title>
 
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
@@ -72,11 +72,11 @@
                     <x-common.common-grid-shape />
                     <div class="flex max-w-xs flex-col items-center">
                         <a href="{{ url('/') }}" class="mb-4 block">
-                            <img class="dark:hidden h-10 w-auto" src="/images/logo/logo.svg" alt="GriyaSpace" />
-                            <img class="hidden dark:block h-10 w-auto" src="/images/logo/logo-dark.svg" alt="GriyaSpace" />
+                            <img class="dark:hidden h-10 w-auto" src="/images/logo/logo.svg" alt="Griya Mahasiswa" />
+                            <img class="hidden dark:block h-10 w-auto" src="/images/logo/logo-dark.svg" alt="Griya Mahasiswa" />
                         </a>
                         <p class="text-center text-gray-400 dark:text-white/60 text-sm">
-                            {{ $bannerText ?? 'GriyaSpace - Sistem Peminjaman Ruangan' }}
+                            {{ $bannerText ?? 'Griya Mahasiswa - Sistem Peminjaman Ruangan' }}
                         </p>
                     </div>
                 </div>
@@ -88,8 +88,8 @@
                     <!-- Mobile Logo (Screens smaller than lg) -->
                     <div class="mb-8 flex justify-center lg:hidden">
                         <a href="{{ url('/') }}">
-                            <img class="dark:hidden h-9 w-auto" src="/images/logo/logo.svg" alt="GriyaSpace" />
-                            <img class="hidden dark:block h-9 w-auto" src="/images/logo/logo-dark.svg" alt="GriyaSpace" />
+                            <img class="dark:hidden h-9 w-auto" src="/images/logo/logo.svg" alt="Griya Mahasiswa" />
+                            <img class="hidden dark:block h-9 w-auto" src="/images/logo/logo-dark.svg" alt="Griya Mahasiswa" />
                         </a>
                     </div>
 

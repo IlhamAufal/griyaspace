@@ -157,7 +157,7 @@
                         <i class="fa-solid fa-door-open text-2xl"></i>
                     </div>
                     <h3 class="text-lg font-bold text-gray-900 dark:text-white mb-1">Belum Ada Ruangan</h3>
-                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Mulai tambahkan ruangan baru ke sistem GriyaSpace</p>
+                    <p class="text-sm text-gray-500 dark:text-gray-400 mb-6">Mulai tambahkan ruangan baru ke sistem Griya Mahasiswa</p>
                     <a href="{{ route('rooms.create') }}" class="bg-accent-500 hover:bg-accent-600 text-white px-5 py-2.5 rounded-lg inline-flex items-center gap-2 text-sm font-medium shadow-theme-xs transition-colors">
                         <span>Ruangan Baru</span>
                     </a>

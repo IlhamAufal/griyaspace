@@ -116,6 +116,7 @@ class BookingController extends Controller
             $rules['booking_date'] = 'required|date|after_or_equal:today';
         }
 
+        $validated = $request->validate($rules);
         $validated = $request->validate($rules, $messages);
 
         // Normalize: always pass booking_dates array to service

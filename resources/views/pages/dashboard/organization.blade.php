@@ -217,8 +217,8 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'gradient',
             gradient: {
                 shadeIntensity: 1,
-                opacityFrom: [0.45, 0.25],
-                opacityTo: [0.05, 0.02],
+                opacityFrom: 0.4,
+                opacityTo: 0.05,
                 stops: [0, 90, 100]
             }
         },

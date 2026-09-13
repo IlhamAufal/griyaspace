@@ -21,7 +21,7 @@
                 <div class="flex-1 min-w-[220px]">
                     <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Pencarian</label>
                     <div class="relative">
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Nama, email, atau username..." class="h-10 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm bg-transparent placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                        <input type="text" name="search" value="{{ request('search') }}" placeholder="Nama atau email..." class="h-10 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm bg-transparent placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
                         <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
                     </div>
                 </div>
@@ -94,9 +94,11 @@
                                 <button type="button" @click="$dispatch('open-modal', 'detail-user-{{ $user->id }}')" class="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors dark:text-green-400 dark:hover:bg-green-900/20" title="Lihat Detail">
                                     <i class="fa-solid fa-eye text-sm"></i>
                                 </button>
+                                @if(auth()->user()->email === 'bagmawa@ums.ac.id')
                                 <a href="{{ route('users.edit', $user) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Edit Pengguna">
                                     <i class="fa-solid fa-pen-to-square text-sm"></i>
                                 </a>
+                                @endif
                                 @if(auth()->id() === $user->id)
                                     <span class="inline-flex items-center justify-center w-8 h-8 text-gray-300 cursor-not-allowed" title="Tidak bisa menonaktifkan akun sendiri">
                                         <i class="fa-solid fa-trash text-sm"></i>
@@ -135,10 +137,6 @@
                         <p class="mt-1 text-sm font-medium text-gray-900 dark:text-white">{{ $user->name }}</p>
                     </div>
                     <div>
-                        <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Username</label>
-                        <p class="mt-1 text-sm font-medium text-gray-900 dark:text-white">{{ $user->username }}</p>
-                    </div>
-                    <div>
                         <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Email</label>
                         <p class="mt-1 text-sm text-gray-900 dark:text-gray-200">{{ $user->email }}</p>
                     </div>
@@ -170,9 +168,11 @@
             </div>
 
             <x-slot:footer>
+                @if(auth()->user()->email === 'bagmawa@ums.ac.id')
                 <a href="{{ route('users.edit', $user) }}" class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                     <i class="fa-solid fa-pen-to-square text-sm"></i> Edit
                 </a>
+                @endif
             </x-slot:footer>
         </x-common.modal>
         @endforeach

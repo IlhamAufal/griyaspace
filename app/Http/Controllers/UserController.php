@@ -19,8 +19,7 @@ class UserController extends Controller
             $search = $request->search;
             $query->where(function ($q) use ($search) {
                 $q->where('name', 'like', "%{$search}%")
-                  ->orWhere('email', 'like', "%{$search}%")
-                  ->orWhere('username', 'like', "%{$search}%");
+                  ->orWhere('email', 'like', "%{$search}%");
             });
         }
 
@@ -49,21 +48,18 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email',
-            'username' => 'required|string|max:255|unique:users,username',
+            'password' => 'required|string|min:8|confirmed|regex:/[A-Z]/',
             'organization_id' => 'nullable|exists:organizations,id',
             'role_id' => 'required|exists:roles,id',
             'phone' => 'nullable|string|max:255',
-            'is_active' => 'boolean',
         ]);
 
-        $tempPassword = Str::random(12);
-
-        $validated['password'] = Hash::make($tempPassword);
-        $validated['must_change_password'] = true;
+        $validated['password'] = Hash::make($validated['password']);
+        $validated['is_active'] = true;
 
         User::create($validated);
 
-        return redirect()->route('users.index')->with('success', "User berhasil dibuat. Password sementara: {$tempPassword}");
+        return redirect()->route('users.index')->with('success', 'User berhasil dibuat.');
     }
 
     public function show(User $user)
@@ -83,7 +79,6 @@ class UserController extends Controller
         $validated = $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|unique:users,email,' . $user->id,
-            'username' => 'required|string|max:255|unique:users,username,' . $user->id,
             'organization_id' => 'nullable|exists:organizations,id',
             'role_id' => 'required|exists:roles,id',
             'phone' => 'nullable|string|max:255',

@@ -13,104 +13,156 @@
             <h1 class="text-2xl font-bold text-gray-900">Konfirmasi Pengajuan</h1>
         </div>
 
-        <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl border border-gray-200 dark:border-gray-700/60 p-4 mb-5">
-            <form action="{{ route('bookings.konfirmasi') }}" method="GET" class="flex flex-wrap items-end gap-4">
-                <div class="flex-1 min-w-[220px]">
-                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Pencarian</label>
-                    <div class="relative">
-                        <input type="text" name="search" value="{{ request('search') }}" placeholder="No. booking, nama kegiatan, pengaju..." class="h-10 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm bg-transparent placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
-                        <i class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>
+        <div x-data="{
+            search: '{{ request('search') }}',
+            filters: { status: '{{ request('status') }}', user_id: '{{ request('user_id') }}' },
+            sort: '{{ request('sort') }}',
+            direction: '{{ request('direction', 'asc') }}',
+            loading: false,
+            timer: null,
+            doSearch() {
+                clearTimeout(this.timer);
+                this.timer = setTimeout(() => { this.page(1); }, 400);
+            },
+            applyFilter() { this.page(1); },
+            clearFilters() {
+                this.search = '';
+                this.filters = { status: '', user_id: '' };
+                this.page(1);
+            },
+            sortColumn(col, dir) {
+                this.sort = col;
+                this.direction = dir;
+                this.page(1);
+            },
+            page(p) {
+                this.loading = true;
+                const params = new URLSearchParams();
+                if (this.search) params.set('search', this.search);
+                if (this.filters.status) params.set('status', this.filters.status);
+                if (this.filters.user_id) params.set('user_id', this.filters.user_id);
+                if (this.sort) params.set('sort', this.sort);
+                if (this.direction) params.set('direction', this.direction);
+                params.set('page', p);
+                const url = '{{ route('bookings.konfirmasi') }}?' + params.toString();
+                fetch(url, { headers: { 'X-Requested-With': 'XMLHttpRequest' } })
+                    .then(r => r.text())
+                    .then(html => {
+                        const doc = new DOMParser().parseFromString(html, 'text/html');
+                        const newTable = doc.querySelector('#table-area');
+                        if (newTable) document.querySelector('#table-area').innerHTML = newTable.innerHTML;
+                        history.replaceState(null, '', url);
+                        this.loading = false;
+                        this.$nextTick(() => {
+                            document.querySelectorAll('#table-area a.pagination-link').forEach(link => {
+                                link.addEventListener('click', e => {
+                                    e.preventDefault();
+                                    const page = new URL(link.href).searchParams.get('page') || 1;
+                                    this.page(page);
+                                });
+                            });
+                        });
+                    })
+                    .catch(() => { this.loading = false; });
+            }
+        }" x-init="$nextTick(() => {
+            document.querySelectorAll('#table-area a.pagination-link').forEach(link => {
+                link.addEventListener('click', e => {
+                    e.preventDefault();
+                    const page = new URL(link.href).searchParams.get('page') || 1;
+                    this.page(page);
+                });
+            });
+        })" @sort.window="sortColumn($event.detail.column, $event.detail.direction)">
+
+            <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl border border-gray-200 dark:border-gray-700/60 p-4 mb-5">
+                <div class="flex flex-wrap items-end gap-4">
+                    <div class="flex-1 min-w-[220px]">
+                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Pencarian</label>
+                        <div class="relative">
+                            <input type="text" x-model="search" @input.debounce.400ms="doSearch()" placeholder="No. booking, nama kegiatan, pengaju..." class="h-10 w-full pl-10 pr-4 py-2 border border-gray-300 rounded-lg text-sm bg-transparent placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                            <i x-show="!loading" class="fa-solid fa-magnifying-glass absolute left-3.5 top-1/2 -translate-y-1/2 text-gray-500 dark:text-gray-400 text-xs"></i>
+                            <i x-show="loading" x-cloak class="fa-solid fa-spinner fa-spin absolute left-3.5 top-1/2 -translate-y-1/2 text-brand-500 text-xs"></i>
+                        </div>
+                    </div>
+                    <div class="w-48">
+                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Status</label>
+                        <select x-model="filters.status" @change="applyFilter()" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                            <option value="">Semua</option>
+                            <option value="submitted">Diajukan</option>
+                            <option value="revision">Revisi</option>
+                        </select>
+                    </div>
+                    <div class="w-56">
+                        <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Pengaju</label>
+                        <select x-model="filters.user_id" @change="applyFilter()" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                            <option value="">Semua Pengaju</option>
+                            @foreach($users as $u)
+                            <option value="{{ $u->id }}">{{ $u->name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <button type="button" @click="clearFilters()" x-show="search || filters.status || filters.user_id" x-cloak class="h-10 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200 px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 transition-colors">
+                        <i class="fa-solid fa-xmark text-xs"></i> Reset
+                    </button>
+                </div>
+            </div>
+
+            <div id="table-area">
+                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl border border-gray-200 dark:border-gray-700/60 overflow-hidden">
+                    <div class="overflow-x-auto transition-opacity duration-300" :class="loading ? 'opacity-50 pointer-events-none' : ''">
+                        <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
+                            <thead class="bg-brand-500 text-white">
+                                <tr>
+                                    <x-table.sortable-header column="booking_number" label="No. Booking" />
+                                    <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Pengaju</th>
+                                    <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Ruangan</th>
+                                    <x-table.sortable-header column="activity_name" label="Kegiatan" />
+                                    <x-table.sortable-header column="booking_date" label="Tanggal" />
+                                    <x-table.sortable-header column="status" label="Status" />
+                                    <th class="px-6 py-3.5 text-center text-xs font-bold text-white uppercase tracking-wider">Aksi</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
+                                @forelse($bookings as $booking)
+                                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ $booking->booking_number ?? '-' }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ $booking->submittedBy->name ?? '-' }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{{ $booking->room->name }}</td>
+                                    <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200 font-medium" title="{{ $booking->activity_name }}">{{ $booking->activity_name }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{{ $booking->booking_date->format('d/m/Y') }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap">
+                                        <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $booking->status->colorClasses() }}">
+                                            {{ $booking->status->label() }}
+                                        </span>
+                                    </td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
+                                        <div class="flex items-center justify-center gap-1.5">
+                                            <a href="{{ route('bookings.show', $booking) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors" title="Lihat Detail">
+                                                <i class="fa-solid fa-eye text-sm"></i>
+                                            </a>
+                                            @if($booking->status !== \App\Enums\BookingStatus::Revision)
+                                            <button type="button" onclick="openDecisionModal('{{ $booking->id }}', '{{ $booking->booking_number }}', '{{ $booking->activity_name }}')" class="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-green-900 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-lg transition-colors" title="Keputusan">
+                                                <i class="fa-solid fa-gavel text-sm"></i>
+                                            </button>
+                                            @endif
+                                        </div>
+                                    </td>
+                                </tr>
+                                @empty
+                                <tr>
+                                    <td colspan="6" class="px-6 py-8 text-center text-sm text-gray-500 dark:text-gray-400">Tidak ada pengajuan yang perlu dikonfirmasi</td>
+                                </tr>
+                                @endforelse
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                <div class="w-48">
-                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Status</label>
-                    <select name="status" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
-                        <option value="">Semua</option>
-                        <option value="submitted" {{ request('status') === 'submitted' ? 'selected' : '' }}>Diajukan</option>
-                        <option value="revision" {{ request('status') === 'revision' ? 'selected' : '' }}>Revisi</option>
-                    </select>
-                </div>
-                <div class="w-56">
-                    <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Pengaju</label>
-                    <select name="user_id" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
-                        <option value="">Semua Pengaju</option>
-                        @foreach($users as $u)
-                        <option value="{{ $u->id }}" {{ request('user_id') == $u->id ? 'selected' : '' }}>{{ $u->name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-                <div class="flex gap-2">
-                    <button type="submit" class="h-10 bg-secondary-500 hover:bg-secondary-600 text-white px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 shadow-theme-xs transition-colors">
-                        <i class="fa-solid fa-filter text-xs"></i> Filter
-                    </button>
-                    @if(request()->hasAny(['search', 'status', 'user_id']))
-                    <a href="{{ route('bookings.konfirmasi') }}" class="h-10 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200 px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 transition-colors">
-                        <i class="fa-solid fa-xmark text-xs"></i> Reset
-                    </a>
-                    @endif
-                </div>
-            </form>
-        </div>
 
-        <div class="bg-white dark:bg-gray-800 shadow-sm rounded-xl border border-gray-200 dark:border-gray-700/60 overflow-hidden"
-             x-data="{ tableLoaded: false }"
-             x-init="tableLoaded = true">
-
-            <div x-show="!tableLoaded" class="p-6">
-                <x-skeleton.table :rows="5" :cols="7" :showHeader="false" />
+                <div class="mt-4">
+                    {{ $bookings->links() }}
+                </div>
             </div>
-
-            <div x-show="tableLoaded" class="overflow-x-auto transition-opacity duration-300">
-                <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                    <thead class="bg-brand-500 text-white">
-                        <tr>
-                            <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">No. Booking</th>
-                            <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Pengaju</th>
-                            <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Ruangan</th>
-                            <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Kegiatan</th>
-                            <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Tanggal</th>
-                            <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">Status</th>
-                            <th class="px-6 py-3.5 text-center text-xs font-bold text-white uppercase tracking-wider">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
-                        @forelse($bookings as $booking)
-                        <tr class="hover:bg-gray-50 dark:hover:bg-gray-700/30 transition-colors">
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ $booking->booking_number ?? '-' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900 dark:text-white">{{ $booking->submittedBy->name ?? '-' }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{{ $booking->room->name }}</td>
-                            <td class="px-6 py-4 text-sm text-gray-800 dark:text-gray-200 font-medium" title="{{ $booking->activity_name }}">{{ $booking->activity_name }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-600 dark:text-gray-300">{{ $booking->booking_date->format('d/m/Y') }}</td>
-                            <td class="px-6 py-4 whitespace-nowrap">
-                                <span class="px-2.5 py-1 inline-flex text-xs leading-5 font-semibold rounded-full {{ $booking->status->colorClasses() }}">
-                                    {{ $booking->status->label() }}
-                                </span>
-                            </td>
-                            <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
-                                <div class="flex items-center justify-center gap-1.5">
-                                    <a href="{{ route('bookings.show', $booking) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors" title="Lihat Detail">
-                                        <i class="fa-solid fa-eye text-sm"></i>
-                                    </a>
-                                    @if($booking->status !== \App\Enums\BookingStatus::Revision)
-                                    <button type="button" onclick="openDecisionModal('{{ $booking->id }}', '{{ $booking->booking_number }}', '{{ $booking->activity_name }}')" class="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-green-900 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-lg transition-colors" title="Keputusan">
-                                        <i class="fa-solid fa-gavel text-sm"></i>
-                                    </button>
-                                    @endif
-                                </div>
-                            </td>
-                        </tr>
-                        @empty
-                        <tr>
-                            <td colspan="6" class="px-6 py-8 text-center text-sm text-gray-500 dark:text-gray-400">Tidak ada pengajuan yang perlu dikonfirmasi</td>
-                        </tr>
-                        @endforelse
-                    </tbody>
-                </table>
-            </div>
-        </div>
-
-        <div class="mt-4">
-            {{ $bookings->links() }}
         </div>
     </div>
 </div>
@@ -159,7 +211,7 @@
                 </div>
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Catatan <span id="requiredIndicator" class="text-red-500">*</span></label>
-                    <textarea name="admin_note" id="decisionNote" rows="3" placeholder="Masukkan catatan keputusan..." class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs"></textarea>
+                    <textarea name="admin_note" id="decisionNote" rows="3" placeholder="Masukkan catatan keputusan..." class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs"></textarea>
                 </div>
                 <div class="flex items-center justify-end gap-3">
                     <button type="button" onclick="closeDecisionModal()" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">

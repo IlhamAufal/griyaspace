@@ -153,7 +153,7 @@
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="4" class="px-4 py-8 text-center text-gray-400">
+                            <td colspan="4" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
                                 <i class="fa-regular fa-calendar-xmark text-2xl mb-2 block"></i>
                                 Tidak ada jadwal peminjaman mendatang
                             </td>

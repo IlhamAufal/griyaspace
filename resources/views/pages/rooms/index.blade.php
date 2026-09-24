@@ -14,7 +14,7 @@
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
-                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs mx-1.5"></i>
+                        <i class="fa-solid fa-chevron-right text-gray-500 dark:text-gray-400 text-xs mx-1.5"></i>
                         <span class="text-gray-700 dark:text-gray-200 font-medium">Ruangan</span>
                     </div>
                 </li>
@@ -73,9 +73,9 @@
 
                         <!-- Skeleton Shimmer Placeholder -->
                         <div x-show="!imgLoaded"
-                             class="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse flex flex-col items-center justify-center text-gray-400 dark:text-gray-500 z-0">
+                             class="absolute inset-0 bg-gray-200 dark:bg-gray-700 animate-pulse flex flex-col items-center justify-center text-gray-500 dark:text-gray-300 z-0">
                             <i class="fa-regular fa-image text-3xl mb-1 opacity-50"></i>
-                            <span class="text-[11px] font-medium opacity-60">Memuat visual...</span>
+                            <span class="text-[11px] font-medium text-gray-800 dark:text-gray-200">Memuat visual...</span>
                         </div>
 
                         <!-- Room Image with Smooth Transition -->
@@ -106,7 +106,7 @@
                                     <i class="fa-solid fa-location-dot text-xs"></i>
                                 </span>
                                 <div class="min-w-0 flex-1">
-                                    <p class="text-xs text-gray-400 dark:text-gray-500">Lokasi / Gedung</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400">Lokasi / Gedung</p>
                                     <p class="font-medium text-gray-800 dark:text-gray-200 truncate">{{ $room->location }}</p>
                                 </div>
                             </div>
@@ -118,7 +118,7 @@
                                         <i class="fa-solid fa-users text-xs"></i>
                                     </span>
                                     <div class="min-w-0">
-                                        <p class="text-xs text-gray-400 dark:text-gray-500">Kapasitas</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Kapasitas</p>
                                         <p class="font-semibold text-gray-800 dark:text-gray-200">{{ $room->capacity }} Org</p>
                                     </div>
                                 </div>
@@ -128,7 +128,7 @@
                                         <i class="fa-regular fa-clock text-xs"></i>
                                     </span>
                                     <div class="min-w-0">
-                                        <p class="text-xs text-gray-400 dark:text-gray-500">Jam Buka</p>
+                                        <p class="text-xs text-gray-500 dark:text-gray-400">Jam Buka</p>
                                         <p class="font-semibold text-gray-800 dark:text-gray-200 truncate">{{ substr($room->open_time, 0, 5) }} - {{ substr($room->close_time, 0, 5) }}</p>
                                     </div>
                                 </div>

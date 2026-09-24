@@ -34,7 +34,7 @@
                     <div class="flex items-center gap-2 truncate">
                         <i class="fa-solid fa-user text-brand-500"></i>
                         <span class="font-medium truncate">{{ $user->name }}</span>
-                        <span class="text-gray-400 text-xs truncate">({{ $user->email }})</span>
+                        <span class="text-gray-500 dark:text-gray-400 text-xs truncate">({{ $user->email }})</span>
                     </div>
                     <span class="text-xs px-2 py-0.5 rounded-full bg-brand-50 text-brand-700 dark:bg-brand-900/30 dark:text-brand-300 font-medium shrink-0">Akun Anda</span>
                 </div>
@@ -57,7 +57,7 @@
                 <input type="hidden" name="organization_id" value="{{ $user->organization_id }}">
             @else
                 <div class="h-11 w-full flex items-center rounded-lg border border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-900/50 px-4 py-2.5 text-sm text-gray-800 dark:text-gray-200">
-                    <i class="fa-solid fa-building text-gray-400 mr-2"></i>
+                    <i class="fa-solid fa-building text-gray-500 dark:text-gray-400 mr-2"></i>
                     <span class="truncate" x-text="organizationName || 'Organisasi otomatis terisi'"></span>
                 </div>
             @endif
@@ -95,7 +95,7 @@
             </label>
             <input type="text" name="activity_name" x-model="activityName" value="{{ old('activity_name') }}"
                 placeholder="Contoh: Seminar Nasional Teknologi & AI 2026"
-                class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
             @error('activity_name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
             <p x-show="stepErrors.activity_name" x-text="stepErrors.activity_name" class="text-red-500 text-xs mt-1.5" style="display:none;"></p>
         </div>
@@ -107,7 +107,7 @@
             </label>
             <textarea name="purpose" x-model="purpose" rows="3"
                 placeholder="Jelaskan deskripsi dan tujuan singkat peminjaman ruangan (opsional)..."
-                class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs">{{ old('purpose') }}</textarea>
+                class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs">{{ old('purpose') }}</textarea>
             @error('purpose') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
         </div>
 
@@ -119,7 +119,7 @@
             <div class="relative">
                 <input type="number" name="participant_count" x-model="participantCount" min="1" value="{{ old('participant_count') }}"
                     placeholder="Contoh: 30"
-                    class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                    class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
             </div>
             <template x-if="roomCapacity && participantCount > roomCapacity">
                 <p class="text-red-500 text-xs mt-1.5 flex items-center gap-1">
@@ -138,7 +138,7 @@
             </label>
             <input type="text" name="person_in_charge" x-model="personInCharge" value="{{ old('person_in_charge') }}"
                 placeholder="Nama lengkap penanggung jawab"
-                class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
             @error('person_in_charge') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
             <p x-show="stepErrors.person_in_charge" x-text="stepErrors.person_in_charge" class="text-red-500 text-xs mt-1.5" style="display:none;"></p>
         </div>
@@ -155,7 +155,7 @@
                 oninput="this.value = this.value.replace(/[^0-9]/g, '')"
                 value="{{ old('contact_phone') }}"
                 placeholder="Contoh: 081234567890"
-                class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
             @error('contact_phone') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
             <p x-show="stepErrors.contact_phone" x-text="stepErrors.contact_phone" class="text-red-500 text-xs mt-1.5" style="display:none;"></p>
         </div>
@@ -173,7 +173,7 @@
                 <p class="text-xs text-green-600 dark:text-green-400 mt-1.5 flex items-center gap-1.5">
                     <i class="fa-solid fa-file-pdf"></i>
                     <span x-text="documentFileName"></span>
-                    <span class="text-gray-400" x-text="'(' + documentFileSize + ')'"></span>
+                    <span class="text-gray-500 dark:text-gray-400" x-text="'(' + documentFileSize + ')'"></span>
                 </p>
             </template>
             @error('document') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror

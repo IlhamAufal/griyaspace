@@ -12,25 +12,25 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kode Ruangan <span class="text-red-500">*</span></label>
-                        <input type="text" name="code" value="{{ old('code') }}" placeholder="Contoh: R.201" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="code" value="{{ old('code') }}" placeholder="Contoh: R.201" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('code') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Ruangan <span class="text-red-500">*</span></label>
-                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Contoh: Lab Komputer 1" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Contoh: Lab Komputer 1" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kapasitas (Orang) <span class="text-red-500">*</span></label>
-                        <input type="number" name="capacity" value="{{ old('capacity') }}" placeholder="Contoh: 40" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="number" name="capacity" value="{{ old('capacity') }}" placeholder="Contoh: 40" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('capacity') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Lokasi / Gedung <span class="text-red-500">*</span></label>
-                        <input type="text" name="location" value="{{ old('location') }}" placeholder="Contoh: Gedung FKI Lt. 2" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="location" value="{{ old('location') }}" placeholder="Contoh: Gedung FKI Lt. 2" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('location') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 

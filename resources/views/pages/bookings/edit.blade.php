@@ -24,7 +24,7 @@
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tanggal Kegiatan <span class="text-red-500">*</span></label>
-                        <input type="date" name="booking_date" value="{{ old('booking_date', $booking->booking_date->format('Y-m-d')) }}" min="{{ date('Y-m-d') }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="booking_date" value="{{ old('booking_date', $booking->booking_date->format('Y-m-d')) }}" data-min-date="{{ date('Y-m-d') }}" class="datepicker h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required readonly>
                         @error('booking_date') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
@@ -42,31 +42,31 @@
 
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Kegiatan <span class="text-red-500">*</span></label>
-                        <input type="text" name="activity_name" value="{{ old('activity_name', $booking->activity_name) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="activity_name" value="{{ old('activity_name', $booking->activity_name) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('activity_name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tujuan Kegiatan <span class="text-red-500">*</span></label>
-                        <textarea name="purpose" rows="3" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>{{ old('purpose', $booking->purpose) }}</textarea>
+                        <textarea name="purpose" rows="3" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>{{ old('purpose', $booking->purpose) }}</textarea>
                         @error('purpose') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jumlah Peserta <span class="text-red-500">*</span></label>
-                        <input type="number" name="participant_count" value="{{ old('participant_count', $booking->participant_count) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="number" name="participant_count" value="{{ old('participant_count', $booking->participant_count) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('participant_count') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Penanggung Jawab <span class="text-red-500">*</span></label>
-                        <input type="text" name="person_in_charge" value="{{ old('person_in_charge', $booking->person_in_charge) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="person_in_charge" value="{{ old('person_in_charge', $booking->person_in_charge) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('person_in_charge') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">No. Telepon / WhatsApp <span class="text-red-500">*</span></label>
-                        <input type="text" name="contact_phone" value="{{ old('contact_phone', $booking->contact_phone) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="contact_phone" value="{{ old('contact_phone', $booking->contact_phone) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('contact_phone') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 

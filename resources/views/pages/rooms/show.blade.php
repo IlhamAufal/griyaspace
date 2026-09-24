@@ -39,13 +39,13 @@
                 </li>
                 <li>
                     <div class="flex items-center">
-                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs mx-1.5"></i>
+                        <i class="fa-solid fa-chevron-right text-gray-500 dark:text-gray-400 text-xs mx-1.5"></i>
                         <a href="{{ route('rooms.index') }}" class="hover:text-brand-500 dark:hover:text-brand-400">Ruangan</a>
                     </div>
                 </li>
                 <li aria-current="page">
                     <div class="flex items-center">
-                        <i class="fa-solid fa-chevron-right text-gray-400 text-xs mx-1.5"></i>
+                        <i class="fa-solid fa-chevron-right text-gray-500 dark:text-gray-400 text-xs mx-1.5"></i>
                         <span class="text-gray-700 dark:text-gray-200 font-medium truncate max-w-[200px] sm:max-w-xs">{{ $room->name }}</span>
                     </div>
                 </li>
@@ -156,7 +156,7 @@
                                 </div>
                                 <div>
                                     <p class="text-sm font-medium text-gray-500 dark:text-gray-400">Belum ada foto ruangan</p>
-                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1">Foto akan ditampilkan setelah ditambahkan oleh admin</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1">Foto akan ditampilkan setelah ditambahkan oleh admin</p>
                                 </div>
                             </div>
                         </div>

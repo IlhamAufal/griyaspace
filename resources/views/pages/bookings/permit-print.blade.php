@@ -208,7 +208,7 @@
         </table> --}}
     </div>
 
-    <!-- ===== QR CODE — pojok kiri bawah ===== -->
+    <!-- QR code, pojok kiri bawah -->
     <div class="qr-corner">
         <img class="qr-code" src="data:image/png;base64,{{ $qrBase64 }}" alt="QR Code Verifikasi">
         <div class="qr-label">Scan untuk verifikasi</div>

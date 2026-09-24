@@ -22,6 +22,17 @@
 Homestead.json
 Homestead.yaml
 
+# Storage (Laravel's own .gitignore files inside handle subdirectories)
+/storage/framework/views/*.php
+/storage/framework/lsp-*.php
+
+# Bootstrap cache
+/bootstrap/cache/*
+!/bootstrap/cache/.gitignore
+
+# Vite
+/vite.config.js.timestamp-*
+
 # TailAdmin template files
 tailadmin-laravel.png
 /public/css
@@ -31,7 +42,6 @@ tailadmin-laravel.png
 # PDF templates and generated files
 storage/app/private/*.pdf
 storage/app/private/**/*.pdf
-*.pdf
 
 # Logo and template images
 storage/app/private/logo.png
@@ -47,7 +57,5 @@ storage/app/private/**/*.jpeg
 # OS
 Thumbs.db
 Desktop.ini
-
-
+AGENTS.md
 docs
-/storage/framework

@@ -37,7 +37,7 @@
         <input type="hidden" name="{{ $name }}" :value="enabled ? '{{ $valueOn }}' : '{{ $valueOff }}'">
 
         <span class="text-sm font-medium"
-              :class="enabled ? 'text-green-600 dark:text-green-400' : 'text-gray-500 dark:text-gray-400'"
+              :class="enabled ? 'text-brand-600 dark:text-brand-400' : 'text-gray-500 dark:text-gray-400'"
               x-text="enabled ? '{{ $activeLabel }}' : '{{ $inactiveLabel }}'"></span>
     </div>
 

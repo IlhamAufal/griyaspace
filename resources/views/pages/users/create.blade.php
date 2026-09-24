@@ -20,21 +20,21 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Lengkap <span class="text-red-500">*</span></label>
-                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Masukkan nama lengkap" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="name" value="{{ old('name') }}" placeholder="Masukkan nama lengkap" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Email <span class="text-red-500">*</span></label>
-                        <input type="email" name="email" value="{{ old('email') }}" placeholder="user@ums.ac.id" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="email" name="email" value="{{ old('email') }}" placeholder="user@ums.ac.id" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('email') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Password <span class="text-red-500">*</span></label>
                         <div x-data="{ showPass: false }" class="relative">
-                            <input :type="showPass ? 'text' : 'password'" name="password" id="password" placeholder="Minimal 8 karakter" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
-                            <span @click="showPass = !showPass" class="absolute top-1/2 right-3.5 -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                            <input :type="showPass ? 'text' : 'password'" name="password" id="password" placeholder="Minimal 8 karakter" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
+                            <span @click="showPass = !showPass" class="absolute top-1/2 right-3.5 -translate-y-1/2 cursor-pointer text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                                 <i x-show="!showPass" class="fa-solid fa-eye text-sm"></i>
                                 <i x-show="showPass" class="fa-solid fa-eye-slash text-sm"></i>
                             </span>
@@ -56,8 +56,8 @@
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Konfirmasi Password <span class="text-red-500">*</span></label>
                         <div x-data="{ showPassConfirm: false }" class="relative">
-                            <input :type="showPassConfirm ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" placeholder="Ulangi password" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
-                            <span @click="showPassConfirm = !showPassConfirm" class="absolute top-1/2 right-3.5 -translate-y-1/2 cursor-pointer text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                            <input :type="showPassConfirm ? 'text' : 'password'" name="password_confirmation" id="password_confirmation" placeholder="Ulangi password" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent py-2.5 pr-11 pl-4 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
+                            <span @click="showPassConfirm = !showPassConfirm" class="absolute top-1/2 right-3.5 -translate-y-1/2 cursor-pointer text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                                 <i x-show="!showPassConfirm" class="fa-solid fa-eye text-sm"></i>
                                 <i x-show="showPassConfirm" class="fa-solid fa-eye-slash text-sm"></i>
                             </span>
@@ -88,7 +88,7 @@
 
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">No. Telepon / WhatsApp</label>
-                        <input type="text" name="phone" value="{{ old('phone') }}" placeholder="08xxxxxxxxxx" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs">
+                        <input type="text" name="phone" value="{{ old('phone') }}" placeholder="08xxxxxxxxxx" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs">
                         @error('phone') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
                 </div>

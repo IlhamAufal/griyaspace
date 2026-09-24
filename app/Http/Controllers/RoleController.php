@@ -24,7 +24,17 @@ class RoleController extends Controller
             $query->where('is_active', $request->status === 'active');
         }
 
-        $roles = $query->withCount('users')->latest()->paginate(10)->withQueryString();
+        $allowedSorts = ['name', 'description', 'is_active', 'users_count', 'created_at'];
+        $sort = $request->input('sort');
+        $direction = $request->input('direction', 'asc');
+
+        if ($sort && in_array($sort, $allowedSorts)) {
+            $query->withCount('users')->orderBy($sort, $direction === 'desc' ? 'desc' : 'asc');
+        } else {
+            $query->withCount('users')->latest();
+        }
+
+        $roles = $query->paginate(10)->withQueryString();
         return view('pages.roles.index', compact('roles'));
     }
 

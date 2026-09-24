@@ -80,13 +80,13 @@
                 <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-gray-200 dark:border-gray-700/60 p-6">
                     <h2 class="text-lg font-semibold text-gray-900 dark:text-white mb-4">Aksi Pengajuan</h2>
                     <div class="flex flex-wrap gap-3">
-                        <button type="button" onclick="openDecisionModal('approve')" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                        <button type="button" onclick="openDecisionModal('approve')" class="inline-flex items-center gap-2 bg-[#2F3185] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
                             <i class="fa-solid fa-check text-sm"></i> Setujui
                         </button>
-                        <button type="button" onclick="openDecisionModal('revision')" class="inline-flex items-center gap-2 bg-orange-500 hover:bg-orange-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                        <button type="button" onclick="openDecisionModal('revision')" class="inline-flex items-center gap-2 bg-[#FFB800] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
                             <i class="fa-solid fa-rotate-left text-sm"></i> Minta Revisi
                         </button>
-                        <button type="button" onclick="openDecisionModal('reject')" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                        <button type="button" onclick="openDecisionModal('reject')" class="inline-flex items-center gap-2 bg-red-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
                             <i class="fa-solid fa-xmark text-sm"></i> Tolak
                         </button>
                     </div>
@@ -191,7 +191,7 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tanggal <span class="text-red-500">*</span></label>
-                                <input type="text" name="booking_date" value="{{ old('booking_date', $booking->booking_date->format('Y-m-d')) }}" class="datepicker h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required readonly>
+                                <input type="text" name="booking_date" value="{{ old('booking_date', $booking->booking_date->format('Y-m-d')) }}" data-min-date="{{ date('Y-m-d') }}" class="datepicker h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required readonly>
                                 @error('booking_date') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
@@ -295,7 +295,7 @@
                                             @if($item->note)
                                             <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">{{ $item->note }}</p>
                                             @endif
-                                            <p class="mt-0.5 text-xs text-gray-400 dark:text-gray-500">
+                                            <p class="mt-0.5 text-xs text-gray-500 dark:text-gray-400">
                                                 {{ $item->changedBy->name ?? '-' }} &middot; {{ $item->created_at->setTimezone(config('app.timezone'))->format('d/m/Y H:i') }}
                                             </p>
                                         </div>
@@ -336,7 +336,7 @@
                 </div>
                 <div class="mb-4">
                     <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Catatan <span id="requiredIndicator" class="text-red-500">*</span></label>
-                    <textarea name="admin_note" id="decisionNote" rows="3" placeholder="Masukkan catatan keputusan..." class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs"></textarea>
+                    <textarea name="admin_note" id="decisionNote" rows="3" placeholder="Masukkan catatan keputusan..." class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs"></textarea>
                 </div>
                 <div class="flex items-center justify-end gap-3">
                     <button type="button" onclick="closeDecisionModal()" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
@@ -356,7 +356,7 @@
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-lg overflow-hidden">
             <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Preview Dokumen Izin</h3>
-                <button onclick="closeGeneratePermitModal()" class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                <button onclick="closeGeneratePermitModal()" class="text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                     <i class="fa-solid fa-xmark text-lg"></i>
                 </button>
             </div>

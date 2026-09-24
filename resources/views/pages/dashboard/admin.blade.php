@@ -15,7 +15,7 @@
                     <i class="fa-regular fa-calendar text-[#2F3185] dark:text-brand-400"></i>
                     <span>{{ now()->translatedFormat('l, d F Y') }}</span>
                 </p>
-                <p class="text-[11px] text-gray-400 dark:text-gray-500 mt-0.5">Pembaruan: {{ now()->format('H:i') }} WIB</p>
+                <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5">Pembaruan: {{ now()->format('H:i') }} WIB</p>
             </div>
         </div>
     </div>
@@ -199,7 +199,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-4 py-8 text-center text-gray-400">
+                                <td colspan="4" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
                                     <i class="fa-regular fa-folder-open text-2xl mb-2 block"></i>
                                     Tidak ada pengajuan terbaru
                                 </td>
@@ -232,7 +232,7 @@
                             </tr>
                         @empty
                             <tr>
-                                <td colspan="4" class="px-4 py-8 text-center text-gray-400">
+                                <td colspan="4" class="px-4 py-8 text-center text-gray-500 dark:text-gray-400">
                                     <i class="fa-regular fa-calendar-xmark text-2xl mb-2 block"></i>
                                     Tidak ada booking mendatang
                                 </td>

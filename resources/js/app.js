@@ -8,6 +8,7 @@ import interactionPlugin from '@fullcalendar/interaction';
 import listPlugin from '@fullcalendar/list';
 import flatpickr from 'flatpickr';
 import 'flatpickr/dist/flatpickr.min.css';
+import 'flatpickr/dist/l10n/id.js';
 
 window.ApexCharts = ApexCharts;
 
@@ -95,12 +96,17 @@ Alpine.start();
 
 document.addEventListener('DOMContentLoaded', function () {
     document.querySelectorAll('.datepicker').forEach(function (el) {
-        flatpickr(el, {
+        const config = {
             dateFormat: 'Y-m-d',
             altInput: true,
             altFormat: 'd/m/Y',
             locale: 'id',
-        });
+        };
+        const minDate = el.getAttribute('data-min-date');
+        if (minDate) {
+            config.minDate = minDate;
+        }
+        flatpickr(el, config);
     });
 
     // Dispatch activity event for session timer

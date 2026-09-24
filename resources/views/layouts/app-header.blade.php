@@ -29,8 +29,8 @@
 
             <!-- Logo (mobile only) -->
             <a href="/" class="xl:hidden">
-                <img class="dark:hidden" src="/images/logo/logo.svg" alt="Logo" />
-                <img class="hidden dark:block" src="/images/logo/logo-dark.svg" alt="Logo" />
+                <img class="dark:hidden h-7 w-auto" src="/images/logo/dkpti-dark.svg" alt="Logo" />
+                <img class="hidden dark:block h-7 w-auto" src="/images/logo/dkpti-dark.svg" alt="Logo" />
             </a>
 
             <!-- Application Menu Toggle (mobile only) -->
@@ -57,7 +57,7 @@
                 <!-- Theme Toggle Switch -->
                 <button
                     type="button"
-                    class="relative inline-flex h-9 w-16 items-center justify-between rounded-full bg-gray-100 p-1 border border-gray-200 transition-colors dark:bg-gray-800 dark:border-gray-700 focus:outline-none"
+                    class="relative inline-flex h-9 w-16 items-center justify-between rounded-full bg-gray-100 p-1 border border-gray-200 transition-colors dark:bg-gray-800 dark:border-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:focus-visible:ring-offset-gray-900"
                     @click="$store.theme.toggle()"
                     :aria-label="$store.theme.theme === 'dark' ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'"
                     :title="$store.theme.theme === 'dark' ? 'Mode Gelap (Klik untuk Terang)' : 'Mode Terang (Klik untuk Gelap)'">

@@ -26,7 +26,7 @@
                         <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 transition-all shadow-xs"
                             :class="step === 1
                                 ? 'bg-brand-500 text-white ring-4 ring-brand-100 dark:ring-brand-500/20'
-                                : (step > 1 ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400')">
+                                : (step > 1 ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300')">
                             <template x-if="step > 1">
                                 <i class="fa-solid fa-check text-xs"></i>
                             </template>
@@ -36,7 +36,7 @@
                         </div>
                         <div class="min-w-0">
                             <p class="text-[11px] uppercase tracking-wider font-semibold"
-                                :class="step === 1 ? 'text-brand-600 dark:text-brand-400' : (step > 1 ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-400')">
+                                :class="step === 1 ? 'text-brand-600 dark:text-brand-400' : (step > 1 ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-500 dark:text-gray-400')">
                                 Langkah 1
                             </p>
                             <h3 class="text-xs sm:text-sm font-semibold truncate"
@@ -53,7 +53,7 @@
                         <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 transition-all shadow-xs"
                             :class="step === 2
                                 ? 'bg-[#FFB800] text-white ring-4 ring-[#FFB800]/25'
-                                : (step > 2 ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400')">
+                                : (step > 2 ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300')">
                             <template x-if="step > 2">
                                 <i class="fa-solid fa-check text-xs"></i>
                             </template>
@@ -63,7 +63,7 @@
                         </div>
                         <div class="min-w-0">
                             <p class="text-[11px] uppercase tracking-wider font-semibold"
-                                :class="step === 2 ? 'text-[#D99B00] dark:text-[#FFB800]' : (step > 2 ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-400')">
+                                :class="step === 2 ? 'text-[#D99B00] dark:text-[#FFB800]' : (step > 2 ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-500 dark:text-gray-400')">
                                 Langkah 2
                             </p>
                             <h3 class="text-xs sm:text-sm font-semibold truncate"
@@ -80,12 +80,12 @@
                         <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 transition-all shadow-xs"
                             :class="step === 3
                                 ? 'bg-[#1CBDB3] text-white ring-4 ring-[#1CBDB3]/25'
-                                : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400'">
+                                : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300'">
                             <span>3</span>
                         </div>
                         <div class="min-w-0">
                             <p class="text-[11px] uppercase tracking-wider font-semibold"
-                                :class="step === 3 ? 'text-[#1CBDB3]' : 'text-gray-400'">
+                                :class="step === 3 ? 'text-[#1CBDB3]' : 'text-gray-500 dark:text-gray-400'">
                                 Langkah 3
                             </p>
                             <h3 class="text-xs sm:text-sm font-semibold truncate"

@@ -22,13 +22,13 @@
 
                 <!-- Sun Icon (Light Mode) -->
                 <span class="z-10 flex h-7 w-7 items-center justify-center text-xs transition-colors duration-200"
-                    :class="$store.theme.theme === 'light' ? 'text-amber-500 font-semibold' : 'text-gray-400 dark:text-gray-500'">
+                    :class="$store.theme.theme === 'light' ? 'text-amber-500 font-semibold' : 'text-gray-500 dark:text-gray-400'">
                     <i class="fa-solid fa-sun text-sm"></i>
                 </span>
 
                 <!-- Moon Icon (Dark Mode) -->
                 <span class="z-10 flex h-7 w-7 items-center justify-center text-xs transition-colors duration-200"
-                    :class="$store.theme.theme === 'dark' ? 'text-blue-400 font-semibold' : 'text-gray-400 dark:text-gray-500'">
+                    :class="$store.theme.theme === 'dark' ? 'text-blue-400 font-semibold' : 'text-gray-500 dark:text-gray-400'">
                     <i class="fa-solid fa-moon text-sm"></i>
                 </span>
             </button>
@@ -40,81 +40,77 @@
             <div class="relative flex w-full flex-1 flex-col justify-between p-3 sm:p-5 lg:w-1/2 lg:p-6">
                 <!-- Pojok Kiri Atas: 2 Logo Kecil Berdampingan (Ukuran Sama Client-Side) -->
                 <div class="flex items-center gap-3">
-                    <img src="{{ asset('storage/logo_text.png') }}" alt="Logo Griya Mahasiswa"
+                    <img src="/images/logo/logo_text.svg" alt="Logo UMS"
                         class="h-8 sm:h-9 w-auto object-contain" />
                     <span class="h-5 w-px bg-gray-300 dark:bg-gray-700"></span>
-                    <img src="{{ asset('storage/dkpti-dark.png') }}" alt="Logo DKPTI"
+                    <img src="/images/logo/dkpti-dark.svg" alt="Logo DKPTI"
                         class="h-8 sm:h-9 w-auto object-contain" />
                 </div>
 
-                <!-- Form Container di Tengah -->
-                <div class="mx-auto my-auto w-full max-w-md py-8">
-                    <div class="mb-6 sm:mb-8">
-                        <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                            Masuk
-                        </h1>
-                        <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                            Masukkan email dan password Anda untuk masuk.
-                        </p>
+                <div class="mt-8 sm:mt-12">
+                    <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
+                        Masuk
+                    </h1>
+                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
+                        Masukkan email dan password Anda untuk masuk.
+                    </p>
+                </div>
+
+                @if ($errors->any())
+                    <div class="mt-6 rounded-xl bg-red-50 p-4 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400 border border-red-200 dark:border-red-800">
+                        <ul class="list-disc list-inside space-y-1">
+                            @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
                     </div>
+                @endif
 
-                    @if ($errors->any())
-                        <div
-                            class="mb-5 rounded-xl bg-red-50 p-4 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400 border border-red-200 dark:border-red-800">
-                            <ul class="list-disc list-inside space-y-1">
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
+                <form method="POST" action="{{ route('login') }}" class="mt-6">
+                    @csrf
+                    <div class="space-y-5">
+                        <!-- Email -->
+                        <div>
+                            <label for="email"
+                                class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Email <span class="text-red-500">*</span>
+                            </label>
+                            <input type="email" id="email" name="email" value="{{ old('email') }}" required
+                                autofocus placeholder="Masukkan email Anda"
+                                class="h-11 w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 shadow-xs transition" />
                         </div>
-                    @endif
 
-                    <form method="POST" action="{{ route('login') }}">
-                        @csrf
-                        <div class="space-y-5">
-                            <!-- Email -->
-                            <div>
-                                <label for="email"
-                                    class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Email <span class="text-red-500">*</span>
-                                </label>
-                                <input type="email" id="email" name="email" value="{{ old('email') }}" required
-                                    autofocus placeholder="Masukkan email Anda"
-                                    class="h-11 w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-400 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 shadow-xs transition" />
-                            </div>
-
-                            <!-- Password -->
-                            <div>
-                                <label for="password"
-                                    class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                    Password <span class="text-red-500">*</span>
-                                </label>
-                                <div x-data="{ showPassword: false }" class="relative">
-                                    <input :type="showPassword ? 'text' : 'password'" id="password" name="password"
-                                        required placeholder="Masukkan password Anda"
-                                        class="h-11 w-full rounded-lg border border-gray-300 bg-white py-2.5 pr-11 pl-4 text-sm text-gray-900 placeholder:text-gray-400 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-500 shadow-xs transition" />
-                                    <button type="button" @click="showPassword = !showPassword"
-                                        class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer focus:outline-none">
-                                        <i x-show="!showPassword" class="fa-solid fa-eye text-sm"></i>
-                                        <i x-show="showPassword" class="fa-solid fa-eye-slash text-sm"
-                                            style="display: none;"></i>
-                                    </button>
-                                </div>
-                            </div>
-
-                            <!-- Submit Button -->
-                            <div class="pt-1">
-                                <button type="submit"
-                                    class="flex w-full items-center justify-center rounded-lg bg-brand-500 hover:bg-brand-600 px-4 py-3 text-sm font-semibold text-white shadow-xs transition duration-150 cursor-pointer">
-                                    Masuk
+                        <!-- Password -->
+                        <div>
+                            <label for="password"
+                                class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                Password <span class="text-red-500">*</span>
+                            </label>
+                            <div x-data="{ showPassword: false }" class="relative">
+                                <input :type="showPassword ? 'text' : 'password'" id="password" name="password"
+                                    required placeholder="Masukkan password Anda"
+                                    class="h-11 w-full rounded-lg border border-gray-300 bg-white py-2.5 pr-11 pl-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 shadow-xs transition" />
+                                <button type="button" @click="showPassword = !showPassword"
+                                    class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer focus:outline-none">
+                                    <i x-show="!showPassword" class="fa-solid fa-eye text-sm"></i>
+                                    <i x-show="showPassword" class="fa-solid fa-eye-slash text-sm"
+                                        style="display: none;"></i>
                                 </button>
                             </div>
                         </div>
-                    </form>
-                </div>
+
+                        <!-- Submit Button -->
+                        <div class="pt-1">
+                            <button type="submit"
+                                class="flex w-full items-center justify-center rounded-lg bg-brand-500 hover:bg-brand-600 px-4 py-3 text-sm font-semibold text-white shadow-xs transition duration-150 cursor-pointer">
+                                Masuk
+                            </button>
+                        </div>
+                    </div>
+                </form>
 
                 <!-- Footer note -->
-                <div class="text-xs text-gray-400 dark:text-gray-500">
+                <div class="text-xs text-gray-500 dark:text-gray-400">
                     &copy; {{ date('Y') }} Griya Mahasiswa. All rights reserved.
                 </div>
             </div>

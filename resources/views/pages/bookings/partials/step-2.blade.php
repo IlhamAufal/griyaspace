@@ -115,20 +115,20 @@
         <div x-show="startDate" class="space-y-3">
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 text-xs">
                 <div class="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-2xs">
-                    <span class="text-gray-400 dark:text-gray-500 block mb-0.5 font-medium text-[11px]">Tanggal Mulai</span>
+                    <span class="text-gray-500 dark:text-gray-400 block mb-0.5 font-medium text-[11px]">Tanggal Mulai</span>
                     <p class="font-bold text-gray-800 dark:text-white" x-text="formatDateShort(startDate)"></p>
                 </div>
                 <div class="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-2xs">
-                    <span class="text-gray-400 dark:text-gray-500 block mb-0.5 font-medium text-[11px]">Tanggal Akhir</span>
+                    <span class="text-gray-500 dark:text-gray-400 block mb-0.5 font-medium text-[11px]">Tanggal Akhir</span>
                     <p class="font-bold text-gray-800 dark:text-white" x-text="formatDateShort(endDate || startDate)"></p>
                 </div>
                 <div class="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-2xs">
-                    <span class="text-gray-400 dark:text-gray-500 block mb-0.5 font-medium text-[11px]">Waktu Pelaksanaan</span>
+                    <span class="text-gray-500 dark:text-gray-400 block mb-0.5 font-medium text-[11px]">Waktu Pelaksanaan</span>
                     <p class="font-bold text-brand-600 dark:text-brand-400"
                         x-text="startTime && endTime ? (startTime + ' - ' + endTime + ' WIB') : 'Belum ditentukan'"></p>
                 </div>
                 <div class="p-3 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-2xs">
-                    <span class="text-gray-400 dark:text-gray-500 block mb-0.5 font-medium text-[11px]">Durasi / Hari</span>
+                    <span class="text-gray-500 dark:text-gray-400 block mb-0.5 font-medium text-[11px]">Durasi / Hari</span>
                     <p class="font-bold text-gray-800 dark:text-white" x-text="formattedDuration || '-'"></p>
                 </div>
             </div>
@@ -182,7 +182,7 @@
                         </div>
                     </div>
                     <button type="button" @click="closeScheduleModal()"
-                        class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                        class="text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer">
                         <i class="fa-solid fa-xmark text-base"></i>
                     </button>
                 </div>
@@ -217,7 +217,7 @@
                             <span>
                                 <span x-show="startDate && endDate">
                                     Total: <b class="text-brand-600 dark:text-brand-400" x-text="totalDays + ' hari'"></b>
-                                    <span x-show="totalDays > 0" class="text-[11px] text-gray-400">
+                                    <span x-show="totalDays > 0" class="text-[11px] text-gray-500 dark:text-gray-400">
                                         (<span x-text="formattedDateRange"></span>)
                                     </span>
                                 </span>
@@ -316,7 +316,7 @@
                 <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 dark:border-gray-700">
                     <h3 class="text-lg font-semibold text-gray-900 dark:text-white">Detail Pengajuan</h3>
                     <button onclick="document.getElementById('step2-event-modal').style.display='none'"
-                        class="text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
+                        class="text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300">
                         <i class="fa-solid fa-xmark text-lg"></i>
                     </button>
                 </div>

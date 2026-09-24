@@ -45,25 +45,25 @@
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kode Ruangan <span class="text-red-500">*</span></label>
-                        <input type="text" name="code" value="{{ old('code', $room->code) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="code" value="{{ old('code', $room->code) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('code') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Ruangan <span class="text-red-500">*</span></label>
-                        <input type="text" name="name" value="{{ old('name', $room->name) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="name" value="{{ old('name', $room->name) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kapasitas (Orang) <span class="text-red-500">*</span></label>
-                        <input type="number" name="capacity" value="{{ old('capacity', $room->capacity) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="number" name="capacity" value="{{ old('capacity', $room->capacity) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('capacity') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Lokasi / Gedung <span class="text-red-500">*</span></label>
-                        <input type="text" name="location" value="{{ old('location', $room->location) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-400 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-white/30 shadow-theme-xs" required>
+                        <input type="text" name="location" value="{{ old('location', $room->location) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
                         @error('location') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
@@ -251,12 +251,12 @@
                         <!-- Empty State (No Photos) -->
                         <template x-if="!selectedPhoto">
                             <div class="p-8 text-center flex flex-col items-center justify-center space-y-3 bg-gray-50 dark:bg-gray-900/50 w-full h-full">
-                                <div class="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-400 dark:text-gray-500 shadow-inner">
+                                <div class="w-16 h-16 rounded-2xl bg-gray-100 dark:bg-gray-800 flex items-center justify-center text-gray-500 dark:text-gray-400 shadow-inner">
                                     <i class="fa-regular fa-image text-3xl"></i>
                                 </div>
                                 <div>
                                     <p class="text-sm font-semibold text-gray-700 dark:text-gray-300">Belum Ada Foto Ruangan</p>
-                                    <p class="text-xs text-gray-400 dark:text-gray-500 mt-1 max-w-xs">Gunakan form di sebelah kanan untuk menambahkan foto (maksimal 6 foto).</p>
+                                    <p class="text-xs text-gray-500 dark:text-gray-400 mt-1 max-w-xs">Gunakan form di sebelah kanan untuk menambahkan foto (maksimal 6 foto).</p>
                                 </div>
                             </div>
                         </template>
@@ -278,7 +278,7 @@
                                 <i class="fa-solid fa-grip text-brand-500"></i>
                                 <span>Galeri Mini Preview (Maksimal 6 Foto)</span>
                             </h3>
-                            <span class="text-xs text-gray-400 dark:text-gray-500">Klik untuk melihat preview</span>
+                            <span class="text-xs text-gray-500 dark:text-gray-400">Klik untuk melihat preview</span>
                         </div>
 
                         <!-- Mini Previews Grid (Responsive 3 columns) -->
@@ -325,7 +325,7 @@
                             <template x-for="slotIndex in (6 - photos.length)" :key="'empty-slot-' + slotIndex">
                                 <div class="border-2 border-dashed border-gray-200 dark:border-gray-700 rounded-xl aspect-[4/3] flex flex-col items-center justify-center p-3 text-center bg-gray-50/50 dark:bg-gray-900/30">
                                     <i class="fa-regular fa-image text-xl text-gray-300 dark:text-gray-600 mb-1"></i>
-                                    <span class="text-[11px] font-medium text-gray-400 dark:text-gray-500">Slot Kosong</span>
+                                    <span class="text-[11px] font-medium text-gray-500 dark:text-gray-400">Slot Kosong</span>
                                 </div>
                             </template>
                         </div>

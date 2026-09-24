@@ -65,12 +65,11 @@
         'justify-start'">
         <a href="/">
             <img x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                class="dark:hidden" src="/images/logo/logo.svg" alt="Logo" width="150" height="40" />
+                class="dark:hidden h-8 w-auto" src="/images/logo/dkpti-dark.svg" alt="Logo" />
             <img x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                class="hidden dark:block" src="/images/logo/logo-dark.svg" alt="Logo" width="150"
-                height="40" />
+                class="hidden dark:block h-8 w-auto" src="/images/logo/dkpti-dark.svg" alt="Logo" />
             <img x-show="!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen"
-                src="/images/logo/logo-icon.svg" alt="Logo" width="32" height="32" />
+                class="h-7 w-7" src="/images/logo/dkpti-dark.svg" alt="Logo" />
 
         </a>
     </div>

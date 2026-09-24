@@ -23,7 +23,17 @@ class OrganizationController extends Controller
             $query->where('is_active', $request->status === 'active');
         }
 
-        $organizations = $query->latest()->paginate(10)->withQueryString();
+        $allowedSorts = ['name', 'email', 'contact_phone', 'is_active', 'created_at'];
+        $sort = $request->input('sort');
+        $direction = $request->input('direction', 'asc');
+
+        if ($sort && in_array($sort, $allowedSorts)) {
+            $query->orderBy($sort, $direction === 'desc' ? 'desc' : 'asc');
+        } else {
+            $query->latest();
+        }
+
+        $organizations = $query->paginate(10)->withQueryString();
         return view('pages.organizations.index', compact('organizations'));
     }
 

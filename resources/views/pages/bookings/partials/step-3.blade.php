@@ -161,7 +161,7 @@
                         </div>
                         <div class="min-w-0 flex-1">
                             <p class="font-medium text-gray-900 dark:text-white truncate" x-text="documentFileName || 'File PDF Terlampir'"></p>
-                            <p class="text-[11px] text-gray-400 mt-0.5" x-text="documentFileSize"></p>
+                            <p class="text-[11px] text-gray-500 dark:text-gray-400 mt-0.5" x-text="documentFileSize"></p>
                         </div>
                     </div>
                 </div>

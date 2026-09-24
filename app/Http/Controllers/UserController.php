@@ -31,7 +31,17 @@ class UserController extends Controller
             $query->where('is_active', $request->status === 'active');
         }
 
-        $users = $query->latest()->paginate(10)->withQueryString();
+        $allowedSorts = ['name', 'email', 'is_active', 'created_at'];
+        $sort = $request->input('sort');
+        $direction = $request->input('direction', 'asc');
+
+        if ($sort && in_array($sort, $allowedSorts)) {
+            $query->orderBy($sort, $direction === 'desc' ? 'desc' : 'asc');
+        } else {
+            $query->latest();
+        }
+
+        $users = $query->paginate(10)->withQueryString();
         $roles = Role::all();
         return view('pages.users.index', compact('users', 'roles'));
     }

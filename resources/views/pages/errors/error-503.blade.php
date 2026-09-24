@@ -30,7 +30,7 @@
         Muat Ulang
     </a>
 
-    <p class="mt-8 text-xs text-gray-400 dark:text-gray-500">
+    <p class="mt-8 text-xs text-gray-500 dark:text-gray-400">
         &copy; {{ $currentYear }} Griya Mahasiswa
     </p>
 </div>

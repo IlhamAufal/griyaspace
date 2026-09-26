@@ -9,7 +9,7 @@
         <div class="absolute top-4 right-4 z-50">
             <button
                 type="button"
-                class="relative inline-flex h-9 w-16 items-center justify-between rounded-full bg-white/90 p-1 border border-gray-200 shadow-md backdrop-blur-xs transition-colors dark:bg-gray-800/90 dark:border-gray-700 focus:outline-none cursor-pointer"
+                class="relative inline-flex h-9 w-16 items-center justify-between rounded-full bg-white/90 p-1 border border-gray-200 shadow-md backdrop-blur-xs transition-colors dark:bg-gray-800/90 dark:border-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:focus-visible:ring-brand-300 dark:focus-visible:ring-offset-gray-900 cursor-pointer"
                 @click="$store.theme.toggle()"
                 :aria-label="$store.theme.theme === 'dark' ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'"
                 :title="$store.theme.theme === 'dark' ? 'Mode Gelap (Klik untuk Terang)' : 'Mode Terang (Klik untuk Gelap)'">
@@ -91,7 +91,7 @@
                                     required placeholder="Masukkan password Anda"
                                     class="h-11 w-full rounded-lg border border-gray-300 bg-white py-2.5 pr-11 pl-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 shadow-xs transition" />
                                 <button type="button" @click="showPassword = !showPassword"
-                                    class="absolute inset-y-0 right-0 flex items-center pr-3.5 text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer focus:outline-none">
+                                    class="absolute inset-y-0 right-0 flex items-center pr-3.5 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:focus-visible:ring-brand-300">
                                     <i x-show="!showPassword" class="fa-solid fa-eye text-sm"></i>
                                     <i x-show="showPassword" class="fa-solid fa-eye-slash text-sm"
                                         style="display: none;"></i>

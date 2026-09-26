@@ -130,11 +130,11 @@
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $role->users_count }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <div class="flex items-center gap-2">
-                                        <button type="button" @click="$dispatch('open-modal', 'detail-role-{{ $role->id }}')" class="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors dark:text-green-400 dark:hover:bg-green-900/20" title="Lihat Detail">
+                                    <div class="flex items-center gap-3">
+                                        <button type="button" @click="$dispatch('open-modal', 'detail-role-{{ $role->id }}')" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors dark:text-green-400 dark:hover:bg-green-900/20" title="Lihat Detail">
                                             <i class="fa-solid fa-eye text-sm"></i>
                                         </button>
-                                        <a href="{{ route('roles.edit', $role) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Edit Role">
+                                        <a href="{{ route('roles.edit', $role) }}" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Edit Role">
                                             <i class="fa-solid fa-pen-to-square text-sm"></i>
                                         </a>
                                         @if($role->users_count > 0)
@@ -145,7 +145,7 @@
                                             <form action="{{ route('roles.destroy', $role) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menonaktifkan role {{ $role->name }}?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="inline-flex items-center justify-center w-8 h-8 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg transition-colors dark:text-red-400 dark:hover:bg-red-900/20" title="Nonaktifkan Role">
+                                                <button type="submit" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg transition-colors dark:text-red-400 dark:hover:bg-red-900/20" title="Nonaktifkan Role">
                                                     <i class="fa-solid fa-trash text-sm"></i>
                                                 </button>
                                             </form>

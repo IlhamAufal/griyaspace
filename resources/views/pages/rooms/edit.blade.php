@@ -313,7 +313,7 @@
                                     <!-- Delete Button (Icon fa delete di pojok kanan atas, muncul saat hover) -->
                                     <button type="button"
                                             @click.stop="confirmDelete(photo)"
-                                            class="absolute top-2 right-2 w-7 h-7 rounded-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white flex items-center justify-center shadow-lg opacity-0 group-hover:opacity-100 transition-all duration-200 transform scale-75 group-hover:scale-100 hover:!scale-110 focus:outline-hidden z-20 cursor-pointer"
+                                            class="absolute top-2 right-2 w-7 h-7 rounded-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white flex items-center justify-center shadow-lg opacity-100 scale-100 transition-all duration-200 hover:!scale-110 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 md:opacity-0 md:scale-75 md:group-hover:opacity-100 md:group-hover:scale-100 md:focus-visible:opacity-100 md:focus-visible:scale-100 after:absolute after:-inset-2 after:content-[''] z-20 cursor-pointer"
                                             title="Hapus foto ini"
                                             aria-label="Hapus foto ini">
                                         <i class="fa-solid fa-trash-can text-xs"></i>

@@ -81,7 +81,7 @@
                 @foreach ($menuGroups as $groupIndex => $menuGroup)
                     <div>
                         <!-- Menu Group Title -->
-                        <h2 class="mb-4 text-xs uppercase flex leading-[20px] text-gray-400"
+                        <h2 class="mb-4 text-xs uppercase flex leading-[20px] text-gray-500"
                             :class="(!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen) ?
                             'lg:justify-center' : 'justify-start'">
                             <template
@@ -89,7 +89,7 @@
                                 <span>{{ $menuGroup['title'] }}</span>
                             </template>
                             <template x-if="!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen">
-                                <i class="fa-solid fa-ellipsis text-gray-400 text-sm"></i>
+                                <i class="fa-solid fa-ellipsis text-gray-500 text-sm"></i>
                             </template>
                         </h2>
 

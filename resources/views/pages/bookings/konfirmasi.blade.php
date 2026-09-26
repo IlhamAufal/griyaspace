@@ -137,12 +137,12 @@
                                         </span>
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
-                                        <div class="flex items-center justify-center gap-1.5">
-                                            <a href="{{ route('bookings.show', $booking) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors" title="Lihat Detail">
+                                        <div class="flex items-center justify-center gap-3">
+                                            <a href="{{ route('bookings.show', $booking) }}" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-blue-600 hover:text-blue-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors" title="Lihat Detail">
                                                 <i class="fa-solid fa-eye text-sm"></i>
                                             </a>
                                             @if($booking->status !== \App\Enums\BookingStatus::Revision)
-                                            <button type="button" onclick="openDecisionModal('{{ $booking->id }}', '{{ $booking->booking_number }}', '{{ $booking->activity_name }}')" class="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-green-900 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-lg transition-colors" title="Keputusan">
+                                            <button type="button" onclick="openDecisionModal('{{ $booking->id }}', '{{ $booking->booking_number }}', '{{ $booking->activity_name }}')" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-green-600 hover:text-green-900 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-lg transition-colors" title="Keputusan">
                                                 <i class="fa-solid fa-gavel text-sm"></i>
                                             </button>
                                             @endif
@@ -167,7 +167,7 @@
     </div>
 </div>
 
-<div id="decisionModal" class="fixed inset-0 z-[99999] hidden bg-black/50" style="display:none;">
+<div id="decisionModal" class="fixed inset-0 z-[99999] hidden bg-black/50" style="display:none;" @keydown.escape.window="closeDecisionModal()">
     <div class="flex items-center justify-center min-h-screen p-4">
         <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-lg overflow-hidden">
             <div class="flex items-center justify-between px-6 py-4 bg-brand-500 text-white">

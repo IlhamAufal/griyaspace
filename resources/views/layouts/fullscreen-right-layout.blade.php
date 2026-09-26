@@ -75,7 +75,7 @@
                             <img class="dark:hidden h-10 w-auto" src="/images/logo/dkpti-dark.svg" alt="Griya Mahasiswa" />
                             <img class="hidden dark:block h-10 w-auto" src="/images/logo/dkpti-dark.svg" alt="Griya Mahasiswa" />
                         </a>
-                        <p class="text-center text-gray-400 dark:text-white/60 text-sm">
+                        <p class="text-center text-gray-500 dark:text-white/60 text-sm">
                             {{ $bannerText ?? 'Griya Mahasiswa - Sistem Peminjaman Ruangan' }}
                         </p>
                     </div>
@@ -101,7 +101,7 @@
             <div class="fixed right-6 bottom-6 z-50">
                 <button
                     type="button"
-                    class="relative inline-flex h-9 w-16 items-center justify-between rounded-full bg-white/90 p-1 border border-gray-200 shadow-md backdrop-blur-xs transition-colors dark:bg-gray-800/90 dark:border-gray-700 focus:outline-none cursor-pointer"
+                    class="relative inline-flex h-9 w-16 items-center justify-between rounded-full bg-white/90 p-1 border border-gray-200 shadow-md backdrop-blur-xs transition-colors dark:bg-gray-800/90 dark:border-gray-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:focus-visible:ring-brand-300 dark:focus-visible:ring-offset-gray-900 cursor-pointer"
                     @click="$store.theme.toggle()"
                     :aria-label="$store.theme.theme === 'dark' ? 'Ganti ke mode terang' : 'Ganti ke mode gelap'"
                     :title="$store.theme.theme === 'dark' ? 'Mode Gelap (Klik untuk Terang)' : 'Mode Terang (Klik untuk Gelap)'">
@@ -114,13 +114,13 @@
 
                     <!-- Sun Icon (Light Mode) -->
                     <span class="z-10 flex h-7 w-7 items-center justify-center text-xs transition-colors duration-200"
-                        :class="$store.theme.theme === 'light' ? 'text-amber-500 font-semibold' : 'text-gray-400 dark:text-gray-500'">
+                        :class="$store.theme.theme === 'light' ? 'text-amber-500 font-semibold' : 'text-gray-500 dark:text-gray-400'">
                         <i class="fa-solid fa-sun text-sm"></i>
                     </span>
 
                     <!-- Moon Icon (Dark Mode) -->
                     <span class="z-10 flex h-7 w-7 items-center justify-center text-xs transition-colors duration-200"
-                        :class="$store.theme.theme === 'dark' ? 'text-blue-400 font-semibold' : 'text-gray-400 dark:text-gray-500'">
+                        :class="$store.theme.theme === 'dark' ? 'text-blue-400 font-semibold' : 'text-gray-500 dark:text-gray-400'">
                         <i class="fa-solid fa-moon text-sm"></i>
                     </span>
                 </button>

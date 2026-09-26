@@ -23,7 +23,7 @@
                 <i class="fa-solid fa-clock text-sm"></i>
             </span>
             <div class="flex-1 min-w-0">
-                <div class="text-[11px] text-gray-400 dark:text-gray-500 leading-none mb-0.5">Sisa Waktu Aktif</div>
+                <div class="text-[11px] text-gray-500 dark:text-gray-400 leading-none mb-0.5">Sisa Waktu Aktif</div>
                 <div class="text-sm font-mono font-semibold tabular-nums leading-none"
                      :class="{
                          'text-gray-700 dark:text-gray-200': !isWarning && !isDanger,
@@ -34,7 +34,7 @@
                 </div>
             </div>
             <button @click="expanded = !expanded"
-                    class="flex items-center justify-center w-6 h-6 rounded text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors">
+                    class="flex items-center justify-center w-6 h-6 rounded text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 transition-colors">
                 <i class="fa-solid fa-chevron-up text-xs transition-transform duration-200" :class="{ 'rotate-180': expanded }"></i>
             </button>
         </div>
@@ -56,7 +56,7 @@
              x-transition:enter="transition ease-out duration-200"
              x-transition:enter-start="opacity-0 -translate-y-1"
              x-transition:enter-end="opacity-100 translate-y-0">
-            <div class="text-[11px] text-gray-400 dark:text-gray-500 mb-2">
+            <div class="text-[11px] text-gray-500 dark:text-gray-400 mb-2">
                 <span x-show="!isDanger">Timer reset saat ada aktivitas</span>
                 <span x-show="isDanger" class="text-red-500 dark:text-red-400 font-medium">Session berakhir segera!</span>
             </div>

@@ -140,12 +140,12 @@
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
-                                    <div class="flex items-center gap-2">
-                                        <button type="button" @click="$dispatch('open-modal', 'detail-user-{{ $user->id }}')" class="inline-flex items-center justify-center w-8 h-8 text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors dark:text-green-400 dark:hover:bg-green-900/20" title="Lihat Detail">
+                                    <div class="flex items-center gap-3">
+                                        <button type="button" @click="$dispatch('open-modal', 'detail-user-{{ $user->id }}')" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors dark:text-green-400 dark:hover:bg-green-900/20" title="Lihat Detail">
                                             <i class="fa-solid fa-eye text-sm"></i>
                                         </button>
                                         @if(auth()->user()->email === 'bagmawa@ums.ac.id')
-                                        <a href="{{ route('users.edit', $user) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Edit Pengguna">
+                                        <a href="{{ route('users.edit', $user) }}" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Edit Pengguna">
                                             <i class="fa-solid fa-pen-to-square text-sm"></i>
                                         </a>
                                         @endif
@@ -157,7 +157,7 @@
                                             <form action="{{ route('users.destroy', $user) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menonaktifkan pengguna {{ $user->name }}?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="inline-flex items-center justify-center w-8 h-8 text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg transition-colors dark:text-red-400 dark:hover:bg-red-900/20" title="Nonaktifkan Pengguna">
+                                                <button type="submit" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg transition-colors dark:text-red-400 dark:hover:bg-red-900/20" title="Nonaktifkan Pengguna">
                                                     <i class="fa-solid fa-trash text-sm"></i>
                                                 </button>
                                             </form>

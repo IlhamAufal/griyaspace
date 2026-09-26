@@ -48,7 +48,7 @@
                 @if ($user)
                     <div class="flex items-center gap-3">
                         <span class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ $user->name }}</span>
-                        <span class="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-600 dark:bg-brand-500/10 dark:text-brand-400">
+                        <span class="rounded-full bg-brand-50 px-2.5 py-0.5 text-xs font-medium text-brand-600 dark:bg-brand-500/10 dark:text-brand-300">
                             {{ $user->role->name ?? '-' }}
                         </span>
                     </div>
@@ -70,13 +70,13 @@
 
                     <!-- Sun Icon (Light Mode) -->
                     <span class="z-10 flex h-7 w-7 items-center justify-center text-xs transition-colors duration-200"
-                        :class="$store.theme.theme === 'light' ? 'text-amber-500 font-semibold' : 'text-gray-400 dark:text-gray-500'">
+                        :class="$store.theme.theme === 'light' ? 'text-amber-500 font-semibold' : 'text-gray-500 dark:text-gray-400'">
                         <i class="fa-solid fa-sun text-sm"></i>
                     </span>
 
                     <!-- Moon Icon (Dark Mode) -->
                     <span class="z-10 flex h-7 w-7 items-center justify-center text-xs transition-colors duration-200"
-                        :class="$store.theme.theme === 'dark' ? 'text-blue-400 font-semibold' : 'text-gray-400 dark:text-gray-500'">
+                        :class="$store.theme.theme === 'dark' ? 'text-blue-400 font-semibold' : 'text-gray-500 dark:text-gray-400'">
                         <i class="fa-solid fa-moon text-sm"></i>
                     </span>
                 </button>

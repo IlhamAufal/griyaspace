@@ -30,7 +30,7 @@
             <p class="text-sm font-semibold text-amber-800 dark:text-amber-200">
                 Anda memiliki <span class="text-amber-600 dark:text-amber-300 font-bold">{{ $pendingCount }}</span> pengajuan untuk dikonfirmasi
             </p>
-            <p class="text-xs text-amber-600/70 dark:text-amber-400/60 mt-0.5">Klik untuk menuju halaman konfirmasi</p>
+            <p class="text-xs text-amber-700 dark:text-amber-300 mt-0.5">Klik untuk menuju halaman konfirmasi</p>
         </div>
         <i class="fa-solid fa-arrow-right text-amber-400 dark:text-amber-500 group-hover:text-amber-600 dark:group-hover:text-amber-300 group-hover:translate-x-1 transition-all"></i>
     </a>

@@ -21,7 +21,7 @@
                 <div class="grid grid-cols-3 gap-2 sm:gap-4 relative">
                     {{-- Step 1 Indicator --}}
                     <button type="button" @click="goToStep(1)"
-                        class="flex items-center gap-2 sm:gap-3.5 p-2 rounded-xl text-left transition-all cursor-pointer focus:outline-hidden"
+                        class="flex items-center gap-2 sm:gap-3.5 p-2 rounded-xl text-left transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:focus-visible:ring-brand-300 dark:focus-visible:ring-offset-gray-900"
                         :class="step === 1 ? 'bg-brand-50/70 dark:bg-brand-500/10' : ''">
                         <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 transition-all shadow-xs"
                             :class="step === 1
@@ -48,7 +48,7 @@
 
                     {{-- Step 2 Indicator --}}
                     <button type="button" @click="goToStep(2)"
-                        class="flex items-center gap-2 sm:gap-3.5 p-2 rounded-xl text-left transition-all cursor-pointer focus:outline-hidden"
+                        class="flex items-center gap-2 sm:gap-3.5 p-2 rounded-xl text-left transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:focus-visible:ring-brand-300 dark:focus-visible:ring-offset-gray-900"
                         :class="step === 2 ? 'bg-[#FFB800]/10 dark:bg-[#FFB800]/15' : ''">
                         <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 transition-all shadow-xs"
                             :class="step === 2
@@ -75,7 +75,7 @@
 
                     {{-- Step 3 Indicator --}}
                     <button type="button" @click="goToStep(3)"
-                        class="flex items-center gap-2 sm:gap-3.5 p-2 rounded-xl text-left transition-all cursor-pointer focus:outline-hidden"
+                        class="flex items-center gap-2 sm:gap-3.5 p-2 rounded-xl text-left transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:focus-visible:ring-brand-300 dark:focus-visible:ring-offset-gray-900"
                         :class="step === 3 ? 'bg-[#1CBDB3]/10 dark:bg-[#1CBDB3]/15' : ''">
                         <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 transition-all shadow-xs"
                             :class="step === 3

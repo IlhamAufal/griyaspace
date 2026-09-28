@@ -22,13 +22,13 @@
 
                 <!-- Sun Icon (Light Mode) -->
                 <span class="z-10 flex h-7 w-7 items-center justify-center text-xs transition-colors duration-200"
-                    :class="$store.theme.theme === 'light' ? 'text-amber-500 font-semibold' : 'text-gray-500 dark:text-gray-400'">
+                    :class="$store.theme.theme === 'light' ? 'text-warning-500 font-semibold' : 'text-gray-500 dark:text-gray-400'">
                     <i class="fa-solid fa-sun text-sm"></i>
                 </span>
 
                 <!-- Moon Icon (Dark Mode) -->
                 <span class="z-10 flex h-7 w-7 items-center justify-center text-xs transition-colors duration-200"
-                    :class="$store.theme.theme === 'dark' ? 'text-blue-400 font-semibold' : 'text-gray-500 dark:text-gray-400'">
+                    :class="$store.theme.theme === 'dark' ? 'text-brand-300 font-semibold' : 'text-gray-500 dark:text-gray-400'">
                     <i class="fa-solid fa-moon text-sm"></i>
                 </span>
             </button>
@@ -44,7 +44,9 @@
                         class="h-8 sm:h-9 w-auto object-contain" />
                     <span class="h-5 w-px bg-gray-300 dark:bg-gray-700"></span>
                     <img src="/images/logo/dkpti-dark.svg" alt="Logo DKPTI"
-                        class="h-8 sm:h-9 w-auto object-contain" />
+                        class="h-8 sm:h-9 w-auto object-contain dark:hidden" />
+                    <img src="/images/logo/dkpti-light.svg" alt="Logo DKPTI"
+                        class="hidden dark:block h-8 sm:h-9 w-auto object-contain" />
                 </div>
 
                 <div class="mt-8 sm:mt-12">
@@ -57,7 +59,7 @@
                 </div>
 
                 @if ($errors->any())
-                    <div class="mt-6 rounded-xl bg-red-50 p-4 text-sm text-red-600 dark:bg-red-900/20 dark:text-red-400 border border-red-200 dark:border-red-800">
+                    <div class="mt-6 rounded-xl bg-error-50 p-4 text-sm text-error-600 dark:bg-error-900/20 dark:text-error-400 border border-error-200 dark:border-error-800">
                         <ul class="list-disc list-inside space-y-1">
                             @foreach ($errors->all() as $error)
                                 <li>{{ $error }}</li>
@@ -73,7 +75,7 @@
                         <div>
                             <label for="email"
                                 class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                Email <span class="text-red-500">*</span>
+                                Email <span class="text-error-500">*</span>
                             </label>
                             <input type="email" id="email" name="email" value="{{ old('email') }}" required
                                 autofocus placeholder="Masukkan email Anda"
@@ -84,7 +86,7 @@
                         <div>
                             <label for="password"
                                 class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                Password <span class="text-red-500">*</span>
+                                Password <span class="text-error-500">*</span>
                             </label>
                             <div x-data="{ showPassword: false }" class="relative">
                                 <input :type="showPassword ? 'text' : 'password'" id="password" name="password"

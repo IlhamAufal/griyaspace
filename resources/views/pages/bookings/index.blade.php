@@ -4,7 +4,7 @@
 <div class="py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
-            <a href="{{ route('dashboard') }}" class="hover:text-blue-600 transition-colors"><i class="fa-solid fa-house"></i></a>
+            <a href="{{ route('dashboard') }}" class="hover:text-brand-600 transition-colors"><i class="fa-solid fa-house"></i></a>
             <i class="fa-solid fa-chevron-right text-xs"></i>
             <span class="text-gray-900 font-medium">Pengajuan</span>
         </nav>
@@ -89,14 +89,14 @@
                     </div>
                     <div class="w-48">
                         <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Status Pengajuan</label>
-                        <select x-model="filters.status" @change="applyFilter()" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                        <x-common.select x-model="filters.status" @change="applyFilter()" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
                             <option value="">Semua Status</option>
                             <option value="submitted">Diajukan</option>
                             <option value="approved">Disetujui</option>
                             <option value="rejected">Ditolak</option>
                             <option value="revision">Revisi</option>
                             <option value="cancelled">Dibatalkan</option>
-                        </select>
+                        </x-common.select>
                     </div>
                     <button type="button" @click="clearFilters()" x-show="search || filters.status" x-cloak class="h-10 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200 px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 transition-colors">
                         <i class="fa-solid fa-xmark text-xs"></i> Reset
@@ -134,7 +134,7 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm">
                                         <div class="flex items-center gap-2">
-                                            <a href="{{ route('bookings.show', $booking) }}" class="inline-flex items-center justify-center w-8 h-8 text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Lihat Detail">
+                                            <a href="{{ route('bookings.show', $booking) }}" class="inline-flex items-center justify-center w-8 h-8 text-brand-600 hover:text-brand-900 hover:bg-brand-50 rounded-lg transition-colors dark:text-brand-200 dark:hover:bg-brand-900/20" title="Lihat Detail">
                                                 <i class="fa-solid fa-eye text-sm"></i>
                                             </a>
                                         </div>

@@ -1,4 +1,4 @@
-﻿@props([
+@props([
     'name' => 'is_active',
     'id' => null,
     'label' => 'Status',
@@ -42,6 +42,6 @@
     </div>
 
     @error($name)
-        <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p>
+        <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p>
     @enderror
 </div>

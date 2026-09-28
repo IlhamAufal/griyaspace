@@ -4,7 +4,7 @@
 <div class="py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
-            <a href="{{ route('dashboard') }}" class="hover:text-blue-600 transition-colors"><i class="fa-solid fa-house"></i></a>
+            <a href="{{ route('dashboard') }}" class="hover:text-brand-600 transition-colors"><i class="fa-solid fa-house"></i></a>
             <i class="fa-solid fa-chevron-right text-xs"></i>
             <span class="text-gray-900 font-medium">Konfirmasi Pengajuan</span>
         </nav>
@@ -87,20 +87,20 @@
                     </div>
                     <div class="w-48">
                         <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Status</label>
-                        <select x-model="filters.status" @change="applyFilter()" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                        <x-common.select x-model="filters.status" @change="applyFilter()" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
                             <option value="">Semua</option>
                             <option value="submitted">Diajukan</option>
                             <option value="revision">Revisi</option>
-                        </select>
+                        </x-common.select>
                     </div>
                     <div class="w-56">
                         <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Pengaju</label>
-                        <select x-model="filters.user_id" @change="applyFilter()" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                        <x-common.select x-model="filters.user_id" @change="applyFilter()" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
                             <option value="">Semua Pengaju</option>
                             @foreach($users as $u)
                             <option value="{{ $u->id }}">{{ $u->name }}</option>
                             @endforeach
-                        </select>
+                        </x-common.select>
                     </div>
                     <button type="button" @click="clearFilters()" x-show="search || filters.status || filters.user_id" x-cloak class="h-10 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200 px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 transition-colors">
                         <i class="fa-solid fa-xmark text-xs"></i> Reset
@@ -138,11 +138,11 @@
                                     </td>
                                     <td class="px-6 py-4 whitespace-nowrap text-sm text-center">
                                         <div class="flex items-center justify-center gap-3">
-                                            <a href="{{ route('bookings.show', $booking) }}" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-blue-600 hover:text-blue-900 hover:bg-blue-50 dark:hover:bg-blue-900/30 rounded-lg transition-colors" title="Lihat Detail">
+                                            <a href="{{ route('bookings.show', $booking) }}" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-brand-600 hover:text-brand-900 hover:bg-brand-50 dark:hover:bg-brand-900/30 rounded-lg transition-colors" title="Lihat Detail">
                                                 <i class="fa-solid fa-eye text-sm"></i>
                                             </a>
                                             @if($booking->status !== \App\Enums\BookingStatus::Revision)
-                                            <button type="button" onclick="openDecisionModal('{{ $booking->id }}', '{{ $booking->booking_number }}', '{{ $booking->activity_name }}')" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-green-600 hover:text-green-900 hover:bg-green-50 dark:hover:bg-green-900/30 rounded-lg transition-colors" title="Keputusan">
+                                            <button type="button" onclick="openDecisionModal('{{ $booking->id }}', '{{ $booking->booking_number }}', '{{ $booking->activity_name }}')" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-success-600 hover:text-success-900 hover:bg-success-50 dark:hover:bg-success-900/30 rounded-lg transition-colors" title="Keputusan">
                                                 <i class="fa-solid fa-gavel text-sm"></i>
                                             </button>
                                             @endif
@@ -196,21 +196,21 @@
                     <p class="text-sm font-semibold text-gray-900 dark:text-white" id="decisionActivityName"></p>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Keputusan <span class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Keputusan <span class="text-error-500">*</span></label>
                     <div class="flex gap-3">
-                        <button type="button" onclick="setDecision('approve')" class="decision-action-btn flex-1 inline-flex items-center justify-center gap-2 border border-green-300 bg-green-50 hover:bg-green-100 text-green-700 px-4 py-3 rounded-lg text-sm font-medium transition-colors">
+                        <button type="button" onclick="setDecision('approve')" class="decision-action-btn flex-1 inline-flex items-center justify-center gap-2 border border-success-300 bg-success-50 hover:bg-success-100 text-success-700 px-4 py-3 rounded-lg text-sm font-medium transition-colors">
                             <i class="fa-solid fa-check"></i> Setujui
                         </button>
                         <button type="button" onclick="setDecision('revision')" class="decision-action-btn flex-1 inline-flex items-center justify-center gap-2 border border-orange-300 bg-orange-50 hover:bg-orange-100 text-orange-700 px-4 py-3 rounded-lg text-sm font-medium transition-colors">
                             <i class="fa-solid fa-rotate-left"></i> Revisi
                         </button>
-                        <button type="button" onclick="setDecision('reject')" class="decision-action-btn flex-1 inline-flex items-center justify-center gap-2 border border-red-300 bg-red-50 hover:bg-red-100 text-red-700 px-4 py-3 rounded-lg text-sm font-medium transition-colors">
+                        <button type="button" onclick="setDecision('reject')" class="decision-action-btn flex-1 inline-flex items-center justify-center gap-2 border border-error-300 bg-error-50 hover:bg-error-100 text-error-700 px-4 py-3 rounded-lg text-sm font-medium transition-colors">
                             <i class="fa-solid fa-xmark"></i> Tolak
                         </button>
                     </div>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Catatan <span id="requiredIndicator" class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Catatan <span id="requiredIndicator" class="text-error-500">*</span></label>
                     <textarea name="admin_note" id="decisionNote" rows="3" placeholder="Masukkan catatan keputusan..." class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs"></textarea>
                 </div>
                 <div class="flex items-center justify-end gap-3">
@@ -274,13 +274,13 @@ function setDecision(action) {
 
     btn.disabled = false;
     if (action === 'approve') {
-        btn.className = 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors text-white bg-green-600 hover:bg-green-700 cursor-pointer';
+        btn.className = 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors text-white bg-success-600 hover:bg-success-700 cursor-pointer';
         text.textContent = 'Setujui';
         title.textContent = 'Setujui Pengajuan';
         desc.textContent = 'Konfirmasi persetujuan pengajuan ini. Catatan bersifat opsional.';
         note.placeholder = 'Tambahkan catatan (opsional)...';
     } else if (action === 'reject') {
-        btn.className = 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors text-white bg-red-600 hover:bg-red-700 cursor-pointer';
+        btn.className = 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors text-white bg-error-600 hover:bg-error-700 cursor-pointer';
         text.textContent = 'Tolak';
         title.textContent = 'Tolak Pengajuan';
         desc.textContent = 'Tolak pengajuan ini. Anda wajib memberikan catatan alasan penolakan.';

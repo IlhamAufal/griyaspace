@@ -18,37 +18,37 @@
     @php
         $statusConfig = [
             'valid' => [
-                'badge_bg' => 'bg-green-50 dark:bg-green-900/20',
-                'badge_border' => 'border-green-200 dark:border-green-800/40',
-                'badge_text' => 'text-green-700 dark:text-green-400',
-                'icon_bg' => 'bg-green-500',
+                'badge_bg' => 'bg-success-50 dark:bg-success-900/20',
+                'badge_border' => 'border-success-200 dark:border-success-800/40',
+                'badge_text' => 'text-success-700 dark:text-success-400',
+                'icon_bg' => 'bg-success-500',
                 'icon' => 'fa-solid fa-check',
                 'label' => 'Izin Valid',
                 'desc' => 'Surat izin peminjaman terdaftar resmi dan sah dalam sistem.'
             ],
             'active' => [
-                'badge_bg' => 'bg-blue-50 dark:bg-blue-900/20',
-                'badge_border' => 'border-blue-200 dark:border-blue-800/40',
-                'badge_text' => 'text-blue-700 dark:text-blue-400',
-                'icon_bg' => 'bg-blue-500',
+                'badge_bg' => 'bg-brand-50 dark:bg-brand-900/20',
+                'badge_border' => 'border-brand-200 dark:border-brand-800/40',
+                'badge_text' => 'text-brand-700 dark:text-brand-200',
+                'icon_bg' => 'bg-brand-500',
                 'icon' => 'fa-solid fa-check-double',
                 'label' => 'Sedang Berlangsung',
                 'desc' => 'Kegiatan sedang berlangsung hari ini sesuai jadwal izin.'
             ],
             'upcoming' => [
-                'badge_bg' => 'bg-amber-50 dark:bg-amber-900/20',
-                'badge_border' => 'border-amber-200 dark:border-amber-800/40',
-                'badge_text' => 'text-amber-700 dark:text-amber-400',
-                'icon_bg' => 'bg-amber-500',
+                'badge_bg' => 'bg-warning-50 dark:bg-warning-900/20',
+                'badge_border' => 'border-warning-200 dark:border-warning-800/40',
+                'badge_text' => 'text-warning-700 dark:text-warning-400',
+                'icon_bg' => 'bg-warning-500',
                 'icon' => 'fa-solid fa-clock',
                 'label' => 'Akan Datang',
                 'desc' => 'Izin peminjaman sah untuk kegiatan yang akan datang.'
             ],
             'expired' => [
-                'badge_bg' => 'bg-red-50 dark:bg-red-900/20',
-                'badge_border' => 'border-red-200 dark:border-red-800/40',
-                'badge_text' => 'text-red-700 dark:text-red-400',
-                'icon_bg' => 'bg-red-500',
+                'badge_bg' => 'bg-error-50 dark:bg-error-900/20',
+                'badge_border' => 'border-error-200 dark:border-error-800/40',
+                'badge_text' => 'text-error-700 dark:text-error-400',
+                'icon_bg' => 'bg-error-500',
                 'icon' => 'fa-solid fa-calendar-xmark',
                 'label' => 'Kadaluarsa',
                 'desc' => 'Masa berlaku izin peminjaman telah berakhir.'
@@ -63,10 +63,10 @@
                 'desc' => 'Izin peminjaman telah dibatalkan atau dicabut.'
             ],
             'not_found' => [
-                'badge_bg' => 'bg-red-50 dark:bg-red-900/20',
-                'badge_border' => 'border-red-200 dark:border-red-800/40',
-                'badge_text' => 'text-red-700 dark:text-red-400',
-                'icon_bg' => 'bg-red-500',
+                'badge_bg' => 'bg-error-50 dark:bg-error-900/20',
+                'badge_border' => 'border-error-200 dark:border-error-800/40',
+                'badge_text' => 'text-error-700 dark:text-error-400',
+                'icon_bg' => 'bg-error-500',
                 'icon' => 'fa-solid fa-circle-xmark',
                 'label' => 'Tidak Ditemukan',
                 'desc' => 'Token verifikasi tidak valid atau data izin tidak terdaftar.'

@@ -89,11 +89,11 @@
                     </div>
                     <div class="w-48">
                         <label class="block text-xs font-medium text-gray-600 dark:text-gray-400 mb-1.5">Status Role</label>
-                        <select x-model="filters.status" @change="applyFilter()" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
+                        <x-common.select x-model="filters.status" @change="applyFilter()" class="h-10 w-full border border-gray-300 rounded-lg text-sm px-3 py-2 bg-transparent focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
                             <option value="">Semua Status</option>
                             <option value="active">Aktif</option>
                             <option value="inactive">Nonaktif</option>
-                        </select>
+                        </x-common.select>
                     </div>
                     <button type="button" @click="clearFilters()" x-show="search || filters.status" x-cloak class="h-10 bg-gray-100 hover:bg-gray-200 text-gray-700 dark:bg-gray-700 dark:text-gray-200 px-4 rounded-lg text-sm font-medium inline-flex items-center gap-2 transition-colors">
                         <i class="fa-solid fa-xmark text-xs"></i> Reset
@@ -123,18 +123,18 @@
                                 <td class="px-6 py-4 text-sm text-gray-500">{{ $role->description ?? '-' }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     @if($role->is_active)
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800">Aktif</span>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-success-100 text-success-800">Aktif</span>
                                     @else
-                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800">Nonaktif</span>
+                                        <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-error-100 text-error-800">Nonaktif</span>
                                     @endif
                                 </td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $role->users_count }}</td>
                                 <td class="px-6 py-4 whitespace-nowrap text-sm">
                                     <div class="flex items-center gap-3">
-                                        <button type="button" @click="$dispatch('open-modal', 'detail-role-{{ $role->id }}')" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-green-600 hover:text-green-900 hover:bg-green-50 rounded-lg transition-colors dark:text-green-400 dark:hover:bg-green-900/20" title="Lihat Detail">
+                                        <button type="button" @click="$dispatch('open-modal', 'detail-role-{{ $role->id }}')" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-success-600 hover:text-success-900 hover:bg-success-50 rounded-lg transition-colors dark:text-success-400 dark:hover:bg-success-900/20" title="Lihat Detail">
                                             <i class="fa-solid fa-eye text-sm"></i>
                                         </button>
-                                        <a href="{{ route('roles.edit', $role) }}" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-blue-600 hover:text-blue-900 hover:bg-blue-50 rounded-lg transition-colors dark:text-blue-400 dark:hover:bg-blue-900/20" title="Edit Role">
+                                        <a href="{{ route('roles.edit', $role) }}" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-brand-600 hover:text-brand-900 hover:bg-brand-50 rounded-lg transition-colors dark:text-brand-200 dark:hover:bg-brand-900/20" title="Edit Role">
                                             <i class="fa-solid fa-pen-to-square text-sm"></i>
                                         </a>
                                         @if($role->users_count > 0)
@@ -145,7 +145,7 @@
                                             <form action="{{ route('roles.destroy', $role) }}" method="POST" class="inline" onsubmit="return confirm('Yakin ingin menonaktifkan role {{ $role->name }}?')">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-red-600 hover:text-red-900 hover:bg-red-50 rounded-lg transition-colors dark:text-red-400 dark:hover:bg-red-900/20" title="Nonaktifkan Role">
+                                                <button type="submit" class="relative inline-flex items-center justify-center w-8 h-8 after:absolute after:-inset-1.5 after:content-[''] text-error-600 hover:text-error-900 hover:bg-error-50 rounded-lg transition-colors dark:text-error-400 dark:hover:bg-error-900/20" title="Nonaktifkan Role">
                                                     <i class="fa-solid fa-trash text-sm"></i>
                                                 </button>
                                             </form>
@@ -187,9 +187,9 @@
                     <div class="col-span-2">
                         <label class="block text-xs font-medium text-gray-500 dark:text-gray-400">Status</label>
                         @if($role->is_active)
-                            <span class="mt-1 px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Aktif</span>
+                            <span class="mt-1 px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-success-100 text-success-800 dark:bg-success-900/30 dark:text-success-400">Aktif</span>
                         @else
-                            <span class="mt-1 px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Nonaktif</span>
+                            <span class="mt-1 px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-error-100 text-error-800 dark:bg-error-900/30 dark:text-error-400">Nonaktif</span>
                         @endif
                     </div>
                 </div>

@@ -22,44 +22,45 @@
 
     <!-- Pending Bookings Alert Banner -->
     @if($pendingCount > 0)
-    <a href="{{ route('bookings.konfirmasi') }}" class="flex items-center gap-4 p-4 rounded-xl bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700/60 hover:shadow-md hover:border-amber-300 dark:hover:border-amber-600 transition-all group">
-        <div class="w-10 h-10 rounded-xl bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
+    <a href="{{ route('bookings.konfirmasi') }}" class="flex items-center gap-4 p-4 rounded-xl bg-warning-50 dark:bg-warning-900/20 border border-warning-200 dark:border-warning-700/60 hover:shadow-md hover:border-warning-300 dark:hover:border-warning-600 transition-all group">
+        <div class="w-10 h-10 rounded-xl bg-warning-100 dark:bg-warning-900/40 text-warning-600 dark:text-warning-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
             <i class="fa-solid fa-bell text-lg"></i>
         </div>
         <div class="flex-1 min-w-0">
-            <p class="text-sm font-semibold text-amber-800 dark:text-amber-200">
-                Anda memiliki <span class="text-amber-600 dark:text-amber-300 font-bold">{{ $pendingCount }}</span> pengajuan untuk dikonfirmasi
+            <p class="text-sm font-semibold text-warning-800 dark:text-warning-200">
+                Anda memiliki <span class="text-warning-600 dark:text-warning-300 font-bold">{{ $pendingCount }}</span> pengajuan untuk dikonfirmasi
             </p>
-            <p class="text-xs text-amber-700 dark:text-amber-300 mt-0.5">Klik untuk menuju halaman konfirmasi</p>
+            <p class="text-xs text-warning-700 dark:text-warning-300 mt-0.5">Klik untuk menuju halaman konfirmasi</p>
         </div>
-        <i class="fa-solid fa-arrow-right text-amber-400 dark:text-amber-500 group-hover:text-amber-600 dark:group-hover:text-amber-300 group-hover:translate-x-1 transition-all"></i>
+        <i class="fa-solid fa-arrow-right text-warning-400 dark:text-warning-500 opacity-0 group-hover:opacity-100 group-hover:text-warning-600 dark:group-hover:text-warning-300 group-hover:translate-x-1 transition-all"></i>
     </a>
     @endif
 
     <!-- Stats Cards (Menggunakan Palette: Navy #2F3185, Kuning #FFB800, Toska #1CBDB3) -->
+    <!-- Stats Cards -->
     <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <x-dashboard.stat-card
-            title="Booking Disetujui"
+            subtitle="Pengajuan"
+            title="Disetujui"
             :value="$approvedCount"
-            icon="fa-circle-check"
             color="navy"/>
 
         <x-dashboard.stat-card
-            title="Pengajuan Menunggu"
+            subtitle="Pengajuan"
+            title="Menunggu"
             :value="$pendingCount"
-            icon="fa-clock-rotate-left"
             color="kuning"/>
 
         <x-dashboard.stat-card
-            title="Jadwal Hari Ini"
+            subtitle="Jadwal"
+            title="Hari Ini"
             :value="$todayBookings"
-            icon="fa-calendar-day"
             color="toska"/>
 
         <x-dashboard.stat-card
+            subtitle="Total"
             title="Ruangan Aktif"
             :value="$activeRooms"
-            icon="fa-door-open"
             color="navy"/>
     </div>
 
@@ -80,7 +81,7 @@
                         <span class="w-3 h-3 rounded-md bg-[#2F3185]"></span>
                         <span>Disetujui</span>
                     </span>
-                    <span class="inline-flex items-center gap-1.5 text-[#1CBDB3] dark:text-teal-400">
+                    <span class="inline-flex items-center gap-1.5 text-[#1CBDB3] dark:text-accent-400">
                         <span class="w-3 h-3 rounded-md bg-[#1CBDB3]"></span>
                         <span>Pengajuan</span>
                     </span>
@@ -118,30 +119,30 @@
                     </div>
 
                     <!-- 2. Menunggu -->
-                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-teal-50/70 dark:bg-teal-950/40 border border-teal-200/80 dark:border-teal-800/60">
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-accent-50/70 dark:bg-accent-950/40 border border-accent-200/80 dark:border-accent-800/60">
                         <div class="flex items-center gap-2 min-w-0">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#1CBDB3] dark:bg-teal-400 shrink-0"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#1CBDB3] dark:bg-accent-400 shrink-0"></span>
                             <span class="font-medium text-gray-700 dark:text-gray-300 truncate">Menunggu</span>
                         </div>
-                        <span class="font-extrabold text-sm text-[#0D9488] dark:text-teal-300">{{ $pendingCount }}</span>
+                        <span class="font-extrabold text-sm text-[#0D9488] dark:text-accent-300">{{ $pendingCount }}</span>
                     </div>
 
                     <!-- 3. Revisi -->
-                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60">
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-warning-50/70 dark:bg-warning-950/40 border border-warning-200/80 dark:border-warning-800/60">
                         <div class="flex items-center gap-2 min-w-0">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#FFB800] dark:bg-amber-400 shrink-0"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#FFB800] dark:bg-warning-400 shrink-0"></span>
                             <span class="font-medium text-gray-700 dark:text-gray-300 truncate">Revisi</span>
                         </div>
-                        <span class="font-extrabold text-sm text-amber-800 dark:text-amber-300">{{ $revisionCount }}</span>
+                        <span class="font-extrabold text-sm text-warning-800 dark:text-warning-300">{{ $revisionCount }}</span>
                     </div>
 
                     <!-- 4. Ditolak -->
-                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-red-50/70 dark:bg-red-950/40 border border-red-200/80 dark:border-red-800/60">
+                    <div class="flex items-center justify-between p-2.5 rounded-xl bg-error-50/70 dark:bg-error-950/40 border border-error-200/80 dark:border-error-800/60">
                         <div class="flex items-center gap-2 min-w-0">
-                            <span class="w-2.5 h-2.5 rounded-full bg-[#EF4444] dark:bg-red-400 shrink-0"></span>
+                            <span class="w-2.5 h-2.5 rounded-full bg-[#EF4444] dark:bg-error-400 shrink-0"></span>
                             <span class="font-medium text-gray-700 dark:text-gray-300 truncate">Ditolak</span>
                         </div>
-                        <span class="font-extrabold text-sm text-red-700 dark:text-red-300">{{ $rejectedCount }}</span>
+                        <span class="font-extrabold text-sm text-error-700 dark:text-error-300">{{ $rejectedCount }}</span>
                     </div>
                 </div>
             </div>
@@ -160,7 +161,7 @@
                 <p class="text-sm font-bold text-gray-900 dark:text-white">Pemeriksaan Pengajuan</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Tinjau dan proses permohonan booking yang masuk</p>
             </div>
-            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto group-hover:text-brand-500 group-hover:translate-x-1 transition-all"></i>
+            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto opacity-0 group-hover:opacity-100 group-hover:text-brand-500 group-hover:translate-x-1 transition-all"></i>
         </a>
         <a href="{{ route('calendar.index') }}" class="group flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-xs dark:border-gray-700 dark:bg-gray-800 hover:shadow-md hover:border-brand-300 dark:hover:border-brand-500 transition-all">
             <div class="w-12 h-12 rounded-xl bg-[#1CBDB3]/10 dark:bg-accent-500/20 text-[#1CBDB3] dark:text-accent-400 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -170,7 +171,7 @@
                 <p class="text-sm font-bold text-gray-900 dark:text-white">Kalender Pemakaian</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Pantau seluruh jadwal dan okupansi ruangan</p>
             </div>
-            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto group-hover:text-brand-500 group-hover:translate-x-1 transition-all"></i>
+            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto opacity-0 group-hover:opacity-100 group-hover:text-brand-500 group-hover:translate-x-1 transition-all"></i>
         </a>
     </div>
 

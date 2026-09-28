@@ -125,7 +125,7 @@
                         <span class="text-gray-500 dark:text-gray-400 block mb-1 font-medium">Jumlah Peserta</span>
                         <p class="font-semibold text-gray-900 dark:text-white">
                             <span x-text="participantCount || '0'"></span> orang
-                            <span class="text-green-600 dark:text-green-400 text-[11px] font-normal" x-show="participantCount <= roomCapacity">(Sesuai Kapasitas)</span>
+                            <span class="text-success-600 dark:text-success-400 text-[11px] font-normal" x-show="participantCount <= roomCapacity">(Sesuai Kapasitas)</span>
                         </p>
                     </div>
                     <div>
@@ -156,7 +156,7 @@
                 <div class="text-xs">
                     <span class="text-gray-500 dark:text-gray-400 block mb-1.5 font-medium">Dokumen Surat Permohonan (PDF)</span>
                     <div class="flex items-center gap-3 p-3 rounded-lg bg-gray-50 dark:bg-gray-900/50 border border-gray-200 dark:border-gray-700 max-w-md">
-                        <div class="w-9 h-9 rounded-lg bg-red-50 dark:bg-red-900/30 text-red-600 dark:text-red-400 flex items-center justify-center shrink-0">
+                        <div class="w-9 h-9 rounded-lg bg-error-50 dark:bg-error-900/30 text-error-600 dark:text-error-400 flex items-center justify-center shrink-0">
                             <i class="fa-solid fa-file-pdf text-lg"></i>
                         </div>
                         <div class="min-w-0 flex-1">

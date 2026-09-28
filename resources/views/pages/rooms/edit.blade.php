@@ -44,39 +44,39 @@
 
                 <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kode Ruangan <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kode Ruangan <span class="text-error-500">*</span></label>
                         <input type="text" name="code" value="{{ old('code', $room->code) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
-                        @error('code') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                        @error('code') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Ruangan <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Ruangan <span class="text-error-500">*</span></label>
                         <input type="text" name="name" value="{{ old('name', $room->name) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
-                        @error('name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                        @error('name') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kapasitas (Orang) <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Kapasitas (Orang) <span class="text-error-500">*</span></label>
                         <input type="number" name="capacity" value="{{ old('capacity', $room->capacity) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
-                        @error('capacity') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                        @error('capacity') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Lokasi / Gedung <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Lokasi / Gedung <span class="text-error-500">*</span></label>
                         <input type="text" name="location" value="{{ old('location', $room->location) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>
-                        @error('location') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                        @error('location') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jam Buka Operasional <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jam Buka Operasional <span class="text-error-500">*</span></label>
                         <input type="time" name="open_time" value="{{ old('open_time', substr($room->open_time, 0, 5)) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
-                        @error('open_time') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                        @error('open_time') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div>
-                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jam Tutup Operasional <span class="text-red-500">*</span></label>
+                        <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jam Tutup Operasional <span class="text-error-500">*</span></label>
                         <input type="time" name="close_time" value="{{ old('close_time', substr($room->close_time, 0, 5)) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
-                        @error('close_time') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                        @error('close_time') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 
                     <div class="md:col-span-2">
@@ -168,7 +168,7 @@
 
                 <div class="flex items-center gap-2">
                     <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-semibold"
-                          :class="photos.length >= 6 ? 'bg-amber-100 text-amber-800 dark:bg-amber-900/30 dark:text-amber-400' : 'bg-brand-50 text-brand-700 dark:bg-brand-500/10 dark:text-brand-300'">
+                          :class="photos.length >= 6 ? 'bg-warning-100 text-warning-800 dark:bg-warning-900/30 dark:text-warning-400' : 'bg-brand-50 text-brand-700 dark:bg-brand-500/10 dark:text-brand-200'">
                         <i class="fa-solid fa-image text-xs"></i>
                         <span><span x-text="photos.length"></span> / {{ $maxPhotos }} Foto</span>
                     </span>
@@ -219,14 +219,14 @@
 
                                 <!-- Top Overlay Badges -->
                                 <div class="absolute top-3 inset-x-3 flex items-center justify-between gap-2">
-                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-black/60 text-white backdrop-blur-md shadow-xs">
+                                    <span class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-black/60 text-white shadow-xs">
                                         <i class="fa-solid fa-camera text-[10px]"></i>
                                         <span>Foto <span x-text="selectedIndex + 1"></span> dari <span x-text="photos.length"></span></span>
                                     </span>
 
                                     <button type="button"
                                             @click="lightboxOpen = true"
-                                            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-white/20 hover:bg-white/30 text-white backdrop-blur-md transition-colors cursor-pointer shadow-xs"
+                                            class="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg text-xs font-semibold bg-black/60 hover:bg-black/75 text-white transition-colors cursor-pointer shadow-xs"
                                             title="Perbesar Layar Penuh">
                                         <i class="fa-solid fa-expand text-xs"></i>
                                         <span class="hidden sm:inline">Perbesar</span>
@@ -298,7 +298,7 @@
                                     <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 pointer-events-none"></div>
 
                                     <!-- Top-Left Index Pill -->
-                                    <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md text-[11px] font-bold text-white shadow-xs backdrop-blur-xs z-10"
+                                    <span class="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md text-[11px] font-bold text-white shadow-xs z-10"
                                           :class="index === 0 ? 'bg-brand-500' : 'bg-black/60'">
                                         #<span x-text="index + 1"></span>
                                     </span>
@@ -313,7 +313,7 @@
                                     <!-- Delete Button (Icon fa delete di pojok kanan atas, muncul saat hover) -->
                                     <button type="button"
                                             @click.stop="confirmDelete(photo)"
-                                            class="absolute top-2 right-2 w-7 h-7 rounded-full bg-red-600 hover:bg-red-700 active:bg-red-800 text-white flex items-center justify-center shadow-lg opacity-100 scale-100 transition-all duration-200 hover:!scale-110 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 md:opacity-0 md:scale-75 md:group-hover:opacity-100 md:group-hover:scale-100 md:focus-visible:opacity-100 md:focus-visible:scale-100 after:absolute after:-inset-2 after:content-[''] z-20 cursor-pointer"
+                                            class="absolute top-2 right-2 w-7 h-7 rounded-full bg-error-600 hover:bg-error-700 active:bg-error-800 text-white flex items-center justify-center shadow-lg opacity-100 scale-100 transition-all duration-200 hover:!scale-110 focus:outline-hidden focus-visible:ring-2 focus-visible:ring-white focus-visible:ring-offset-2 focus-visible:ring-offset-black/50 md:opacity-0 md:scale-75 md:group-hover:opacity-100 md:group-hover:scale-100 md:focus-visible:opacity-100 md:focus-visible:scale-100 after:absolute after:-inset-2 after:content-[''] z-20 cursor-pointer"
                                             title="Hapus foto ini"
                                             aria-label="Hapus foto ini">
                                         <i class="fa-solid fa-trash-can text-xs"></i>
@@ -383,9 +383,9 @@
                                 </label>
 
                                 <!-- Error Alert if any -->
-                                <p x-show="uploadError" x-text="uploadError" class="text-red-500 text-xs font-medium" style="display: none;"></p>
+                                <p x-show="uploadError" x-text="uploadError" class="text-error-500 text-xs font-medium" style="display: none;"></p>
                                 @error('photo')
-                                    <p class="text-red-500 text-xs font-medium">{{ $message }}</p>
+                                    <p class="text-error-500 text-xs font-medium">{{ $message }}</p>
                                 @enderror
                             </form>
                         </div>
@@ -393,13 +393,13 @@
 
                     <!-- Limit Reached Notice (If photos count == 6) -->
                     <template x-if="photos.length >= 6">
-                        <div class="p-4 rounded-xl bg-amber-50 dark:bg-amber-950/30 border border-amber-200 dark:border-amber-800/50 flex items-start gap-3">
-                            <div class="mt-0.5 flex-shrink-0 w-8 h-8 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400 flex items-center justify-center">
+                        <div class="p-4 rounded-xl bg-warning-50 dark:bg-warning-950/30 border border-warning-200 dark:border-warning-800/50 flex items-start gap-3">
+                            <div class="mt-0.5 flex-shrink-0 w-8 h-8 rounded-full bg-warning-100 dark:bg-warning-900/40 text-warning-600 dark:text-warning-400 flex items-center justify-center">
                                 <i class="fa-solid fa-circle-check text-sm"></i>
                             </div>
                             <div class="text-sm">
-                                <p class="font-bold text-amber-900 dark:text-amber-200">Kuota Maksimal 6 Foto Terpenuhi</p>
-                                <p class="text-xs text-amber-700 dark:text-amber-300/90 mt-0.5 leading-relaxed">
+                                <p class="font-bold text-warning-900 dark:text-warning-200">Kuota Maksimal 6 Foto Terpenuhi</p>
+                                <p class="text-xs text-warning-700 dark:text-warning-300/90 mt-0.5 leading-relaxed">
                                     Ruangan ini telah memiliki 6 foto (batas maksimal). Untuk mengunggah foto baru, silakan hapus salah satu foto pada galeri di atas terlebih dahulu.
                                 </p>
                             </div>
@@ -454,9 +454,9 @@
                         </div>
 
                         <div class="mt-3 pt-2.5 border-t border-gray-200/60 dark:border-gray-700/40 flex flex-wrap items-center gap-x-4 gap-y-1 text-[11px] text-gray-500 dark:text-gray-400">
-                            <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-check text-green-500 text-[10px]"></i> Orientasi landscape (horizontal)</span>
-                            <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-check text-green-500 text-[10px]"></i> Rasio rekomendasi 3:2 atau 16:9</span>
-                            <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-check text-green-500 text-[10px]"></i> Maksimal 5 MB per file</span>
+                            <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-check text-success-500 text-[10px]"></i> Orientasi landscape (horizontal)</span>
+                            <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-check text-success-500 text-[10px]"></i> Rasio rekomendasi 3:2 atau 16:9</span>
+                            <span class="inline-flex items-center gap-1.5"><i class="fa-solid fa-check text-success-500 text-[10px]"></i> Maksimal 5 MB per file</span>
                         </div>
                     </div> --}}
 
@@ -476,7 +476,7 @@
                  @keydown.escape.window="closeDeleteModal()">
 
                 <!-- Backdrop Overlay -->
-                <div class="fixed inset-0 bg-gray-900/60 dark:bg-gray-950/80 backdrop-blur-xs transition-opacity"
+                <div class="fixed inset-0 bg-gray-900/60 dark:bg-gray-950/80 transition-opacity"
                      @click="closeDeleteModal()"></div>
 
                 <!-- Modal Dialog -->
@@ -492,7 +492,7 @@
                          class="relative transform overflow-hidden rounded-2xl bg-white dark:bg-gray-800 text-left shadow-2xl transition-all w-full sm:max-w-md border border-gray-100 dark:border-gray-700">
 
                         <!-- Modal Header -->
-                        <div class="flex items-center justify-between bg-red-600 text-white px-6 py-4">
+                        <div class="flex items-center justify-between bg-error-600 text-white px-6 py-4">
                             <div class="flex items-center gap-3">
                                 <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/20 text-white">
                                     <i class="fa-solid fa-triangle-exclamation text-base"></i>
@@ -517,7 +517,7 @@
                             <template x-if="photoToDelete">
                                 <div class="rounded-xl overflow-hidden border border-gray-200 dark:border-gray-700 bg-gray-900 aspect-video relative shadow-inner">
                                     <img :src="photoToDelete.url" :alt="photoToDelete.name" class="w-full h-full object-cover">
-                                    <div class="absolute bottom-2 left-2 bg-black/60 backdrop-blur-xs text-white text-xs font-semibold px-2 py-0.5 rounded">
+                                    <div class="absolute bottom-2 left-2 bg-black/60 text-white text-xs font-semibold px-2 py-0.5 rounded">
                                         <span x-text="photoToDelete.name"></span>
                                     </div>
                                 </div>
@@ -537,7 +537,7 @@
                                     @csrf
                                     @method('DELETE')
                                     <button type="submit"
-                                            class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-xs">
+                                            class="inline-flex items-center gap-2 bg-error-600 hover:bg-error-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors shadow-xs">
                                         <i class="fa-solid fa-trash-can text-xs"></i>
                                         <span>Ya, Hapus Foto</span>
                                     </button>
@@ -556,7 +556,7 @@
                  x-transition:leave="ease-in duration-200"
                  x-transition:leave-start="opacity-100"
                  x-transition:leave-end="opacity-0"
-                 class="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6"
+                 class="fixed inset-0 z-[99999] bg-black/95 flex flex-col justify-between p-4 sm:p-6"
                  style="display: none;"
                  @keydown.escape.window="lightboxOpen = false">
 

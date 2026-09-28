@@ -92,6 +92,117 @@ Alpine.data('sessionTimer', () => {
     };
 });
 
+Alpine.data('customSelect', () => ({
+    open: false,
+    items: [],
+    active: -1,
+    selected: -1,
+
+    get select() {
+        return this.$refs.select;
+    },
+
+    sync() {
+        const select = this.select;
+        this.items = Array.from(select.options).map((option) => ({
+            value: option.value,
+            label: (option.textContent || '').replace(/\s+/g, ' ').trim(),
+            disabled: option.disabled,
+        }));
+        this.selected = select.selectedIndex;
+    },
+
+    toggle() {
+        if (this.open) {
+            this.close();
+            return;
+        }
+
+        this.sync();
+        this.active = this.selected;
+        this.open = true;
+        this.select.focus();
+    },
+
+    close(focusSelect = false) {
+        this.open = false;
+
+        if (focusSelect) {
+            this.select.focus();
+        }
+    },
+
+    choose(index) {
+        const option = this.select.options[index];
+
+        if (!option || option.disabled) {
+            return;
+        }
+
+        this.select.value = option.value;
+        this.select.dispatchEvent(new Event('change', { bubbles: true }));
+        this.open = false;
+        this.select.focus();
+    },
+
+    highlight(step) {
+        if (!this.open) {
+            this.sync();
+            this.active = this.selected;
+            this.open = true;
+        }
+
+        const count = this.items.length;
+        let index = this.active;
+
+        for (let i = 0; i < count; i++) {
+            index = (index + step + count) % count;
+
+            if (!this.items[index].disabled) {
+                this.active = index;
+                return;
+            }
+        }
+    },
+
+    onKeydown(event) {
+        switch (event.key) {
+            case 'Enter':
+            case ' ':
+            case 'Spacebar':
+                event.preventDefault();
+
+                if (this.open) {
+                    this.choose(this.active);
+                } else {
+                    this.toggle();
+                }
+
+                break;
+            case 'ArrowDown':
+                event.preventDefault();
+                this.highlight(1);
+                break;
+            case 'ArrowUp':
+                event.preventDefault();
+                this.highlight(-1);
+                break;
+            case 'Escape':
+                if (this.open) {
+                    event.preventDefault();
+                    this.close();
+                }
+
+                break;
+            case 'Tab':
+                this.open = false;
+                break;
+            default:
+                break;
+        }
+    },
+}));
+
 Alpine.start();
 
 document.addEventListener('DOMContentLoaded', function () {

@@ -46,17 +46,17 @@
                     @if($isInactive)
                         <div class="absolute inset-0 bg-black/90 backdrop-blur-[2px] z-20 flex flex-col items-center justify-center p-6 text-center">
                             @if(auth()->user()?->isAdmin())
-                                <div class="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center mb-3 text-red-400 border border-white/10 shadow-sm">
+                                <div class="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center mb-3 text-error-400 border border-white/10 shadow-sm">
                                     <i class="fa-solid fa-ban text-xl"></i>
                                 </div>
                                 <h4 class="text-base font-bold text-white mb-1.5">Ruangan sedang di Non-Aktifkan</h4>
                                 <p class="text-xs text-gray-200 max-w-[230px] mb-4">Ruangan ini tidak aktif dan tidak dapat diajukan untuk peminjaman.</p>
                                 <a href="{{ route('rooms.edit', $room) }}" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold bg-white text-gray-900 hover:bg-gray-100 shadow-md transition-colors">
-                                    <i class="fa-solid fa-pen-to-square text-xs text-blue-600"></i>
+                                    <i class="fa-solid fa-pen-to-square text-xs text-brand-600"></i>
                                     <span>Edit & Aktifkan</span>
                                 </a>
                             @else
-                                <div class="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center mb-3 text-amber-300 border border-white/10 shadow-sm">
+                                <div class="w-12 h-12 rounded-full bg-white/15 flex items-center justify-center mb-3 text-warning-300 border border-white/10 shadow-sm">
                                     <i class="fa-solid fa-circle-exclamation text-xl"></i>
                                 </div>
                                 <h4 class="text-sm font-semibold text-white leading-relaxed max-w-[240px]">
@@ -138,12 +138,12 @@
 
                         <!-- Card Footer Actions -->
                         <div class="pt-4 border-t border-gray-100 dark:border-gray-700/60 flex items-center justify-end gap-2">
-                            <a href="{{ route('rooms.show', $room) }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-green-600 hover:text-green-800 bg-green-50 hover:bg-green-100 dark:text-green-400 dark:bg-green-900/20 dark:hover:bg-green-900/40 transition-colors" title="Lihat Detail">
+                            <a href="{{ route('rooms.show', $room) }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-success-600 hover:text-success-800 bg-success-50 hover:bg-success-100 dark:text-success-400 dark:bg-success-900/20 dark:hover:bg-success-900/40 transition-colors" title="Lihat Detail">
                                 <i class="fa-solid fa-eye text-xs"></i>
                                 <span>Detail</span>
                             </a>
                             @if(auth()->user()?->isAdmin())
-                            <a href="{{ route('rooms.edit', $room) }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-blue-600 hover:text-blue-800 bg-blue-50 hover:bg-blue-100 dark:text-blue-400 dark:bg-blue-900/20 dark:hover:bg-blue-900/40 transition-colors" title="Edit Ruangan">
+                            <a href="{{ route('rooms.edit', $room) }}" class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg text-xs font-semibold text-brand-600 hover:text-brand-800 bg-brand-50 hover:bg-brand-100 dark:text-brand-200 dark:bg-brand-900/20 dark:hover:bg-brand-900/40 transition-colors" title="Edit Ruangan">
                                 <i class="fa-solid fa-pen-to-square text-xs"></i>
                                 <span>Edit</span>
                             </a>

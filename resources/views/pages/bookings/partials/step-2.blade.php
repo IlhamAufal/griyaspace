@@ -18,13 +18,13 @@
 
     {{-- Race Condition / Conflict Error Banner --}}
     @if(session('conflict_step') || $errors->has('schedule_conflict') || $errors->has('start_time'))
-    <div class="mb-6 p-4 rounded-xl bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 text-red-700 dark:text-red-300 flex items-start gap-3">
-        <div class="w-8 h-8 rounded-full bg-red-100 dark:bg-red-800/50 flex items-center justify-center shrink-0 text-red-600 dark:text-red-200 mt-0.5">
+    <div class="mb-6 p-4 rounded-xl bg-error-50 dark:bg-error-900/20 border border-error-200 dark:border-error-800 text-error-700 dark:text-error-300 flex items-start gap-3">
+        <div class="w-8 h-8 rounded-full bg-error-100 dark:bg-error-800/50 flex items-center justify-center shrink-0 text-error-600 dark:text-error-200 mt-0.5">
             <i class="fa-solid fa-triangle-exclamation text-base"></i>
         </div>
         <div class="text-sm">
-            <h4 class="font-bold text-red-800 dark:text-red-200">Terjadi Bentrok Jadwal!</h4>
-            <p class="mt-0.5 text-xs text-red-600 dark:text-red-300">
+            <h4 class="font-bold text-error-800 dark:text-error-200">Terjadi Bentrok Jadwal!</h4>
+            <p class="mt-0.5 text-xs text-error-600 dark:text-error-300">
                 {{ $errors->first('schedule_conflict') ?: $errors->first('start_time') ?: 'Slot jadwal yang Anda pilih baru saja dipesan oleh pengguna lain.' }}
                 Kalender telah diperbarui. Silakan pilih slot waktu kosong lainnya.
             </p>
@@ -64,15 +64,15 @@
         {{-- Guide & Legend --}}
         <div class="mt-3 pt-3 border-t border-gray-200/70 dark:border-gray-700/60 flex flex-wrap items-center justify-between gap-2 text-xs">
             <div class="flex items-center gap-2 text-gray-600 dark:text-gray-400">
-                <i class="fa-solid fa-lightbulb text-amber-500"></i>
+                <i class="fa-solid fa-lightbulb text-warning-500"></i>
                 <span><b>Cara Memilih:</b> Klik & geser (drag) tanggal di kalender. Maks 3 hari.</span>
             </div>
             <div class="flex items-center gap-4 text-[11px]">
                 <span class="inline-flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
-                    <span class="w-3 h-3 rounded-xs bg-emerald-100 dark:bg-emerald-900/50 border border-emerald-400"></span> Kosong
+                    <span class="w-3 h-3 rounded-xs bg-success-100 dark:bg-success-900/50 border border-success-400"></span> Kosong
                 </span>
                 <span class="inline-flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
-                    <span class="w-3 h-3 rounded-xs bg-red-400"></span> Terisi
+                    <span class="w-3 h-3 rounded-xs bg-error-400"></span> Terisi
                 </span>
                 <span class="inline-flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
                     <span class="w-3 h-3 rounded-xs bg-brand-500"></span> Pilihan Anda
@@ -91,10 +91,7 @@
         <div class="flex flex-wrap items-center justify-between gap-3 mb-3">
             <h3 class="text-sm font-semibold text-gray-900 dark:text-white flex items-center gap-2">
                 <i class="fa-solid fa-calendar-check text-brand-500"></i>
-                <span>Tanggal & Waktu Peminjaman</span>
-                <span class="text-xs font-normal text-gray-500 dark:text-gray-400" x-show="totalDays > 0">
-                    (<span x-text="totalDays"></span> hari dipilih)
-                </span>
+                <span>Kesimpulan Peminjaman</span>
             </h3>
             <button type="button" @click="openScheduleModal()"
                 class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-brand-500 hover:bg-brand-600 text-white text-xs font-medium transition-colors shadow-xs cursor-pointer">
@@ -137,7 +134,7 @@
             <template x-if="startDate && startTime && endTime">
                 <div class="pt-2 border-t border-brand-200/60 dark:border-brand-500/20 flex flex-wrap items-center justify-between gap-2 text-xs">
                     <div class="flex items-center gap-2 text-brand-900 dark:text-brand-200 font-medium">
-                        <i class="fa-solid fa-circle-check text-green-500"></i>
+                        <i class="fa-solid fa-circle-check text-success-500"></i>
                         <span>
                             <span x-text="totalDays"></span> hari peminjaman:
                             <b x-text="formattedDateRange"></b>, pukul <b x-text="startTime"></b> - <b x-text="endTime"></b> WIB
@@ -195,20 +192,20 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-medium text-gray-600 dark:text-gray-400 mb-1">
-                                    Tanggal Mulai <span class="text-red-500">*</span>
+                                    Tanggal Mulai <span class="text-error-500">*</span>
                                 </label>
                                 <input type="date" x-model="startDate" min="{{ date('Y-m-d') }}"
                                     @change="if (!endDate || endDate < startDate) endDate = startDate"
                                     class="h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
-                                <p x-show="stepErrors.start_date" x-text="stepErrors.start_date" class="text-red-500 text-[11px] mt-1" style="display:none;"></p>
+                                <p x-show="stepErrors.start_date" x-text="stepErrors.start_date" class="text-error-500 text-[11px] mt-1" style="display:none;"></p>
                             </div>
                             <div>
                                 <label class="block text-[11px] font-medium text-gray-600 dark:text-gray-400 mb-1">
-                                    Tanggal Akhir <span class="text-red-500">*</span>
+                                    Tanggal Akhir <span class="text-error-500">*</span>
                                 </label>
                                 <input type="date" x-model="endDate" :min="startDate || '{{ date('Y-m-d') }}'"
                                     class="h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
-                                <p x-show="stepErrors.end_date" x-text="stepErrors.end_date" class="text-red-500 text-[11px] mt-1" style="display:none;"></p>
+                                <p x-show="stepErrors.end_date" x-text="stepErrors.end_date" class="text-error-500 text-[11px] mt-1" style="display:none;"></p>
                             </div>
                         </div>
 
@@ -222,7 +219,7 @@
                                     </span>
                                 </span>
                             </span>
-                            <span class="text-[11px] text-amber-600 dark:text-amber-400 font-medium">
+                            <span class="text-[11px] text-warning-600 dark:text-warning-400 font-medium">
                                 <i class="fa-solid fa-info-circle mr-0.5"></i> Maks. 3 hari
                             </span>
                         </div>
@@ -237,25 +234,25 @@
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
                             <div>
                                 <label class="block text-[11px] font-medium text-gray-600 dark:text-gray-400 mb-1">
-                                    Jam Mulai <span class="text-red-500">*</span>
+                                    Jam Mulai <span class="text-error-500">*</span>
                                 </label>
                                 <input type="time" name="start_time" x-model="startTime" required
                                     class="h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
                                 @error('start_time')
-                                    <p class="text-red-500 text-[11px] mt-1">{{ $message }}</p>
+                                    <p class="text-error-500 text-[11px] mt-1">{{ $message }}</p>
                                 @enderror
-                                <p x-show="stepErrors.start_time" x-text="stepErrors.start_time" class="text-red-500 text-[11px] mt-1" style="display:none;"></p>
+                                <p x-show="stepErrors.start_time" x-text="stepErrors.start_time" class="text-error-500 text-[11px] mt-1" style="display:none;"></p>
                             </div>
                             <div>
                                 <label class="block text-[11px] font-medium text-gray-600 dark:text-gray-400 mb-1">
-                                    Jam Selesai <span class="text-red-500">*</span>
+                                    Jam Selesai <span class="text-error-500">*</span>
                                 </label>
                                 <input type="time" name="end_time" x-model="endTime" required
                                     class="h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
                                 @error('end_time')
-                                    <p class="text-red-500 text-[11px] mt-1">{{ $message }}</p>
+                                    <p class="text-error-500 text-[11px] mt-1">{{ $message }}</p>
                                 @enderror
-                                <p x-show="stepErrors.end_time" x-text="stepErrors.end_time" class="text-red-500 text-[11px] mt-1" style="display:none;"></p>
+                                <p x-show="stepErrors.end_time" x-text="stepErrors.end_time" class="text-error-500 text-[11px] mt-1" style="display:none;"></p>
                             </div>
                         </div>
 

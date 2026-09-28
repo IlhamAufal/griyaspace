@@ -4,9 +4,9 @@
 <div class="py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
-            <a href="{{ route('dashboard') }}" class="hover:text-blue-600 transition-colors"><i class="fa-solid fa-house"></i></a>
+            <a href="{{ route('dashboard') }}" class="hover:text-brand-600 transition-colors"><i class="fa-solid fa-house"></i></a>
             <i class="fa-solid fa-chevron-right text-xs"></i>
-            <a href="{{ route('roles.index') }}" class="hover:text-blue-600 transition-colors">Role</a>
+            <a href="{{ route('roles.index') }}" class="hover:text-brand-600 transition-colors">Role</a>
             <i class="fa-solid fa-chevron-right text-xs"></i>
             <span class="text-gray-900 font-medium">{{ $role->name }}</span>
         </nav>
@@ -18,7 +18,7 @@
                     <i class="fa-solid fa-arrow-left text-sm"></i>
                     <span>Kembali</span>
                 </a>
-                <a href="{{ route('roles.edit', $role) }}" class="inline-flex items-center gap-2 bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
+                <a href="{{ route('roles.edit', $role) }}" class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-700 text-white px-4 py-2 rounded-lg text-sm font-medium transition-colors">
                     <i class="fa-solid fa-pen-to-square text-sm"></i>
                     <span>Edit Role</span>
                 </a>
@@ -43,9 +43,9 @@
                     <label class="block text-sm font-semibold text-gray-800 dark:text-gray-200">Status</label>
                     <p class="mt-1">
                         @if($role->is_active)
-                            <span class="px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Aktif</span>
+                            <span class="px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-success-100 text-success-800 dark:bg-success-900/30 dark:text-success-400">Aktif</span>
                         @else
-                            <span class="px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100 text-red-800 dark:bg-red-900/30 dark:text-red-400">Nonaktif</span>
+                            <span class="px-2.5 py-0.5 inline-flex text-xs leading-5 font-semibold rounded-full bg-error-100 text-error-800 dark:bg-error-900/30 dark:text-error-400">Nonaktif</span>
                         @endif
                     </p>
                 </div>

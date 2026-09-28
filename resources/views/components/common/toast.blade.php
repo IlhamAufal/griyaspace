@@ -1,4 +1,4 @@
-﻿@props([])
+@props([])
 
 <div x-data="toastManager()"
      @toast.window="addToast($event.detail)"
@@ -16,31 +16,31 @@
              x-transition:leave-end="opacity-0 scale-95"
              class="pointer-events-auto w-full bg-white dark:bg-gray-800 rounded-xl shadow-lg border p-4 flex items-start gap-3 relative overflow-hidden"
              :class="{
-                 'border-green-200 dark:border-green-800/60': item.type === 'success',
-                 'border-red-200 dark:border-red-800/60': item.type === 'error',
-                 'border-amber-200 dark:border-amber-800/60': item.type === 'warning',
-                 'border-blue-200 dark:border-blue-800/60': item.type === 'info'
+                 'border-success-200 dark:border-success-800/60': item.type === 'success',
+                 'border-error-200 dark:border-error-800/60': item.type === 'error',
+                 'border-warning-200 dark:border-warning-800/60': item.type === 'warning',
+                 'border-brand-200 dark:border-brand-800/60': item.type === 'info'
              }">
 
             <!-- Icon -->
             <div class="flex-shrink-0 mt-0.5">
                 <template x-if="item.type === 'success'">
-                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-green-100 dark:bg-green-900/40 text-green-600 dark:text-green-400">
+                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-success-100 dark:bg-success-900/40 text-success-600 dark:text-success-400">
                         <i class="fa-solid fa-circle-check text-base"></i>
                     </span>
                 </template>
                 <template x-if="item.type === 'error'">
-                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400">
+                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-error-100 dark:bg-error-900/40 text-error-600 dark:text-error-400">
                         <i class="fa-solid fa-circle-xmark text-base"></i>
                     </span>
                 </template>
                 <template x-if="item.type === 'warning'">
-                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400">
+                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-warning-100 dark:bg-warning-900/40 text-warning-600 dark:text-warning-400">
                         <i class="fa-solid fa-triangle-exclamation text-base"></i>
                     </span>
                 </template>
                 <template x-if="item.type === 'info'">
-                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400">
+                    <span class="inline-flex items-center justify-center w-7 h-7 rounded-full bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-200">
                         <i class="fa-solid fa-circle-info text-base"></i>
                     </span>
                 </template>

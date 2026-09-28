@@ -16,85 +16,71 @@
         </div>
 
         {{-- Stepper Progress Bar --}}
+        {{-- Stepper Progress Bar (Clean & Simpel Sesuai Gambar) --}}
         <div class="mb-8">
-            <div class="bg-white dark:bg-gray-800 rounded-2xl border border-gray-200 dark:border-gray-700/60 p-4 sm:p-5 shadow-xs">
-                <div class="grid grid-cols-3 gap-2 sm:gap-4 relative">
-                    {{-- Step 1 Indicator --}}
-                    <button type="button" @click="goToStep(1)"
-                        class="flex items-center gap-2 sm:gap-3.5 p-2 rounded-xl text-left transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:focus-visible:ring-brand-300 dark:focus-visible:ring-offset-gray-900"
-                        :class="step === 1 ? 'bg-brand-50/70 dark:bg-brand-500/10' : ''">
-                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 transition-all shadow-xs"
-                            :class="step === 1
-                                ? 'bg-brand-500 text-white ring-4 ring-brand-100 dark:ring-brand-500/20'
-                                : (step > 1 ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300')">
-                            <template x-if="step > 1">
-                                <i class="fa-solid fa-check text-xs"></i>
-                            </template>
-                            <template x-if="step <= 1">
-                                <span>1</span>
-                            </template>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-[11px] uppercase tracking-wider font-semibold"
-                                :class="step === 1 ? 'text-brand-600 dark:text-brand-400' : (step > 1 ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-500 dark:text-gray-400')">
-                                Langkah 1
-                            </p>
-                            <h3 class="text-xs sm:text-sm font-semibold truncate"
-                                :class="step === 1 ? 'text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400'">
-                                Detail & Ruangan
-                            </h3>
-                        </div>
-                    </button>
+            <div class="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                
+                {{-- Step 1 Indicator --}}
+                <button type="button" @click="goToStep(1)"
+                    class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl transition-all cursor-pointer text-left shadow-xs"
+                    :class="step === 1 
+                        ? 'bg-[#2F3185] text-white shadow-md' 
+                        : (step > 1 ? 'bg-success-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400')">
+                    <!-- Circle Angka / Icon -->
+                    <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center font-bold text-base shrink-0 shadow-xs"
+                        :class="step === 1 ? 'text-[#2F3185]' : (step > 1 ? 'text-success-600' : 'text-gray-400 dark:text-gray-500')">
+                        <template x-if="step > 1">
+                            <i class="fa-solid fa-check text-sm"></i>
+                        </template>
+                        <template x-if="step <= 1">
+                            <span>1</span>
+                        </template>
+                    </div>
+                    <!-- Judul Langkah -->
+                    <span class="text-base sm:text-lg font-bold tracking-tight truncate">
+                        Detail & Ruangan
+                    </span>
+                </button>
 
-                    {{-- Step 2 Indicator --}}
-                    <button type="button" @click="goToStep(2)"
-                        class="flex items-center gap-2 sm:gap-3.5 p-2 rounded-xl text-left transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:focus-visible:ring-brand-300 dark:focus-visible:ring-offset-gray-900"
-                        :class="step === 2 ? 'bg-[#FFB800]/10 dark:bg-[#FFB800]/15' : ''">
-                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 transition-all shadow-xs"
-                            :class="step === 2
-                                ? 'bg-[#FFB800] text-white ring-4 ring-[#FFB800]/25'
-                                : (step > 2 ? 'bg-emerald-500 text-white' : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300')">
-                            <template x-if="step > 2">
-                                <i class="fa-solid fa-check text-xs"></i>
-                            </template>
-                            <template x-if="step <= 2">
-                                <span>2</span>
-                            </template>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-[11px] uppercase tracking-wider font-semibold"
-                                :class="step === 2 ? 'text-[#D99B00] dark:text-[#FFB800]' : (step > 2 ? 'text-emerald-600 dark:text-emerald-400' : 'text-gray-500 dark:text-gray-400')">
-                                Langkah 2
-                            </p>
-                            <h3 class="text-xs sm:text-sm font-semibold truncate"
-                                :class="step === 2 ? 'text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400'">
-                                Jadwal & Kalender
-                            </h3>
-                        </div>
-                    </button>
+                {{-- Step 2 Indicator --}}
+                <button type="button" @click="goToStep(2)"
+                    class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl transition-all cursor-pointer text-left shadow-xs"
+                    :class="step === 2 
+                        ? 'bg-[#2F3185] text-white shadow-md' 
+                        : (step > 2 ? 'bg-success-600 text-white' : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400')">
+                    <!-- Circle Angka / Icon -->
+                    <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center font-bold text-base shrink-0 shadow-xs"
+                        :class="step === 2 ? 'text-[#2F3185]' : (step > 2 ? 'text-success-600' : 'text-gray-400 dark:text-gray-500')">
+                        <template x-if="step > 2">
+                            <i class="fa-solid fa-check text-sm"></i>
+                        </template>
+                        <template x-if="step <= 2">
+                            <span>2</span>
+                        </template>
+                    </div>
+                    <!-- Judul Langkah -->
+                    <span class="text-base sm:text-lg font-bold tracking-tight truncate">
+                        Jadwal & Kalender
+                    </span>
+                </button>
 
-                    {{-- Step 3 Indicator --}}
-                    <button type="button" @click="goToStep(3)"
-                        class="flex items-center gap-2 sm:gap-3.5 p-2 rounded-xl text-left transition-all cursor-pointer focus:outline-hidden focus-visible:ring-2 focus-visible:ring-brand-500 focus-visible:ring-offset-2 dark:focus-visible:ring-brand-300 dark:focus-visible:ring-offset-gray-900"
-                        :class="step === 3 ? 'bg-[#1CBDB3]/10 dark:bg-[#1CBDB3]/15' : ''">
-                        <div class="w-8 h-8 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center font-bold text-xs sm:text-sm shrink-0 transition-all shadow-xs"
-                            :class="step === 3
-                                ? 'bg-[#1CBDB3] text-white ring-4 ring-[#1CBDB3]/25'
-                                : 'bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-300'">
-                            <span>3</span>
-                        </div>
-                        <div class="min-w-0">
-                            <p class="text-[11px] uppercase tracking-wider font-semibold"
-                                :class="step === 3 ? 'text-[#1CBDB3]' : 'text-gray-500 dark:text-gray-400'">
-                                Langkah 3
-                            </p>
-                            <h3 class="text-xs sm:text-sm font-semibold truncate"
-                                :class="step === 3 ? 'text-gray-900 dark:text-white' : 'text-gray-600 dark:text-gray-400'">
-                                Konfirmasi & Submit
-                            </h3>
-                        </div>
-                    </button>
-                </div>
+                {{-- Step 3 Indicator --}}
+                <button type="button" @click="goToStep(3)"
+                    class="w-full flex items-center gap-3.5 px-4 py-3 rounded-2xl transition-all cursor-pointer text-left shadow-xs"
+                    :class="step === 3 
+                        ? 'bg-[#2F3185] text-white shadow-md' 
+                        : 'bg-gray-100 dark:bg-gray-800 text-gray-500 dark:text-gray-400'">
+                    <!-- Circle Angka / Icon -->
+                    <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center font-bold text-base shrink-0 shadow-xs"
+                        :class="step === 3 ? 'text-[#2F3185]' : 'text-gray-400 dark:text-gray-500'">
+                        <span>3</span>
+                    </div>
+                    <!-- Judul Langkah -->
+                    <span class="text-base sm:text-lg font-bold tracking-tight truncate">
+                        Konfirmasi & Submit
+                    </span>
+                </button>
+
             </div>
         </div>
 

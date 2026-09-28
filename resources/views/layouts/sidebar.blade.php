@@ -67,9 +67,11 @@
             <img x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
                 class="dark:hidden h-8 w-auto" src="/images/logo/dkpti-dark.svg" alt="Logo" />
             <img x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                class="hidden dark:block h-8 w-auto" src="/images/logo/dkpti-dark.svg" alt="Logo" />
+                class="hidden dark:block h-8 w-auto" src="/images/logo/dkpti-light.svg" alt="Logo" />
             <img x-show="!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen"
-                class="h-7 w-7" src="/images/logo/dkpti-dark.svg" alt="Logo" />
+                class="h-7 w-7 dark:hidden" src="/images/logo/dkpti-dark.svg" alt="Logo" />
+            <img x-show="!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen"
+                class="hidden dark:block h-7 w-7" src="/images/logo/dkpti-light.svg" alt="Logo" />
 
         </a>
     </div>
@@ -119,14 +121,6 @@
                                                 x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
                                                 class="menu-item-text flex items-center gap-2">
                                                 {{ $item['name'] }}
-                                                @if (!empty($item['new']))
-                                                    <span class="absolute right-10"
-                                                        :class="isActive('{{ $item['path'] ?? '' }}') ?
-                                                            'menu-dropdown-badge menu-dropdown-badge-active' :
-                                                            'menu-dropdown-badge menu-dropdown-badge-inactive'">
-                                                        new
-                                                    </span>
-                                                @endif
                                             </span>
 
                                             <!-- Chevron Down Icon -->
@@ -149,24 +143,6 @@
                                                                 'menu-dropdown-item-active' :
                                                                 'menu-dropdown-item-inactive'">
                                                             {{ $subItem['name'] }}
-                                                            <span class="flex items-center gap-1 ml-auto">
-                                                                @if (!empty($subItem['new']))
-                                                                    <span
-                                                                        :class="isActive('{{ $subItem['path'] }}') ?
-                                                                            'menu-dropdown-badge menu-dropdown-badge-active' :
-                                                                            'menu-dropdown-badge menu-dropdown-badge-inactive'">
-                                                                        new
-                                                                    </span>
-                                                                @endif
-                                                                @if (!empty($subItem['pro']))
-                                                                    <span
-                                                                        :class="isActive('{{ $subItem['path'] }}') ?
-                                                                            'menu-dropdown-badge-pro menu-dropdown-badge-pro-active' :
-                                                                            'menu-dropdown-badge-pro menu-dropdown-badge-pro-inactive'">
-                                                                        pro
-                                                                    </span>
-                                                                @endif
-                                                            </span>
                                                         </a>
                                                     </li>
                                                 @endforeach
@@ -195,12 +171,6 @@
                                                 x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
                                                 class="menu-item-text flex items-center gap-2">
                                                 {{ $item['name'] }}
-                                                @if (!empty($item['new']))
-                                                    <span
-                                                        class="ml-2 inline-flex items-center px-2 py-0.5 rounded text-xs font-semibold bg-brand-500 text-white">
-                                                        new
-                                                    </span>
-                                                @endif
                                             </span>
                                         </a>
                                     @endif

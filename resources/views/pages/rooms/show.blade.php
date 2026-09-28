@@ -139,7 +139,7 @@
                                 <div class="space-y-1">
                                     <h3 class="text-white font-bold text-base sm:text-lg drop-shadow-md" x-text="photos[activeIndex].caption"></h3>
                                 </div>
-                                <button type="button" @click="lightbox = true" class="inline-flex items-center gap-1.5 bg-white/20 hover:bg-white/30 text-white backdrop-blur-xs px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 shadow-sm cursor-pointer" title="Lihat Layar Penuh">
+                                <button type="button" @click="lightbox = true" class="inline-flex items-center gap-1.5 bg-black/60 hover:bg-black/75 text-white px-3 py-1.5 rounded-lg text-xs font-semibold transition-colors shrink-0 shadow-sm cursor-pointer" title="Lihat Layar Penuh">
                                     <i class="fa-solid fa-expand"></i>
                                     <span class="hidden sm:inline">Perbesar</span>
                                 </button>
@@ -249,7 +249,7 @@
                             </span>
                             <div class="min-w-0">
                                 <p class="text-xs font-semibold text-gray-800 dark:text-gray-200">Status Ruangan</p>
-                                <p class="text-sm font-normal {{ $room->isActive() ? 'text-green-600 dark:text-green-400' : 'text-red-600 dark:text-red-400' }}">
+                                <p class="text-sm font-normal {{ $room->isActive() ? 'text-success-600 dark:text-success-400' : 'text-error-600 dark:text-error-400' }}">
                                     {{ $room->isActive() ? 'Tersedia (Aktif)' : 'Tidak Aktif' }}
                                 </p>
                             </div>
@@ -287,7 +287,7 @@
                                     <td class="py-3 px-3 truncate max-w-[180px]">{{ $b->event_name ?? $b->purpose ?? '-' }}</td>
                                     <td class="py-3 px-3">
                                         @if($b->status === \App\Enums\BookingStatus::Approved)
-                                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-green-100 text-green-800 dark:bg-green-900/30 dark:text-green-400">Disetujui</span>
+                                            <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-success-100 text-success-800 dark:bg-success-900/30 dark:text-success-400">Disetujui</span>
                                         @elseif(in_array($b->status, [\App\Enums\BookingStatus::Submitted, \App\Enums\BookingStatus::Revision], true))
                                             <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-800 dark:bg-yellow-900/30 dark:text-yellow-400">{{ $b->status->label() }}</span>
                                         @else
@@ -358,7 +358,7 @@
     </div>
 
     <!-- FULLSCREEN LIGHTBOX MODAL -->
-    <div x-show="lightbox" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-[99999] bg-black/95 backdrop-blur-md flex flex-col justify-between p-4 sm:p-6" style="display: none;">
+    <div x-show="lightbox" x-transition:enter="ease-out duration-300" x-transition:enter-start="opacity-0" x-transition:enter-end="opacity-100" x-transition:leave="ease-in duration-200" x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" class="fixed inset-0 z-[99999] bg-black/95 flex flex-col justify-between p-4 sm:p-6" style="display: none;">
         <!-- Top Bar -->
         <div class="flex items-center justify-between text-white z-10">
             <div class="flex items-center gap-3">

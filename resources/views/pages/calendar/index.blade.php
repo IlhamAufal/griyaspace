@@ -26,13 +26,13 @@
             <h2 class="text-lg font-semibold text-gray-700" x-text="currentTitle"></h2>
 
             <div class="ml-auto flex items-center gap-3">
-                <select x-model="selectedRoom" @change="updateEvents()"
+                <x-common.select x-model="selectedRoom" @change="updateEvents()"
                     class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
                     <option value="">Semua Ruangan</option>
                     @foreach($rooms as $room)
                         <option value="{{ $room->id }}">{{ $room->name }}</option>
                     @endforeach
-                </select>
+                </x-common.select>
 
                 <div class="flex rounded-lg border border-gray-300 overflow-hidden">
                     <button @click="changeView('timeGridDay')" :class="currentView === 'timeGridDay' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
@@ -95,10 +95,10 @@
                     <div class="mt-0.5">
                         <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-normal"
                             :class="{
-                                'bg-green-100 text-green-700 dark:bg-green-900/30 dark:text-green-400': modalData.status === 'approved',
+                                'bg-success-100 text-success-700 dark:bg-success-900/30 dark:text-success-400': modalData.status === 'approved',
                                 'bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-400': modalData.status === 'submitted',
                                 'bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-400': modalData.status === 'revision',
-                                'bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-400': modalData.status === 'rejected',
+                                'bg-error-100 text-error-700 dark:bg-error-900/30 dark:text-error-400': modalData.status === 'rejected',
                                 'bg-gray-100 text-gray-700 dark:bg-gray-700 dark:text-gray-300': !['approved','submitted','revision','rejected'].includes(modalData.status)
                             }"
                             x-text="modalData.status_label || '-'"></span>

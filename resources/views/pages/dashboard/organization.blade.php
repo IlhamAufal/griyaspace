@@ -63,7 +63,7 @@
                         <span class="w-3 h-3 rounded-md bg-[#2F3185]"></span>
                         <span>Disetujui</span>
                     </span>
-                    <span class="inline-flex items-center gap-1.5 text-[#1CBDB3] dark:text-teal-400">
+                    <span class="inline-flex items-center gap-1.5 text-[#1CBDB3] dark:text-accent-400">
                         <span class="w-3 h-3 rounded-md bg-[#1CBDB3]"></span>
                         <span>Diajukan</span>
                     </span>
@@ -95,12 +95,12 @@
                     </div>
                     <span class="font-extrabold text-sm text-[#2F3185] dark:text-brand-300">{{ $myApprovedCount }}</span>
                 </div>
-                <div class="flex items-center justify-between p-2.5 rounded-xl bg-amber-50/70 dark:bg-amber-950/40 border border-amber-200/80 dark:border-amber-800/60">
+                <div class="flex items-center justify-between p-2.5 rounded-xl bg-warning-50/70 dark:bg-warning-950/40 border border-warning-200/80 dark:border-warning-800/60">
                     <div class="flex items-center gap-2 min-w-0">
-                        <span class="w-2.5 h-2.5 rounded-full bg-[#FFB800] dark:bg-amber-400 shrink-0"></span>
+                        <span class="w-2.5 h-2.5 rounded-full bg-[#FFB800] dark:bg-warning-400 shrink-0"></span>
                         <span class="font-medium text-gray-700 dark:text-gray-300 truncate">Menunggu</span>
                     </div>
-                    <span class="font-extrabold text-sm text-amber-800 dark:text-amber-300">{{ $myPendingCount }}</span>
+                    <span class="font-extrabold text-sm text-warning-800 dark:text-warning-300">{{ $myPendingCount }}</span>
                 </div>
             </div>
         </div>
@@ -117,7 +117,7 @@
                 <p class="text-sm font-bold text-gray-900 dark:text-white">Ajukan Peminjaman Baru</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">Buat permohonan peminjaman ruangan baru</p>
             </div>
-            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto group-hover:text-brand-500 group-hover:translate-x-1 transition-all"></i>
+            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto opacity-0 group-hover:opacity-100 group-hover:text-brand-500 group-hover:translate-x-1 transition-all"></i>
         </a>
         <a href="{{ route('bookings.index') }}" class="group flex items-center gap-4 rounded-2xl border border-gray-200 bg-white p-5 shadow-xs dark:border-gray-700 dark:bg-gray-800 hover:shadow-md hover:border-brand-300 dark:hover:border-brand-500 transition-all">
             <div class="w-12 h-12 rounded-xl bg-[#1CBDB3]/10 dark:bg-accent-500/20 text-[#1CBDB3] dark:text-accent-400 flex items-center justify-center group-hover:scale-110 transition-transform">
@@ -127,7 +127,7 @@
                 <p class="text-sm font-bold text-gray-900 dark:text-white">Daftar Surat Izin & Berkas</p>
                 <p class="text-xs text-gray-500 dark:text-gray-400 mt-0.5">{{ $validPermitsCount }} surat izin pemakaian aktif</p>
             </div>
-            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto group-hover:text-brand-500 group-hover:translate-x-1 transition-all"></i>
+            <i class="fa-solid fa-arrow-right text-gray-300 dark:text-gray-600 ml-auto opacity-0 group-hover:opacity-100 group-hover:text-brand-500 group-hover:translate-x-1 transition-all"></i>
         </a>
     </div>
 

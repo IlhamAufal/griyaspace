@@ -4,9 +4,9 @@
 <div class="py-6">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <nav class="flex items-center gap-2 text-sm text-gray-500 mb-6">
-            <a href="{{ route('dashboard') }}" class="hover:text-blue-600 transition-colors"><i class="fa-solid fa-house"></i></a>
+            <a href="{{ route('dashboard') }}" class="hover:text-brand-600 transition-colors"><i class="fa-solid fa-house"></i></a>
             <i class="fa-solid fa-chevron-right text-xs"></i>
-            <a href="{{ route('bookings.index') }}" class="hover:text-blue-600 transition-colors">Pengajuan</a>
+            <a href="{{ route('bookings.index') }}" class="hover:text-brand-600 transition-colors">Pengajuan</a>
             <i class="fa-solid fa-chevron-right text-xs"></i>
             <span class="text-gray-900 font-medium">{{ $booking->booking_number }}</span>
         </nav>
@@ -86,7 +86,7 @@
                         <button type="button" onclick="openDecisionModal('revision')" class="inline-flex items-center gap-2 bg-[#FFB800] text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
                             <i class="fa-solid fa-rotate-left text-sm"></i> Minta Revisi
                         </button>
-                        <button type="button" onclick="openDecisionModal('reject')" class="inline-flex items-center gap-2 bg-red-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
+                        <button type="button" onclick="openDecisionModal('reject')" class="inline-flex items-center gap-2 bg-error-600 text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors">
                             <i class="fa-solid fa-xmark text-sm"></i> Tolak
                         </button>
                     </div>
@@ -97,7 +97,7 @@
                 <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-gray-200 dark:border-gray-700/60 p-6">
                     <form action="{{ route('bookings.cancel', $booking) }}" method="POST" onsubmit="return confirm('Yakin ingin membatalkan pengajuan ini?')">
                         @csrf
-                        <button type="submit" class="inline-flex items-center gap-2 bg-red-600 hover:bg-red-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors cursor-pointer">
+                        <button type="submit" class="inline-flex items-center gap-2 bg-error-600 hover:bg-error-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors cursor-pointer">
                             <i class="fa-solid fa-ban text-sm"></i> Batalkan Pengajuan
                         </button>
                     </form>
@@ -105,18 +105,18 @@
                 @endif
 
                 @if($booking->status === \App\Enums\BookingStatus::Approved && auth()->user()->isAdmin() && (!$booking->permit || !$booking->permit->pdf_storage_key))
-                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-green-200 dark:border-green-700/40 p-6">
+                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-success-200 dark:border-success-700/40 p-6">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                                <i class="fa-solid fa-file-circle-plus text-green-600 dark:text-green-400"></i>
+                            <div class="w-10 h-10 rounded-full bg-success-100 dark:bg-success-900/30 flex items-center justify-center">
+                                <i class="fa-solid fa-file-circle-plus text-success-600 dark:text-success-400"></i>
                             </div>
                             <div>
-                                <h2 class="text-lg font-semibold text-green-800 dark:text-green-200">Generate Dokumen Izin</h2>
-                                <p class="text-xs text-green-600/80 dark:text-green-400/80">Klik tombol untuk membuat dokumen izin peminjaman ruangan.</p>
+                                <h2 class="text-lg font-semibold text-success-800 dark:text-success-200">Generate Dokumen Izin</h2>
+                                <p class="text-xs text-success-600/80 dark:text-success-400/80">Klik tombol untuk membuat dokumen izin peminjaman ruangan.</p>
                             </div>
                         </div>
-                        <button type="button" onclick="openGeneratePermitModal()" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors">
+                        <button type="button" onclick="openGeneratePermitModal()" class="inline-flex items-center gap-2 bg-success-600 hover:bg-success-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors">
                             <i class="fa-solid fa-file-pdf text-sm"></i> Generate Dokumen
                         </button>
                     </div>
@@ -124,18 +124,18 @@
                 @endif
 
                 @if($booking->status === \App\Enums\BookingStatus::Approved && $booking->permit && $booking->permit->pdf_storage_key)
-                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-green-200 dark:border-green-700/40 p-6">
+                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-success-200 dark:border-success-700/40 p-6">
                     <div class="flex items-center justify-between">
                         <div class="flex items-center gap-3">
-                            <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/30 flex items-center justify-center">
-                                <i class="fa-solid fa-file-pdf text-green-600 dark:text-green-400"></i>
+                            <div class="w-10 h-10 rounded-full bg-success-100 dark:bg-success-900/30 flex items-center justify-center">
+                                <i class="fa-solid fa-file-pdf text-success-600 dark:text-success-400"></i>
                             </div>
                             <div>
-                                <h2 class="text-lg font-semibold text-green-800 dark:text-green-200">Dokumen Izin</h2>
-                                <p class="text-xs text-green-600/80 dark:text-green-400/80">{{ $booking->permit->permit_number }}</p>
+                                <h2 class="text-lg font-semibold text-success-800 dark:text-success-200">Dokumen Izin</h2>
+                                <p class="text-xs text-success-600/80 dark:text-success-400/80">{{ $booking->permit->permit_number }}</p>
                             </div>
                         </div>
-                        <a href="{{ route('bookings.downloadPermit', $booking) }}" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors">
+                        <a href="{{ route('bookings.downloadPermit', $booking) }}" class="inline-flex items-center gap-2 bg-success-600 hover:bg-success-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors">
                             <i class="fa-solid fa-download text-sm"></i> Unduh PDF
                         </a>
                     </div>
@@ -171,58 +171,58 @@
                         @method('PUT')
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-x-6 gap-y-5">
                             <div class="md:col-span-2">
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Kegiatan <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Nama Kegiatan <span class="text-error-500">*</span></label>
                                 <input type="text" name="activity_name" value="{{ old('activity_name', $booking->activity_name) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
-                                @error('activity_name') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                                @error('activity_name') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Deskripsi Kegiatan </label>
                                 <textarea name="purpose" rows="3" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>{{ old('purpose', $booking->purpose) }}</textarea>
-                                @error('purpose') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                                @error('purpose') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ruangan <span class="text-red-500">*</span></label>
-                                <select name="room_id" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Ruangan <span class="text-error-500">*</span></label>
+                                <x-common.select name="room_id" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
                                     @foreach($rooms as $room)
                                     <option value="{{ $room->id }}" {{ old('room_id', $booking->room_id) == $room->id ? 'selected' : '' }}>{{ $room->name }} - {{ $room->code }}</option>
                                     @endforeach
-                                </select>
-                                @error('room_id') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                                </x-common.select>
+                                @error('room_id') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tanggal <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tanggal <span class="text-error-500">*</span></label>
                                 <input type="text" name="booking_date" value="{{ old('booking_date', $booking->booking_date->format('Y-m-d')) }}" data-min-date="{{ date('Y-m-d') }}" class="datepicker h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required readonly>
-                                @error('booking_date') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                                @error('booking_date') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jam Mulai <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jam Mulai <span class="text-error-500">*</span></label>
                                 <input type="time" name="start_time" value="{{ old('start_time', $booking->start_time) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
-                                @error('start_time') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                                @error('start_time') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jam Selesai <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jam Selesai <span class="text-error-500">*</span></label>
                                 <input type="time" name="end_time" value="{{ old('end_time', $booking->end_time) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
-                                @error('end_time') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                                @error('end_time') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Peserta <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Peserta <span class="text-error-500">*</span></label>
                                 <input type="number" name="participant_count" value="{{ old('participant_count', $booking->participant_count) }}" min="1" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
-                                @error('participant_count') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                                @error('participant_count') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">PIC <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">PIC <span class="text-error-500">*</span></label>
                                 <input type="text" name="person_in_charge" value="{{ old('person_in_charge', $booking->person_in_charge) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
-                                @error('person_in_charge') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                                @error('person_in_charge') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
-                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Telepon <span class="text-red-500">*</span></label>
+                                <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Telepon <span class="text-error-500">*</span></label>
                                 <input type="text" name="contact_phone" value="{{ old('contact_phone', $booking->contact_phone) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
-                                @error('contact_phone') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                                @error('contact_phone') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Dokumen (PDF)</label>
                                 <input type="file" name="document" accept=".pdf" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-3 py-2 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 file:mr-4 file:py-1 file:px-3 file:rounded-md file:border-0 file:text-xs file:font-semibold file:bg-brand-50 file:text-brand-700 hover:file:bg-brand-100 dark:file:bg-brand-900/30 dark:file:text-brand-300 shadow-theme-xs">
-                                @error('document') <p class="text-red-500 text-xs mt-1.5">{{ $message }}</p> @enderror
+                                @error('document') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                         </div>
                         <div class="mt-6 pt-5 border-t border-gray-100 dark:border-gray-700/60 flex items-center justify-end gap-3">
@@ -238,14 +238,14 @@
                 @endif
 
                 @if($booking->status === \App\Enums\BookingStatus::Approved && !auth()->user()->isAdmin() && (!$booking->permit || !$booking->permit->pdf_storage_key))
-                <div class="bg-green-50 dark:bg-green-900/20 rounded-2xl border border-green-200 dark:border-green-700/40 p-5">
+                <div class="bg-success-50 dark:bg-success-900/20 rounded-2xl border border-success-200 dark:border-success-700/40 p-5">
                     <div class="flex items-start gap-3">
-                        <div class="w-10 h-10 rounded-full bg-green-100 dark:bg-green-900/40 flex items-center justify-center shrink-0">
-                            <i class="fa-solid fa-circle-check text-green-600 dark:text-green-400"></i>
+                        <div class="w-10 h-10 rounded-full bg-success-100 dark:bg-success-900/40 flex items-center justify-center shrink-0">
+                            <i class="fa-solid fa-circle-check text-success-600 dark:text-success-400"></i>
                         </div>
                         <div>
-                            <h3 class="text-sm font-semibold text-green-800 dark:text-green-200">Pengajuan Disetujui</h3>
-                            <p class="text-sm text-green-700 dark:text-green-300 mt-1">Pengajuan Anda telah disetujui. Silakan hubungi admin jika dokumen izin belum muncul.</p>
+                            <h3 class="text-sm font-semibold text-success-800 dark:text-success-200">Pengajuan Disetujui</h3>
+                            <p class="text-sm text-success-700 dark:text-success-300 mt-1">Pengajuan Anda telah disetujui. Silakan hubungi admin jika dokumen izin belum muncul.</p>
                         </div>
                     </div>
                 </div>
@@ -266,8 +266,8 @@
                         $timelineConfig = [
                             \App\Enums\BookingStatus::Submitted->value => ['color' => 'bg-yellow-500', 'ring' => 'ring-yellow-100', 'icon' => 'fa-solid fa-paper-plane', 'label' => \App\Enums\BookingStatus::Submitted->label()],
                             \App\Enums\BookingStatus::Revision->value => ['color' => 'bg-orange-500', 'ring' => 'ring-orange-100', 'icon' => 'fa-solid fa-rotate-left', 'label' => \App\Enums\BookingStatus::Revision->label()],
-                            \App\Enums\BookingStatus::Approved->value => ['color' => 'bg-green-500', 'ring' => 'ring-green-100', 'icon' => 'fa-solid fa-check', 'label' => \App\Enums\BookingStatus::Approved->label()],
-                            \App\Enums\BookingStatus::Rejected->value => ['color' => 'bg-red-500', 'ring' => 'ring-red-100', 'icon' => 'fa-solid fa-xmark', 'label' => \App\Enums\BookingStatus::Rejected->label()],
+                            \App\Enums\BookingStatus::Approved->value => ['color' => 'bg-success-500', 'ring' => 'ring-success-100', 'icon' => 'fa-solid fa-check', 'label' => \App\Enums\BookingStatus::Approved->label()],
+                            \App\Enums\BookingStatus::Rejected->value => ['color' => 'bg-error-500', 'ring' => 'ring-error-100', 'icon' => 'fa-solid fa-xmark', 'label' => \App\Enums\BookingStatus::Rejected->label()],
                             \App\Enums\BookingStatus::Cancelled->value => ['color' => 'bg-gray-400', 'ring' => 'ring-gray-100', 'icon' => 'fa-solid fa-ban', 'label' => \App\Enums\BookingStatus::Cancelled->label()],
                         ];
                     @endphp
@@ -335,7 +335,7 @@
                     <p class="text-sm text-gray-600 dark:text-gray-400" id="decisionModalDesc"></p>
                 </div>
                 <div class="mb-4">
-                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Catatan <span id="requiredIndicator" class="text-red-500">*</span></label>
+                    <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Catatan <span id="requiredIndicator" class="text-error-500">*</span></label>
                     <textarea name="admin_note" id="decisionNote" rows="3" placeholder="Masukkan catatan keputusan..." class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs"></textarea>
                 </div>
                 <div class="flex items-center justify-end gap-3">
@@ -391,7 +391,7 @@
                     <button type="button" onclick="closeGeneratePermitModal()" class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
                         Batal
                     </button>
-                    <button type="submit" class="inline-flex items-center gap-2 bg-green-600 hover:bg-green-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors">
+                    <button type="submit" class="inline-flex items-center gap-2 bg-success-600 hover:bg-success-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors">
                         <i class="fa-solid fa-file-pdf text-sm"></i> Generate
                     </button>
                 </div>
@@ -421,13 +421,13 @@ function openDecisionModal(action) {
 
     btn.disabled = false;
     if (action === 'approve') {
-        btn.className = 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors text-white bg-green-600 hover:bg-green-700 cursor-pointer';
+        btn.className = 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors text-white bg-success-600 hover:bg-success-700 cursor-pointer';
         text.textContent = 'Setujui';
         title.textContent = 'Setujui Pengajuan';
         desc.textContent = 'Konfirmasi persetujuan pengajuan ini. Catatan bersifat opsional.';
         note.placeholder = 'Tambahkan catatan (opsional)...';
     } else if (action === 'reject') {
-        btn.className = 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors text-white bg-red-600 hover:bg-red-700 cursor-pointer';
+        btn.className = 'inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors text-white bg-error-600 hover:bg-error-700 cursor-pointer';
         text.textContent = 'Tolak';
         title.textContent = 'Tolak Pengajuan';
         desc.textContent = 'Tolak pengajuan ini. Anda wajib memberikan catatan alasan penolakan.';

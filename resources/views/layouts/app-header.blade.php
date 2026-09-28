@@ -30,7 +30,7 @@
             <!-- Logo (mobile only) -->
             <a href="/" class="xl:hidden">
                 <img class="dark:hidden h-7 w-auto" src="/images/logo/dkpti-dark.svg" alt="Logo" />
-                <img class="hidden dark:block h-7 w-auto" src="/images/logo/dkpti-dark.svg" alt="Logo" />
+                <img class="hidden dark:block h-7 w-auto" src="/images/logo/dkpti-light.svg" alt="Logo" />
             </a>
 
             <!-- Application Menu Toggle (mobile only) -->
@@ -70,13 +70,13 @@
 
                     <!-- Sun Icon (Light Mode) -->
                     <span class="z-10 flex h-7 w-7 items-center justify-center text-xs transition-colors duration-200"
-                        :class="$store.theme.theme === 'light' ? 'text-amber-500 font-semibold' : 'text-gray-500 dark:text-gray-400'">
+                        :class="$store.theme.theme === 'light' ? 'text-warning-500 font-semibold' : 'text-gray-500 dark:text-gray-400'">
                         <i class="fa-solid fa-sun text-sm"></i>
                     </span>
 
                     <!-- Moon Icon (Dark Mode) -->
                     <span class="z-10 flex h-7 w-7 items-center justify-center text-xs transition-colors duration-200"
-                        :class="$store.theme.theme === 'dark' ? 'text-blue-400 font-semibold' : 'text-gray-500 dark:text-gray-400'">
+                        :class="$store.theme.theme === 'dark' ? 'text-brand-300 font-semibold' : 'text-gray-500 dark:text-gray-400'">
                         <i class="fa-solid fa-moon text-sm"></i>
                     </span>
                 </button>

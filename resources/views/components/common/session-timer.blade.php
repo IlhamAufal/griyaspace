@@ -16,19 +16,22 @@
         <div class="flex items-center gap-2.5 mb-2">
             <span class="flex items-center justify-center w-7 h-7 rounded-full flex-shrink-0"
                   :class="{
-                      'bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400': !isWarning && !isDanger,
-                      'bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400': isWarning && !isDanger,
-                      'bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400': isDanger
+                      'bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-200': !isWarning && !isDanger,
+                      'bg-warning-100 dark:bg-warning-900/40 text-warning-600 dark:text-warning-400': isWarning && !isDanger,
+                      'bg-error-100 dark:bg-error-900/40 text-error-600 dark:text-error-400': isDanger
                   }">
                 <i class="fa-solid fa-clock text-sm"></i>
             </span>
             <div class="flex-1 min-w-0">
-                <div class="text-[11px] text-gray-500 dark:text-gray-400 leading-none mb-0.5">Sisa Waktu Aktif</div>
+                <div class="text-[11px] text-gray-500 dark:text-gray-400 leading-none mb-0.5">
+                    <span x-show="!isDanger">Sisa Waktu Aktif</span>
+                    <span x-show="isDanger" class="text-error-600 dark:text-error-400 font-semibold">Segera berakhir</span>
+                </div>
                 <div class="text-sm font-mono font-semibold tabular-nums leading-none"
                      :class="{
                          'text-gray-700 dark:text-gray-200': !isWarning && !isDanger,
-                         'text-amber-600 dark:text-amber-400': isWarning && !isDanger,
-                         'text-red-600 dark:text-red-400 animate-pulse': isDanger
+                         'text-warning-600 dark:text-warning-400': isWarning && !isDanger,
+                         'text-error-600 dark:text-error-400': isDanger
                      }"
                      x-text="formatTime(remaining)">
                 </div>
@@ -43,9 +46,9 @@
         <div class="w-full h-1 bg-gray-200 dark:bg-gray-700 rounded-full overflow-hidden mb-2">
             <div class="h-full rounded-full transition-all duration-1000 ease-linear"
                  :class="{
-                     'bg-blue-500': !isWarning && !isDanger,
-                     'bg-amber-500': isWarning && !isDanger,
-                     'bg-red-500': isDanger
+                     'bg-brand-500': !isWarning && !isDanger,
+                     'bg-warning-500': isWarning && !isDanger,
+                     'bg-error-500': isDanger
                  }"
                  :style="`width: ${(remaining / total) * 100}%`">
             </div>
@@ -58,13 +61,13 @@
              x-transition:enter-end="opacity-100 translate-y-0">
             <div class="text-[11px] text-gray-500 dark:text-gray-400 mb-2">
                 <span x-show="!isDanger">Timer reset saat ada aktivitas</span>
-                <span x-show="isDanger" class="text-red-500 dark:text-red-400 font-medium">Session berakhir segera!</span>
+                <span x-show="isDanger" class="text-error-500 dark:text-error-400 font-medium">Session berakhir segera!</span>
             </div>
             <button @click="logout()"
                     class="w-full px-3 py-1.5 text-xs font-medium rounded-lg transition-colors
-                           bg-gray-100 hover:bg-red-50 dark:bg-gray-700 dark:hover:bg-red-900/30
-                           text-gray-600 hover:text-red-600 dark:text-gray-400 dark:hover:text-red-400
-                           border border-gray-200 hover:border-red-200 dark:border-gray-600 dark:hover:border-red-800">
+                           bg-gray-100 hover:bg-error-50 dark:bg-gray-700 dark:hover:bg-error-900/30
+                           text-gray-600 hover:text-error-600 dark:text-gray-400 dark:hover:text-error-400
+                           border border-gray-200 hover:border-error-200 dark:border-gray-600 dark:hover:border-error-800">
                 <i class="fa-solid fa-right-from-bracket mr-1"></i>
                 Logout
             </button>
@@ -76,17 +79,17 @@
          class="flex flex-col items-center gap-1">
         <span class="flex items-center justify-center w-8 h-8 rounded-full"
               :class="{
-                  'bg-blue-100 dark:bg-blue-900/40 text-blue-600 dark:text-blue-400': !isWarning && !isDanger,
-                  'bg-amber-100 dark:bg-amber-900/40 text-amber-600 dark:text-amber-400': isWarning && !isDanger,
-                  'bg-red-100 dark:bg-red-900/40 text-red-600 dark:text-red-400 animate-pulse': isDanger
+                  'bg-brand-100 dark:bg-brand-900/40 text-brand-600 dark:text-brand-200': !isWarning && !isDanger,
+                  'bg-warning-100 dark:bg-warning-900/40 text-warning-600 dark:text-warning-400': isWarning && !isDanger,
+                  'bg-error-100 dark:bg-error-900/40 text-error-600 dark:text-error-400': isDanger
               }">
             <i class="fa-solid fa-clock text-sm"></i>
         </span>
         <span class="text-[10px] font-mono font-semibold tabular-nums"
               :class="{
                   'text-gray-600 dark:text-gray-300': !isWarning && !isDanger,
-                  'text-amber-600 dark:text-amber-400': isWarning && !isDanger,
-                  'text-red-600 dark:text-red-400': isDanger
+                  'text-warning-600 dark:text-warning-400': isWarning && !isDanger,
+                  'text-error-600 dark:text-error-400': isDanger
               }"
               x-text="formatTime(remaining)">
         </span>

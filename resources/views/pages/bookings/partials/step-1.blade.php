@@ -215,14 +215,14 @@
     {{-- Step 1 Actions --}}
     <div class="mt-8 pt-6 border-t border-gray-100 dark:border-gray-700/60 flex items-center justify-between">
         <a href="{{ route('bookings.index') }}"
-            class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600">
-            <i class="fa-solid fa-xmark text-sm"></i>
+            class="inline-flex items-center gap-2 bg-red-500  text-white px-5 py-2.5 rounded-lg text-sm font-medium transition-colors  dark:text-white">
+            {{-- <i class="fa-solid fa-xmark text-sm"></i> --}}
             <span>Batal</span>
         </a>
         <button type="button" @click="goToStep2()"
             class="inline-flex items-center gap-2 bg-brand-500 hover:bg-brand-600 text-white px-6 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors cursor-pointer">
             <span>Lanjut: Pilih Jadwal & Kalender</span>
-            <i class="fa-solid fa-arrow-right text-sm"></i>
+            {{-- <i class="fa-solid fa-arrow-right text-sm"></i> --}}
         </button>
     </div>
 </div>

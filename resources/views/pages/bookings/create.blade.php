@@ -259,7 +259,7 @@ function bookingWizard() {
                     initialView: 'dayGridMonth',
                     headerToolbar: false,
                     validRange: {
-                        start: new Date().toISOString().split('T')[0]
+                        start: self.dateToYMD(new Date())
                     },
                     selectable: true,
                     selectMirror: true,
@@ -342,12 +342,17 @@ function bookingWizard() {
             const startDate = new Date(startStr + 'T00:00:00');
             const endExclusive = new Date(endStr + 'T00:00:00');
             const endInclusive = new Date(endExclusive.getTime() - 86400000);
-            let endDateStr = endInclusive.toISOString().substring(0, 10);
 
-            const diffDays = Math.round((endInclusive - startDate) / 86400000) + 1;
+            let endDateStr = this.dateToYMD(endInclusive);
+
+            const diffDays = Math.round((endInclusive.getTime() - startDate.getTime()) / 86400000) + 1;
             if (diffDays > 3) {
                 const maxEnd = new Date(startDate.getTime() + (2 * 86400000));
-                endDateStr = maxEnd.toISOString().substring(0, 10);
+                endDateStr = this.dateToYMD(maxEnd);
+            }
+
+            if (endDateStr < startStr) {
+                endDateStr = startStr;
             }
 
             this.startDate = startStr;
@@ -366,7 +371,7 @@ function bookingWizard() {
 
         openScheduleModal() {
             if (!this.startDate) {
-                const today = new Date().toISOString().substring(0, 10);
+                const today = this.dateToYMD(new Date());
                 this.startDate = today;
                 this.endDate = today;
             } else if (!this.endDate) {
@@ -513,6 +518,13 @@ function bookingWizard() {
         },
 
         // Helper Getters
+        dateToYMD(date) {
+            const y = date.getFullYear();
+            const m = String(date.getMonth() + 1).padStart(2, '0');
+            const d = String(date.getDate()).padStart(2, '0');
+            return `${y}-${m}-${d}`;
+        },
+
         get totalDays() {
             if (!this.startDate || !this.endDate) return 0;
             const start = new Date(this.startDate + 'T00:00:00');
@@ -522,6 +534,21 @@ function bookingWizard() {
             return Math.round(diffTime / (1000 * 60 * 60 * 24)) + 1;
         },
 
+        get maxEndDate() {
+            if (!/^\d{4}-\d{2}-\d{2}$/.test(this.startDate || '')) return '';
+            const d = new Date(this.startDate + 'T00:00:00');
+            d.setDate(d.getDate() + 2);
+            return this.dateToYMD(d);
+        },
+
+        onStartDateChange() {
+            if (!this.endDate || this.endDate < this.startDate) {
+                this.endDate = this.startDate;
+            } else if (this.maxEndDate && this.endDate > this.maxEndDate) {
+                this.endDate = this.maxEndDate;
+            }
+        },
+
         get generatedDates() {
             if (!this.startDate || !this.endDate) return [];
             const dates = [];
@@ -529,7 +556,7 @@ function bookingWizard() {
             const end = new Date(this.endDate + 'T00:00:00');
             if (end < current) return [];
             while (current <= end) {
-                dates.push(current.toISOString().substring(0, 10));
+                dates.push(this.dateToYMD(current));
                 current.setDate(current.getDate() + 1);
             }
             return dates;

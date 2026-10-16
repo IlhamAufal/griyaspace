@@ -67,7 +67,7 @@
                 <i class="fa-solid fa-lightbulb text-warning-500"></i>
                 <span><b>Cara Memilih:</b> Klik & geser (drag) tanggal di kalender. Maks 3 hari.</span>
             </div>
-            <div class="flex items-center gap-4 text-[11px]">
+            {{-- <div class="flex items-center gap-4 text-[11px]">
                 <span class="inline-flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
                     <span class="w-3 h-3 rounded-xs bg-success-100 dark:bg-success-900/50 border border-success-400"></span> Kosong
                 </span>
@@ -77,7 +77,7 @@
                 <span class="inline-flex items-center gap-1.5 text-gray-600 dark:text-gray-400">
                     <span class="w-3 h-3 rounded-xs bg-brand-500"></span> Pilihan Anda
                 </span>
-            </div>
+            </div> --}}
         </div>
     </div>
 
@@ -158,7 +158,7 @@
 
         {{-- Modal Wrapper --}}
         <div class="flex min-h-screen items-center justify-center p-4">
-            <div class="relative w-full max-w-lg rounded-2xl bg-white dark:bg-gray-800 shadow-2xl border border-gray-100 dark:border-gray-700/60 overflow-hidden transform transition-all"
+            <div class="relative w-full max-w-lg rounded-2xl bg-white dark:bg-gray-800 shadow-2xl border  overflow-hidden transform transition-all"
                 x-show="showScheduleModal" x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
@@ -168,18 +168,14 @@
                 @click.outside="closeScheduleModal()">
 
                 {{-- Modal Header --}}
-                <div class="flex items-center justify-between px-6 py-4 border-b border-gray-100 dark:border-gray-700/60 bg-brand-50/50 dark:bg-brand-900/10">
+                <div class="flex items-center justify-between px-6 py-4 bg-brand-500">
                     <div class="flex items-center gap-3">
-                        <div class="w-9 h-9 rounded-xl bg-brand-500 text-white flex items-center justify-center shadow-xs">
-                            <i class="fa-solid fa-calendar-days text-sm"></i>
-                        </div>
                         <div>
-                            <h3 class="text-base font-bold text-gray-900 dark:text-white">Tanggal & Waktu Peminjaman</h3>
-                            <p class="text-[11px] text-gray-500 dark:text-gray-400">Atur rentang tanggal pelaksanaan dan jam peminjaman</p>
+                            <h3 class="text-base font-bold text-white">Tanggal & Waktu Peminjaman</h3>
                         </div>
                     </div>
-                    <button type="button" @click="closeScheduleModal()"
-                        class="text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 w-8 h-8 rounded-lg flex items-center justify-center hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors cursor-pointer">
+                    <button type="button" @click="closeScheduleModal()" aria-label="Tutup"
+                        class="text-white/80 hover:text-white w-8 h-8 rounded-lg flex items-center justify-center hover:bg-white/15 transition-colors cursor-pointer">
                         <i class="fa-solid fa-xmark text-base"></i>
                     </button>
                 </div>
@@ -195,7 +191,7 @@
                                     Tanggal Mulai <span class="text-error-500">*</span>
                                 </label>
                                 <input type="date" x-model="startDate" min="{{ date('Y-m-d') }}"
-                                    @change="if (!endDate || endDate < startDate) endDate = startDate"
+                                    @change="onStartDateChange()"
                                     class="h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
                                 <p x-show="stepErrors.start_date" x-text="stepErrors.start_date" class="text-error-500 text-[11px] mt-1" style="display:none;"></p>
                             </div>
@@ -204,6 +200,7 @@
                                     Tanggal Akhir <span class="text-error-500">*</span>
                                 </label>
                                 <input type="date" x-model="endDate" :min="startDate || '{{ date('Y-m-d') }}'"
+                                    :max="maxEndDate"
                                     class="h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
                                 <p x-show="stepErrors.end_date" x-text="stepErrors.end_date" class="text-error-500 text-[11px] mt-1" style="display:none;"></p>
                             </div>
@@ -276,7 +273,6 @@
                     </button>
                     <button type="button" @click="saveScheduleModal()"
                         class="px-5 py-2 rounded-lg bg-brand-500 hover:bg-brand-600 text-white text-xs font-semibold shadow-xs transition-colors flex items-center gap-1.5 cursor-pointer">
-                        <i class="fa-solid fa-check text-xs"></i>
                         <span>Simpan & Terapkan Jadwal</span>
                     </button>
                 </div>

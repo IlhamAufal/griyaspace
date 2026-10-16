@@ -10,30 +10,36 @@
         'navy' => [
             'bg' => 'bg-[#2F3185]',
             'text' => 'text-[#2F3185]',
+            'fg' => 'text-white',
+            'fgSub' => 'text-white/90',
         ],
         'kuning' => [
-            // Gunakan warna teks yang sedikit lebih tegas agar terbaca jelas
+            // Teks navy di atas kuning (kontras 6.4:1), putih tidak lolos WCAG AA
             'bg' => 'bg-[#FFB800]',
-            'text' => 'text-[#D97706]', 
+            'text' => 'text-[#D97706]',
+            'fg' => 'text-[#2F3185]',
+            'fgSub' => 'text-[#2F3185]',
         ],
         'toska' => [
             'bg' => 'bg-[#1CBDB3]',
             'text' => 'text-[#0D9488]',
+            'fg' => 'text-[#2F3185]',
+            'fgSub' => 'text-[#2F3185]',
         ],
     ];
 
     $selectedColor = $colorConfig[$color] ?? $colorConfig['navy'];
 @endphp
 
-<div class="relative overflow-hidden rounded-2xl sm:rounded-3xl {{ $selectedColor['bg'] }} p-4 sm:p-5 shadow-sm flex items-center justify-between min-h-[96px] text-white">
-    <!-- Sisi Teks Kiri -->
-    <div class="flex flex-col justify-center pr-2 z-10 min-w-0">
+<div class="relative overflow-hidden rounded-2xl sm:rounded-3xl {{ $selectedColor['bg'] }} p-4 sm:p-5 shadow-sm flex items-center justify-between min-h-[96px] {{ $selectedColor['fg'] }}">
+    <!-- Sisi Teks Kiri (ruang kanan disisakan selebar badge agar judul tidak tertutup) -->
+    <div class="flex flex-col justify-center pr-24 sm:pr-28 z-10 min-w-0">
         @if($subtitle)
-            <span class="text-xs sm:text-sm font-medium tracking-wide text-white/90 truncate">
+            <span class="text-xs sm:text-sm font-medium tracking-wide {{ $selectedColor['fgSub'] }} truncate">
                 {{ $subtitle }}
             </span>
         @endif
-        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold tracking-tight leading-tight truncate mt-0.5">
+        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold tracking-tight leading-tight mt-0.5">
             {{ $title }}
         </h3>
     </div>

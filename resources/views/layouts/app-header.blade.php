@@ -82,17 +82,33 @@
                 </button>
 
                 <!-- Logout -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-                    <button type="submit"
-                        class="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800">
-                        <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
-                        Keluar
-                    </button>
-                </form>
+                <button type="button" aria-haspopup="dialog"
+                    @click="$dispatch('open-modal', 'logout-confirm')"
+                    class="flex items-center gap-2 rounded-lg border border-gray-200 px-4 py-2.5 text-sm font-medium text-gray-600 hover:bg-gray-100 dark:border-gray-800 dark:text-gray-300 dark:hover:bg-gray-800">
+                    <i class="fa-solid fa-arrow-right-from-bracket text-base"></i>
+                    Keluar
+                </button>
             </div>
         </div>
     </div>
 </header>
+
+<x-common.modal id="logout-confirm" title="Keluar dari akun?" icon="fa-solid fa-arrow-right-from-bracket" maxWidth="sm">
+    <p>Sesi kamu akan berakhir dan kamu akan kembali ke halaman masuk. Pastikan semua pekerjaan sudah tersimpan.</p>
+
+    <x-slot:footer>
+        <form method="POST" action="{{ route('logout') }}" class="contents">
+            @csrf
+            <button type="button" @click="$dispatch('close-modal', 'logout-confirm')"
+                class="rounded-lg border border-gray-300 px-4 py-3 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-100 focus:outline-hidden focus:ring-3 focus:ring-brand-500/10 dark:border-gray-600 dark:text-gray-200 dark:hover:bg-gray-700">
+                Batal
+            </button>
+            <button type="submit"
+                class="rounded-lg bg-error-600 px-4 py-3 text-sm font-medium text-white transition-colors hover:bg-error-700 focus:outline-hidden focus:ring-3 focus:ring-error-500/30">
+                Keluar
+            </button>
+        </form>
+    </x-slot:footer>
+</x-common.modal>
 
 

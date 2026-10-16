@@ -14,6 +14,7 @@ use App\Models\BookingDocument;
 use App\Models\Permit;
 use App\Enums\BookingStatus;
 use App\Services\BookingService;
+use App\Services\BookingAutoRejectService;
 use App\Services\PermitPdfService;
 use App\Exceptions\BookingConflictException;
 use Illuminate\Support\Facades\Storage;
@@ -24,6 +25,9 @@ class BookingController extends Controller
     public function index(Request $request)
     {
         $user = $request->user();
+
+        app(BookingAutoRejectService::class)->handle();
+
         $query = Booking::with(['room', 'organization', 'submittedBy']);
 
         if ($user->isOrganization()) {

@@ -48,7 +48,7 @@
                         </div>
                         <div class="md:col-span-2">
                             <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Deskripsi Kegiatan</label>
-                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->purpose }}</p>
+                            <p class="text-sm font-normal text-gray-600 dark:text-gray-400">{{ $booking->purpose ?: '-' }}</p>
                         </div>
                         <div>
                             <label class="block text-xs font-semibold text-gray-800 dark:text-gray-200 mb-1">Jumlah Peserta</label>
@@ -90,17 +90,6 @@
                             <i class="fa-solid fa-xmark text-sm"></i> Tolak
                         </button>
                     </div>
-                </div>
-                @endif
-
-                @if(in_array($booking->status, [\App\Enums\BookingStatus::Submitted, \App\Enums\BookingStatus::Revision], true) && !auth()->user()->isAdmin())
-                <div class="bg-white dark:bg-gray-800 shadow-sm rounded-2xl border border-gray-200 dark:border-gray-700/60 p-6">
-                    <form action="{{ route('bookings.cancel', $booking) }}" method="POST" onsubmit="return confirm('Yakin ingin membatalkan pengajuan ini?')">
-                        @csrf
-                        <button type="submit" class="inline-flex items-center gap-2 bg-error-600 hover:bg-error-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors cursor-pointer">
-                            <i class="fa-solid fa-ban text-sm"></i> Batalkan Pengajuan
-                        </button>
-                    </form>
                 </div>
                 @endif
 
@@ -177,7 +166,7 @@
                             </div>
                             <div class="md:col-span-2">
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Deskripsi Kegiatan </label>
-                                <textarea name="purpose" rows="3" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>{{ old('purpose', $booking->purpose) }}</textarea>
+                                <textarea name="purpose" rows="3" placeholder="Jelaskan deskripsi dan tujuan singkat peminjaman ruangan (opsional)..." class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs">{{ old('purpose', $booking->purpose) }}</textarea>
                                 @error('purpose') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
@@ -308,6 +297,15 @@
                     @else
                     <p class="text-sm text-gray-500 dark:text-gray-400 text-center py-4">Belum ada riwayat status</p>
                     @endif
+
+                    @if(in_array($booking->status, [\App\Enums\BookingStatus::Submitted, \App\Enums\BookingStatus::Revision], true) && !auth()->user()->isAdmin())
+                    <div class="mt-1 pt-5 border-t border-gray-100 dark:border-gray-700/60">
+                        <button type="button" onclick="openCancelModal()"
+                            class="w-full inline-flex items-center justify-center gap-2 bg-error-600 hover:bg-error-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors cursor-pointer">
+                            <i class="fa-solid fa-ban text-sm"></i> Batalkan Pengajuan
+                        </button>
+                    </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -400,6 +398,46 @@
     </div>
 </div>
 
+<div id="cancelModal" class="fixed inset-0 z-[99999] hidden bg-black/50" style="display:none;" role="dialog" aria-modal="true" aria-labelledby="cancelModalTitle">
+    <div class="flex items-center justify-center min-h-screen p-4" onclick="closeCancelModal()">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl w-full max-w-md overflow-hidden" onclick="event.stopPropagation()">
+            <div class="flex items-center justify-between px-6 py-4 bg-brand-500 text-white">
+                <div class="flex items-center gap-3">
+                    <span class="inline-flex items-center justify-center w-8 h-8 rounded-lg bg-white/15 text-white">
+                        <i class="fa-solid fa-ban text-sm"></i>
+                    </span>
+                    <h3 class="text-lg font-bold text-white" id="cancelModalTitle">Batalkan Pengajuan</h3>
+                </div>
+                <button onclick="closeCancelModal()" type="button" class="text-white/80 hover:text-white hover:bg-white/15 p-1.5 rounded-lg transition-colors cursor-pointer" aria-label="Tutup">
+                    <i class="fa-solid fa-xmark text-lg text-white"></i>
+                </button>
+            </div>
+            <form id="cancelForm" method="POST" action="{{ route('bookings.cancel', $booking) }}" class="p-6">
+                @csrf
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                    Pengajuan <b class="font-mono text-gray-900 dark:text-white">{{ $booking->booking_number }}</b>
+                    untuk kegiatan <b class="text-gray-900 dark:text-white">{{ $booking->activity_name }}</b>
+                    akan dibatalkan dan tidak dapat diproses lagi.
+                </p>
+                <div class="mt-4 p-3 rounded-lg bg-error-50 dark:bg-error-900/20 border border-error-200 dark:border-error-800 text-xs text-error-700 dark:text-error-300 flex items-start gap-2">
+                    <i class="fa-solid fa-triangle-exclamation mt-0.5"></i>
+                    <span>Pembatalan bersifat permanen. Anda dapat membuat pengajuan baru setelahnya.</span>
+                </div>
+                <div class="flex items-center justify-end gap-3 mt-6">
+                    <button type="button" onclick="closeCancelModal()" id="cancelBackBtn"
+                        class="inline-flex items-center gap-2 bg-gray-100 hover:bg-gray-200 text-gray-700 px-5 py-2.5 rounded-lg text-sm font-medium transition-colors dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600 cursor-pointer">
+                        Kembali
+                    </button>
+                    <button type="submit"
+                        class="inline-flex items-center gap-2 bg-error-600 hover:bg-error-700 text-white px-5 py-2.5 rounded-lg text-sm font-medium shadow-theme-xs transition-colors cursor-pointer">
+                        <i class="fa-solid fa-ban text-sm"></i> Ya, Batalkan
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
 <script>
 function openDecisionModal(action) {
     var modal = document.getElementById('decisionModal');
@@ -456,5 +494,23 @@ function closeGeneratePermitModal() {
     var modal = document.getElementById('generatePermitModal');
     modal.style.display = 'none';
 }
+
+function openCancelModal() {
+    var modal = document.getElementById('cancelModal');
+    modal.style.display = 'block';
+    document.body.classList.add('overflow-hidden');
+    document.getElementById('cancelBackBtn').focus();
+}
+
+function closeCancelModal() {
+    var modal = document.getElementById('cancelModal');
+    if (modal.style.display !== 'block') return;
+    modal.style.display = 'none';
+    document.body.classList.remove('overflow-hidden');
+}
+
+document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape') closeCancelModal();
+});
 </script>
 @endsection

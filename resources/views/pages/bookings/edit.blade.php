@@ -48,7 +48,7 @@
 
                     <div class="md:col-span-2">
                         <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Tujuan Kegiatan <span class="text-error-500">*</span></label>
-                        <textarea name="purpose" rows="3" class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs" required>{{ old('purpose', $booking->purpose) }}</textarea>
+                        <textarea name="purpose" rows="3" placeholder="Jelaskan deskripsi dan tujuan singkat peminjaman ruangan (opsional)..." class="w-full rounded-lg border border-gray-300 bg-transparent px-4 py-3 text-sm text-gray-800 placeholder:text-gray-500 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 dark:placeholder:text-gray-400 shadow-theme-xs">{{ old('purpose', $booking->purpose) }}</textarea>
                         @error('purpose') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                     </div>
 

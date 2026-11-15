@@ -43,22 +43,16 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/{booking}/edit', [BookingController::class, 'edit'])->name('bookings.edit');
         Route::put('/{booking}', [BookingController::class, 'update'])->name('bookings.update');
         Route::post('/{booking}/cancel', [BookingController::class, 'cancel'])->name('bookings.cancel');
-        Route::post('/{booking}/decision', [BookingController::class, 'decision'])->name('bookings.decision');
+        Route::post('/{booking}/decision', [BookingController::class, 'decision'])->name('bookings.decision')->middleware('role:admin');
         Route::post('/{booking}/generate-permit', [BookingController::class, 'generatePermit'])->name('bookings.generatePermit')->middleware('role:admin');
         Route::get('/{booking}/riwayat', [BookingController::class, 'history'])->name('bookings.history');
         Route::get('/{booking}/permit-download', [BookingController::class, 'downloadPermit'])->name('bookings.downloadPermit');
     });
 
-    // Ruangan (index & show bisa diakses semua role)
-    Route::prefix('ruangan')->group(function () {
-        Route::get('/', [RoomController::class, 'index'])->name('rooms.index');
-        Route::get('/{room}', [RoomController::class, 'show'])->name('rooms.show');
-    });
-
     // Admin only
     Route::middleware(['role:admin'])->group(function () {
 
-        // Ruangan (admin only)
+        // Ruangan (admin only - diletakkan sebelum wildcard {room})
         Route::prefix('ruangan')->group(function () {
             Route::get('/create', [RoomController::class, 'create'])->name('rooms.create');
             Route::post('/', [RoomController::class, 'store'])->name('rooms.store');
@@ -94,15 +88,21 @@ Route::middleware(['auth'])->group(function () {
         // Pengguna
         Route::prefix('pengguna')->group(function () {
             Route::get('/', [UserController::class, 'index'])->name('users.index');
-            Route::get('/create', [UserController::class, 'create'])->name('users.create');
-            Route::post('/', [UserController::class, 'store'])->name('users.store');
+            Route::get('/create', [UserController::class, 'create'])->name('users.create')->middleware('bagmawa');
+            Route::post('/', [UserController::class, 'store'])->name('users.store')->middleware('bagmawa');
             Route::get('/{user}', [UserController::class, 'show'])->name('users.show');
             Route::get('/{user}/edit', [UserController::class, 'edit'])->name('users.edit')->middleware('bagmawa');
             Route::put('/{user}', [UserController::class, 'update'])->name('users.update')->middleware('bagmawa');
-            Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy');
-            Route::post('/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword');
+            Route::delete('/{user}', [UserController::class, 'destroy'])->name('users.destroy')->middleware('bagmawa');
+            Route::post('/{user}/reset-password', [UserController::class, 'resetPassword'])->name('users.resetPassword')->middleware('bagmawa');
         });
 
+    });
+
+    // Ruangan (index & show bisa diakses semua role - diletakkan setelah route spesifik /ruangan/create)
+    Route::prefix('ruangan')->group(function () {
+        Route::get('/', [RoomController::class, 'index'])->name('rooms.index');
+        Route::get('/{room}', [RoomController::class, 'show'])->name('rooms.show');
     });
 
 });

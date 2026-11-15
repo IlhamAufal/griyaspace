@@ -19,7 +19,7 @@
                 Pengajuan Untuk Pengguna
             </label>
             @if ($user->isAdmin() && $users->count())
-                <select name="user_id" x-model="selectedUserId" @change="onUserChange()"
+                <x-common.select name="user_id" x-model="selectedUserId" @change="onUserChange()"
                     class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
                     <option value="">Pilih Pengguna / Akun Pemohon</option>
                     @foreach ($users as $u)
@@ -30,7 +30,7 @@
                             </option>
                         @endif
                     @endforeach
-                </select>
+                </x-common.select>
                 @error('user_id')
                     <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p>
                 @enderror
@@ -80,7 +80,7 @@
             <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Pilih Ruangan <span class="text-error-500">*</span>
             </label>
-            <select name="room_id" x-model="roomId" @change="onRoomChange()" required
+            <x-common.select name="room_id" x-model="roomId" @change="onRoomChange()" required
                 class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs">
                 <option value="">-- Pilih Ruangan --</option>
                 @foreach ($rooms as $room)
@@ -91,7 +91,7 @@
                         {{ $room->name }} (Kapasitas: {{ $room->capacity }} orang)
                     </option>
                 @endforeach
-            </select>
+            </x-common.select>
             @error('room_id')
                 <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p>
             @enderror

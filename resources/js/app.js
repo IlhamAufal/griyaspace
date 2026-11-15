@@ -220,6 +220,22 @@ document.addEventListener('DOMContentLoaded', function () {
         flatpickr(el, config);
     });
 
+    document.querySelectorAll('.timepicker').forEach(function (el) {
+        flatpickr(el, {
+            enableTime: true,
+            noCalendar: true,
+            time_24hr: true,
+            enableSeconds: false,
+            dateFormat: 'H:i',
+            locale: 'id',
+            wrap: true,
+            allowInput: true,
+            onChange: function () {
+                el.dispatchEvent(new Event('input', { bubbles: true }));
+            },
+        });
+    });
+
     // Dispatch activity event for session timer
     ['mousemove', 'keydown', 'click', 'scroll', 'touchstart'].forEach(function (event) {
         document.addEventListener(event, function () {

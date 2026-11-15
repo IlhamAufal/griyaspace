@@ -158,7 +158,7 @@
 
         {{-- Modal Wrapper --}}
         <div class="flex min-h-screen items-center justify-center p-4">
-            <div class="relative w-full max-w-lg rounded-2xl bg-white dark:bg-gray-800 shadow-2xl border  overflow-hidden transform transition-all"
+            <div class="relative w-full max-w-lg rounded-2xl bg-white dark:bg-gray-800 shadow-2xl overflow-hidden transform transition-all"
                 x-show="showScheduleModal" x-transition:enter="ease-out duration-300"
                 x-transition:enter-start="opacity-0 translate-y-4 sm:translate-y-0 sm:scale-95"
                 x-transition:enter-end="opacity-100 translate-y-0 sm:scale-100"
@@ -233,8 +233,8 @@
                                 <label class="block text-[11px] font-medium text-gray-600 dark:text-gray-400 mb-1">
                                     Jam Mulai <span class="text-error-500">*</span>
                                 </label>
-                                <input type="time" name="start_time" x-model="startTime" required
-                                    class="h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
+                                <input type="text" name="start_time" x-model="startTime" required
+                                    class="timepicker h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
                                 @error('start_time')
                                     <p class="text-error-500 text-[11px] mt-1">{{ $message }}</p>
                                 @enderror
@@ -244,8 +244,8 @@
                                 <label class="block text-[11px] font-medium text-gray-600 dark:text-gray-400 mb-1">
                                     Jam Selesai <span class="text-error-500">*</span>
                                 </label>
-                                <input type="time" name="end_time" x-model="endTime" required
-                                    class="h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
+                                <input type="text" name="end_time" x-model="endTime" required
+                                    class="timepicker h-10 w-full rounded-lg border border-gray-300 bg-white dark:bg-gray-900 px-3 py-2 text-sm text-gray-800 dark:text-white focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 shadow-xs">
                                 @error('end_time')
                                     <p class="text-error-500 text-[11px] mt-1">{{ $message }}</p>
                                 @enderror

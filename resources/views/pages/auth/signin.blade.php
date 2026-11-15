@@ -37,7 +37,7 @@
         <div class="relative flex min-h-screen w-full flex-col lg:flex-row">
 
             <!-- Sisi Kiri (Form Login & Logo di Pojok Kiri Atas) -->
-            <div class="relative flex w-full flex-1 flex-col justify-between p-3 sm:p-5 lg:w-1/2 lg:p-6">
+            <div class="relative flex w-full flex-1 flex-col p-5 sm:p-8 lg:w-1/2">
                 <!-- Pojok Kiri Atas: 2 Logo Kecil Berdampingan (Ukuran Sama Client-Side) -->
                 <div class="flex items-center gap-3">
                     <img src="/images/logo/logo_text.svg" alt="Logo UMS"
@@ -49,67 +49,70 @@
                         class="hidden dark:block h-8 sm:h-9 w-auto object-contain" />
                 </div>
 
-                <div class="mt-8 sm:mt-12">
-                    <h1 class="text-2xl sm:text-3xl font-bold tracking-tight text-gray-900 dark:text-white">
-                        Masuk
-                    </h1>
-                    <p class="mt-2 text-sm text-gray-500 dark:text-gray-400">
-                        Masukkan email dan password Anda untuk masuk.
-                    </p>
-                </div>
+                <!-- Blok Form Terpusat Vertikal, Lebar Terbatas -->
+                <div class="flex flex-1 flex-col justify-center py-10">
+                    <div class="w-full max-w-sm">
+                        <h1 class="text-2xl font-bold tracking-tight text-gray-900 dark:text-white">
+                            Masuk
+                        </h1>
+                        <p class="mt-1.5 text-sm text-gray-500 dark:text-gray-400">
+                            Masukkan email dan password Anda untuk masuk.
+                        </p>
 
-                @if ($errors->any())
-                    <div class="mt-6 rounded-xl bg-error-50 p-4 text-sm text-error-600 dark:bg-error-900/20 dark:text-error-400 border border-error-200 dark:border-error-800">
-                        <ul class="list-disc list-inside space-y-1">
-                            @foreach ($errors->all() as $error)
-                                <li>{{ $error }}</li>
-                            @endforeach
-                        </ul>
-                    </div>
-                @endif
-
-                <form method="POST" action="{{ route('login') }}" class="mt-6">
-                    @csrf
-                    <div class="space-y-5">
-                        <!-- Email -->
-                        <div>
-                            <label for="email"
-                                class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                Email <span class="text-error-500">*</span>
-                            </label>
-                            <input type="email" id="email" name="email" value="{{ old('email') }}" required
-                                autofocus placeholder="Masukkan email Anda"
-                                class="h-11 w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 shadow-xs transition" />
-                        </div>
-
-                        <!-- Password -->
-                        <div>
-                            <label for="password"
-                                class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
-                                Password <span class="text-error-500">*</span>
-                            </label>
-                            <div x-data="{ showPassword: false }" class="relative">
-                                <input :type="showPassword ? 'text' : 'password'" id="password" name="password"
-                                    required placeholder="Masukkan password Anda"
-                                    class="h-11 w-full rounded-lg border border-gray-300 bg-white py-2.5 pr-11 pl-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 shadow-xs transition" />
-                                <button type="button" @click="showPassword = !showPassword"
-                                    class="absolute inset-y-0 right-0 flex items-center pr-3.5 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:focus-visible:ring-brand-300">
-                                    <i x-show="!showPassword" class="fa-solid fa-eye text-sm"></i>
-                                    <i x-show="showPassword" class="fa-solid fa-eye-slash text-sm"
-                                        style="display: none;"></i>
-                                </button>
+                        @if ($errors->any())
+                            <div class="mt-5 rounded-xl bg-error-50 p-4 text-sm text-error-600 dark:bg-error-900/20 dark:text-error-400 border border-error-200 dark:border-error-800">
+                                <ul class="list-disc list-inside space-y-1">
+                                    @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                    @endforeach
+                                </ul>
                             </div>
-                        </div>
+                        @endif
 
-                        <!-- Submit Button -->
-                        <div class="pt-1">
-                            <button type="submit"
-                                class="flex w-full items-center justify-center rounded-lg bg-brand-500 hover:bg-brand-600 px-4 py-3 text-sm font-semibold text-white shadow-xs transition duration-150 cursor-pointer">
-                                Masuk
-                            </button>
-                        </div>
+                        <form method="POST" action="{{ route('login') }}" class="mt-6">
+                            @csrf
+                            <div class="space-y-4">
+                                <!-- Email -->
+                                <div>
+                                    <label for="email"
+                                        class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Email <span class="text-error-500">*</span>
+                                    </label>
+                                    <input type="email" id="email" name="email" value="{{ old('email') }}" required
+                                        autofocus placeholder="Masukkan email Anda"
+                                        class="h-11 w-full rounded-lg border border-gray-300 bg-white px-4 py-2.5 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 shadow-xs transition" />
+                                </div>
+
+                                <!-- Password -->
+                                <div>
+                                    <label for="password"
+                                        class="mb-1.5 block text-sm font-medium text-gray-700 dark:text-gray-300">
+                                        Password <span class="text-error-500">*</span>
+                                    </label>
+                                    <div x-data="{ showPassword: false }" class="relative">
+                                        <input :type="showPassword ? 'text' : 'password'" id="password" name="password"
+                                            required placeholder="Masukkan password Anda"
+                                            class="h-11 w-full rounded-lg border border-gray-300 bg-white py-2.5 pr-11 pl-4 text-sm text-gray-900 placeholder:text-gray-500 focus:border-brand-500 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-800 dark:text-white dark:placeholder:text-gray-400 shadow-xs transition" />
+                                        <button type="button" @click="showPassword = !showPassword"
+                                            class="absolute inset-y-0 right-0 flex items-center pr-3.5 rounded-md text-gray-500 dark:text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 cursor-pointer focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500 dark:focus-visible:ring-brand-300">
+                                            <i x-show="!showPassword" class="fa-solid fa-eye text-sm"></i>
+                                            <i x-show="showPassword" class="fa-solid fa-eye-slash text-sm"
+                                                style="display: none;"></i>
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <!-- Submit Button -->
+                                <div class="pt-1">
+                                    <button type="submit"
+                                        class="flex w-full items-center justify-center rounded-lg bg-brand-500 hover:bg-brand-600 px-4 py-2.5 text-sm font-semibold text-white shadow-xs transition duration-150 cursor-pointer">
+                                        Masuk
+                                    </button>
+                                </div>
+                            </div>
+                        </form>
                     </div>
-                </form>
+                </div>
 
                 <!-- Footer note -->
                 <div class="text-xs text-gray-500 dark:text-gray-400">

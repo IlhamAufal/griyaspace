@@ -5,46 +5,46 @@
 @section('content')
 <div x-data="calendarApp()" x-init="init()">
     <div class="mb-6">
-        <h1 class="text-2xl font-bold text-gray-800">Kalender</h1>
-        <p class="text-sm text-gray-500 mt-1">Lihat dan kelola jadwal ruangan</p>
+        <h1 class="text-2xl font-bold text-gray-800 dark:text-white">Kalender</h1>
+        <p class="text-sm text-gray-500 mt-1 dark:text-gray-400">Lihat dan kelola jadwal ruangan</p>
     </div>
 
-    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4">
-        <div class="flex flex-wrap items-center gap-4">
+    <div class="bg-white rounded-lg shadow-sm border border-gray-200 p-4 mb-4 dark:bg-gray-800 dark:border-gray-700/60">
+        <div class="flex flex-wrap items-center gap-4 ">
             <div class="flex items-center gap-2">
-                <button @click="prev()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-600" title="Sebelumnya">
+                <button @click="prev()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-400" title="Sebelumnya">
                     <i class="fa-solid fa-chevron-left text-base"></i>
                 </button>
-                <button @click="goToday()" class="px-3 py-1.5 text-sm font-medium text-gray-700 bg-gray-100 rounded-lg hover:bg-gray-200 transition-colors">
+                <button @click="goToday()" class="px-3 py-1.5 text-sm font-medium text-gray-700 dark:text-gray-200 bg-gray-100 dark:bg-gray-700 rounded-lg hover:bg-gray-200 dark:hover:bg-gray-600 transition-colors">
                     Hari Ini
                 </button>
-                <button @click="next()" class="p-2 rounded-lg hover:bg-gray-100 transition-colors text-gray-600" title="Selanjutnya">
+                <button @click="next()" class="p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors text-gray-600 dark:text-gray-400" title="Selanjutnya">
                     <i class="fa-solid fa-chevron-right text-base"></i>
                 </button>
             </div>
 
-            <h2 class="text-lg font-semibold text-gray-700" x-text="currentTitle"></h2>
+            <h2 class="text-lg font-semibold text-gray-700 dark:text-white" x-text="currentTitle"></h2>
 
             <div class="ml-auto flex items-center gap-3">
                 <x-common.select x-model="selectedRoom" @change="updateEvents()"
-                    class="text-sm border border-gray-300 rounded-lg px-3 py-2 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
+                    class="text-sm border border-gray-300 dark:border-gray-600 rounded-lg px-3 py-2 bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-200 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 outline-none">
                     <option value="">Semua Ruangan</option>
                     @foreach($rooms as $room)
                         <option value="{{ $room->id }}">{{ $room->name }}</option>
                     @endforeach
                 </x-common.select>
 
-                <div class="flex rounded-lg border border-gray-300 overflow-hidden">
-                    <button @click="changeView('timeGridDay')" :class="currentView === 'timeGridDay' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
+                <div class="flex rounded-lg border border-gray-300 dark:border-gray-600 overflow-hidden">
+                    <button @click="changeView('timeGridDay')" :class="currentView === 'timeGridDay' ? 'bg-brand-500 text-white' : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'"
                         class="px-3 py-1.5 text-sm font-medium transition-colors">
                         Hari
                     </button>
-                    <button @click="changeView('timeGridWeek')" :class="currentView === 'timeGridWeek' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
-                        class="px-3 py-1.5 text-sm font-medium border-l border-gray-300 transition-colors">
+                    <button @click="changeView('timeGridWeek')" :class="currentView === 'timeGridWeek' ? 'bg-brand-500 text-white' : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                        class="px-3 py-1.5 text-sm font-medium border-l border-gray-300 dark:border-gray-600 transition-colors">
                         Minggu
                     </button>
-                    <button @click="changeView('dayGridMonth')" :class="currentView === 'dayGridMonth' ? 'bg-brand-500 text-white' : 'bg-white text-gray-700 hover:bg-gray-50'"
-                        class="px-3 py-1.5 text-sm font-medium border-l border-gray-300 transition-colors">
+                    <button @click="changeView('dayGridMonth')" :class="currentView === 'dayGridMonth' ? 'bg-brand-500 text-white' : 'bg-white dark:bg-gray-900 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700'"
+                        class="px-3 py-1.5 text-sm font-medium border-l border-gray-300 dark:border-gray-600 transition-colors">
                         Bulan
                     </button>
                 </div>

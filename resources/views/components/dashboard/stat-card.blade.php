@@ -35,11 +35,11 @@
     <!-- Sisi Teks Kiri (ruang kanan disisakan selebar badge agar judul tidak tertutup) -->
     <div class="flex flex-col justify-center pr-24 sm:pr-28 z-10 min-w-0">
         @if($subtitle)
-            <span class="text-xs sm:text-sm font-medium tracking-wide {{ $selectedColor['fgSub'] }} truncate">
+            <span class="text-xs sm:text-sm text-white font-medium tracking-wide {{ $selectedColor['fgSub'] }} truncate">
                 {{ $subtitle }}
             </span>
         @endif
-        <h3 class="text-lg sm:text-xl lg:text-2xl font-bold tracking-tight leading-tight mt-0.5">
+        <h3 class="text-lg sm:text-xl text-white lg:text-2xl font-bold tracking-tight leading-tight mt-0.5">
             {{ $title }}
         </h3>
     </div>

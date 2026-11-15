@@ -22,18 +22,16 @@
 
     <!-- Pending Bookings Alert Banner -->
     @if($pendingCount > 0)
-    <a href="{{ route('bookings.konfirmasi') }}" class="flex items-center gap-4 p-4 rounded-xl bg-warning-50 dark:bg-warning-900/20 border border-warning-200 dark:border-warning-700/60 hover:shadow-md hover:border-warning-300 dark:hover:border-warning-600 transition-all group">
-        <div class="w-10 h-10 rounded-xl bg-warning-100 dark:bg-warning-900/40 text-warning-600 dark:text-warning-400 flex items-center justify-center shrink-0 group-hover:scale-110 transition-transform">
-            <i class="fa-solid fa-bell text-lg"></i>
-        </div>
-        <div class="flex-1 min-w-0">
-            <p class="text-sm font-semibold text-warning-800 dark:text-warning-200">
-                Anda memiliki <span class="text-warning-600 dark:text-warning-300 font-bold">{{ $pendingCount }}</span> pengajuan untuk dikonfirmasi
-            </p>
-            <p class="text-xs text-warning-700 dark:text-warning-300 mt-0.5">Klik untuk menuju halaman konfirmasi</p>
-        </div>
-        <i class="fa-solid fa-arrow-right text-warning-400 dark:text-warning-500 opacity-0 group-hover:opacity-100 group-hover:text-warning-600 dark:group-hover:text-warning-300 group-hover:translate-x-1 transition-all"></i>
-    </a>
+    <div class="flex items-stretch gap-3">
+        <a href="{{ route('bookings.konfirmasi') }}" class="flex flex-1 min-w-0 items-center gap-4 p-4 rounded-xl bg-warning-700 hover:bg-warning-800 text-white transition-colors">
+            <i class="fa-solid fa-bell text-xl shrink-0"></i>
+            <p class="text-sm font-bold truncate">Anda memiliki {{ $pendingCount }} pengajuan untuk dikonfirmasi</p>
+        </a>
+        <a href="{{ route('bookings.konfirmasi') }}" title="Menuju halaman konfirmasi"
+            class="flex items-center justify-center w-14 shrink-0 rounded-xl bg-warning-700 hover:bg-warning-800 text-white transition-colors">
+            <i class="fa-solid fa-arrow-up-right-from-square text-lg"></i>
+        </a>
+    </div>
     @endif
 
     <!-- Stats Cards (Menggunakan Palette: Navy #2F3185, Kuning #FFB800, Toska #1CBDB3) -->

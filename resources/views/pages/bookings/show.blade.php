@@ -185,12 +185,12 @@
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jam Mulai <span class="text-error-500">*</span></label>
-                                <input type="time" name="start_time" value="{{ old('start_time', $booking->start_time) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
+                                <input type="text" name="start_time" value="{{ old('start_time', substr($booking->start_time, 0, 5)) }}" class="timepicker h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
                                 @error('start_time') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>
                                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">Jam Selesai <span class="text-error-500">*</span></label>
-                                <input type="time" name="end_time" value="{{ old('end_time', $booking->end_time) }}" class="h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
+                                <input type="text" name="end_time" value="{{ old('end_time', substr($booking->end_time, 0, 5)) }}" class="timepicker h-11 w-full rounded-lg border border-gray-300 bg-transparent px-4 py-2.5 text-sm text-gray-800 focus:border-brand-300 focus:ring-3 focus:ring-brand-500/10 focus:outline-hidden dark:border-gray-700 dark:bg-gray-900 dark:text-white/90 shadow-theme-xs" required>
                                 @error('end_time') <p class="text-error-500 text-xs mt-1.5">{{ $message }}</p> @enderror
                             </div>
                             <div>

@@ -108,7 +108,7 @@
                 <div class="bg-white dark:bg-gray-800 shadow rounded-lg overflow-hidden">
                     <div class="overflow-x-auto transition-opacity duration-300" :class="loading ? 'opacity-50 pointer-events-none' : ''">
                         <table class="min-w-full divide-y divide-gray-200 dark:divide-gray-700">
-                            <thead class="bg-brand-500 text-white">
+                            <thead class="bg-[#2F3185] text-white">
                                 <tr>
                                     <th class="px-6 py-3.5 text-left text-xs font-bold text-white uppercase tracking-wider">No</th>
                                     <x-table.sortable-header column="booking_number" label="No. Booking" />

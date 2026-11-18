@@ -37,7 +37,32 @@ Homestead.yaml
 tailadmin-laravel.png
 /public/css
 /public/js
-/public/images
+public/images/brand/
+  public/images/carousel/
+  public/images/chat/
+  public/images/country/
+  public/images/grid-image/
+  public/images/icons/
+  public/images/logistics/
+  public/images/product/
+  public/images/support/
+  public/images/task/
+  public/images/user/
+  public/images/video-thumb/
+  public/images/logo/auth-logo.svg
+  public/images/logo/logo.svg
+  public/images/logo/logo-dark.svg
+  public/images/logo/logo-icon.svg
+  public/images/error/maintenance.svg
+  public/images/error/maintenance-dark.svg
+  public/images/error/success.svg
+  public/images/error/success-dark.svg
+  public/images/cards/card-01.png
+  public/images/cards/card-02.jpg
+  public/images/cards/card-02.png
+  public/images/cards/card-03.jpg
+  public/images/cards/card-03.png
+  public/images/user/
 
 # PDF templates and generated files
 storage/app/private/*.pdf

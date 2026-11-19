@@ -65,13 +65,13 @@
         'justify-start'">
         <a href="/">
             <img x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                class="dark:hidden h-8 w-auto" src="/images/dkpti/gm.webp" alt="Logo" />
+                class="dark:hidden h-8 w-auto" src="{{ asset('storage/gm.webp') }}" alt="Logo" />
             <img x-show="$store.sidebar.isExpanded || $store.sidebar.isHovered || $store.sidebar.isMobileOpen"
-                class="hidden dark:block h-8 w-auto" src="/images/dkpti/gm.webp" alt="Logo" />
+                class="hidden dark:block h-8 w-auto" src="{{ asset('storage/gm.webp') }}" alt="Logo" />
             <img x-show="!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen"
-                class="h-7 w-7 dark:hidden" src="/images/dkpti/dkpti-dark.webp" alt="Logo" />
+                class="h-7 w-7 dark:hidden" src="{{ asset('storage/dkpti-dark.webp') }}" alt="Logo" />
             <img x-show="!$store.sidebar.isExpanded && !$store.sidebar.isHovered && !$store.sidebar.isMobileOpen"
-                class="hidden dark:block h-7 w-7" src="/images/dkpti/dkpti-light.webp" alt="Logo" />
+                class="hidden dark:block h-7 w-7" src="{{ asset('storage/dkpti-light.webp') }}" alt="Logo" />
 
         </a>
     </div>

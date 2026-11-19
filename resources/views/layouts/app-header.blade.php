@@ -33,8 +33,8 @@
 
             <!-- Logo (mobile only) -->
             <a href="/" class="xl:hidden">
-                <img class="dark:hidden h-7 w-auto" src="/images/dkpti/dkpti-dark.webp" alt="Logo" />
-                <img class="hidden dark:block h-7 w-auto" src="/images/dkpti/dkpti-light.webp" alt="Logo" />
+                <img class="dark:hidden h-7 w-auto" src="{{ asset('storage/dkpti-dark.webp') }}" alt="Logo" />
+                <img class="hidden dark:block h-7 w-auto" src="{{ asset('storage/dkpti-light.webp') }}" alt="Logo" />
             </a>
 
             <!-- Application Menu Toggle (mobile only) -->

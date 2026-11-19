@@ -40,12 +40,12 @@
             <div class="relative flex w-full flex-1 flex-col p-5 sm:p-8 lg:w-1/2">
                 <!-- Pojok Kiri Atas: 2 Logo Kecil Berdampingan (Ukuran Sama Client-Side) -->
                 <div class="flex items-center gap-3">
-                    <img src="/images/logo/logo_text.svg" alt="Logo UMS"
+                    <img src="/images/dkpti/logo_text.webp" alt="Logo UMS"
                         class="h-8 sm:h-9 w-auto object-contain" />
                     <span class="h-5 w-px bg-gray-300 dark:bg-gray-700"></span>
-                    <img src="/images/logo/dkpti-dark.svg" alt="Logo DKPTI"
+                    <img src="/images/dkpti/dkpti-dark.webp" alt="Logo DKPTI"
                         class="h-8 sm:h-9 w-auto object-contain dark:hidden" />
-                    <img src="/images/logo/dkpti-light.svg" alt="Logo DKPTI"
+                    <img src="/images/dkpti/dkpti-light.webp" alt="Logo DKPTI"
                         class="hidden dark:block h-8 sm:h-9 w-auto object-contain" />
                 </div>
 
